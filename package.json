@@ -87,6 +87,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
   },
+  "homepage": "https://dudu-project.netlify.app",
   "eslintConfig": {
     "extends": [
       "react-app",
