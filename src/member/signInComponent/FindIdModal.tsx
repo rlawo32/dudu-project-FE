@@ -1,6 +1,5 @@
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {useDrag} from "react-use-gesture";
-import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 
