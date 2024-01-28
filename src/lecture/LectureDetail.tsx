@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import dayjs from "dayjs";
 import dompurify from "dompurify";
@@ -12,6 +12,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpLong as topIcon, faChevronDown as arrow} from "@fortawesome/free-solid-svg-icons";
 
 const LectureDetail = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const lectureNo:number = location.state.lectureNo;
 
@@ -355,7 +356,9 @@ const LectureDetail = () => {
                             {
                                 lectureDetail.lectureStateNo === 1 ?
                                     <button style={{backgroundColor: "gray"}}>접수 기간이 아닙니다.</button> :
-                                    lectureDetail.lectureStateNo === 2 ? <button>수강 신청하기</button> :
+                                    lectureDetail.lectureStateNo === 2 ? <button onClick={() => navigate("/lecturePayment",
+                                            { state: {lectureNo: lectureDetail.lectureNo, lectureFee: lectureDetail.lectureFee,
+                                                    lectureTitle: lectureDetail.lectureTitle}})}>수강 신청하기</button> :
                                         lectureDetail.lectureStateNo === 3 ? <button>인원이 다찼습니다</button> :
                                             lectureDetail.lectureStateNo === 4 ? <button>접수 종료</button> :
                                                 lectureDetail.lectureStateNo === 5 ? <button>접수 불가</button> :

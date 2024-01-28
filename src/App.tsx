@@ -25,6 +25,9 @@ import FaqWrite from "./information/FaqWrite";
 import FaqList from "./information/FaqList";
 import BranchInfoWrite from "./information/BranchInfoWrite";
 import BranchInfoList from "./information/BranchInfoList";
+// payment
+import LecturePayment from "./payment/LecturePayment";
+import PaymentSuccess from "./payment/paymentComponent/paymentSuccess";
 
 //
 import {GlobalStyle} from "./styles/GlobalStyles";
@@ -77,6 +80,10 @@ function App() {
                 <Route path="/faqList" element={<FaqList />} />
                 <Route path="/branchInfoWrite" element={<BranchInfoWrite />} />
                 <Route path="/branchInfoList" element={<BranchInfoList />} />
+
+                <Route path="/lecturePayment" element={<LecturePayment />} />
+                <Route path="/paymentSuccess" element={<PaymentSuccess />} />
+
             </Routes>
         </ThemeProvider>
     </>
