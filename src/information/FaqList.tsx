@@ -122,7 +122,6 @@ const FaqList = () => {
                 method: "GET",
                 url: "/faq/faqOftenList"
             }).then((res):void => {
-                console.log(res.data.data.faqList)
                 setFaqOftenList(res.data.data.faqList);
             }).catch((err):void => {
                 console.log(err.message);
