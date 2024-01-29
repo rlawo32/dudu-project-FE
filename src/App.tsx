@@ -27,7 +27,7 @@ import BranchInfoWrite from "./information/BranchInfoWrite";
 import BranchInfoList from "./information/BranchInfoList";
 // payment
 import LecturePayment from "./payment/LecturePayment";
-import PaymentSuccess from "./payment/paymentComponent/paymentSuccess";
+import PaymentSuccess from "./payment/paymentComponent/PaymentSuccess";
 
 //
 import {GlobalStyle} from "./styles/GlobalStyles";
