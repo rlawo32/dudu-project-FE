@@ -16,17 +16,20 @@ const PaymentSuccess = () => {
             orderId: orderId,
             amount: amount,
         }
-        axios({
-            method: "POST",
-            url: "/lecture/lectureApplicationInsert",
-            data: JSON.stringify(lectureApplicationData),
-            headers: {'Content-type': 'application/json'}
-        }).then((res):void => {
-            alert("결제가 완료되었습니다.");
-            navigate("/");
-        }).catch((err):void => {
-            console.log(err.message);
-        })
+        const paymentSuccess = async ():Promise<void> => {
+            await axios({
+                method: "POST",
+                url: "/lecture/lectureApplicationInsert",
+                data: JSON.stringify(lectureApplicationData),
+                headers: {'Content-type': 'application/json'}
+            }).then((res):void => {
+                alert("결제가 완료되었습니다.");
+                // navigate("/");
+            }).catch((err):void => {
+                console.log(err.message);
+            })
+        }
+        setTimeout(() => {paymentSuccess().then();}, 200);
     }, [])
 
     return (

@@ -2,6 +2,7 @@ import {useLocation} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import {useDrag} from "react-use-gesture";
+import axios from "axios";
 
 declare global {
     interface Window {
@@ -60,7 +61,8 @@ const PaymentWidgetView = styled.div<{ x: number; y: number; }>`
 const PaymentWidget = (props: Props) => {
     const modalRef:any = useRef<any>();
 
-    const [logoPos, setLogoPos] = useState({x:0, y:0})
+    const [memberNo, setMemberNo] = useState<number>(0);
+    const [logoPos, setLogoPos] = useState({x:0, y:0});
     const bindLogoPos = useDrag((params)=>{
         console.log(params)
         setLogoPos({
@@ -81,39 +83,49 @@ const PaymentWidget = (props: Props) => {
         script.async = true;
         script.src = `https://js.tosspayments.com/v1/payment-widget`;
         document.head.appendChild(script);
-
         const clientKey:string|undefined = process.env.REACT_APP_TOSS_CLIENT_KEY;
-        const customerKey:string = Math.random().toString(16).substring(2, 8) + "_";
-        const orderId:string = Math.random().toString(16).substring(2, 8) + "_" + lectureNo;
 
-        script.addEventListener("load", ():void => {
-            const button:HTMLElement|null = document.getElementById("payment-button");
-            const paymentWidget = window.PaymentWidget(clientKey, customerKey);
+        axios({
+            method: "GET",
+            url: "/member/getMemberNo",
+        }).then((res):void => {
+            console.log(res)
+            const customerKey:string = Math.random().toString(16).substring(2) + "_" + res.data;
+            const orderId:string = Math.random().toString(16).substring(2) + "_" + lectureNo;
 
-            paymentWidget.renderPaymentMethods(
-                '#payment-widget',
-                { value: lectureFee },
-                { variantKey: "DEFAULT" })
-            paymentWidget.renderAgreement(
-                '#payment-agreement',
-                { variantKey: "AGREEMENT" })
+            console.log(customerKey)
+            console.log(orderId)
 
-            if(button !== null) {
-                button.addEventListener("click", ():void => {
-                    // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
-                    // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
-                    paymentWidget.requestPayment({
-                        orderId: orderId,
-                        orderName: lectureTitle,
-                        successUrl: window.location.origin + "/paymentSuccess",
-                        failUrl: window.location.origin + "/fail",
-                        customerEmail: "customer123@gmail.com",
-                        customerName: "김토스",
-                        customerMobilePhone: "01012341234",
+            script.addEventListener("load", ():void => {
+                const button:HTMLElement|null = document.getElementById("payment-button");
+                const paymentWidget = window.PaymentWidget(clientKey, customerKey);
+
+                paymentWidget.renderPaymentMethods(
+                    '#payment-widget',
+                    { value: lectureFee },
+                    { variantKey: "DEFAULT" })
+                paymentWidget.renderAgreement(
+                    '#payment-agreement',
+                    { variantKey: "AGREEMENT" })
+
+                if(button !== null) {
+                    button.addEventListener("click", ():void => {
+                        // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
+                        // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
+                        paymentWidget.requestPayment({
+                            orderId: orderId,
+                            orderName: lectureTitle,
+                            successUrl: window.location.origin + "/paymentSuccess",
+                            failUrl: window.location.origin + "/fail",
+                            customerEmail: "customer123@gmail.com",
+                            customerName: "김토스",
+                            customerMobilePhone: "01012341234",
+                        });
                     });
-                });
-            }
-
+                }
+            })
+        }).catch((err):void => {
+            console.log(err.message);
         })
     }, [])
 
