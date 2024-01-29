@@ -357,8 +357,7 @@ const LectureDetail = () => {
                                 lectureDetail.lectureStateNo === 1 ?
                                     <button style={{backgroundColor: "gray"}}>접수 기간이 아닙니다.</button> :
                                     lectureDetail.lectureStateNo === 2 ? <button onClick={() => navigate("/lecturePayment",
-                                            { state: {lectureNo: lectureDetail.lectureNo, lectureFee: lectureDetail.lectureFee,
-                                                    lectureTitle: lectureDetail.lectureTitle}})}>수강 신청하기</button> :
+                                            { state: lectureDetail})}>수강 신청하기</button> :
                                         lectureDetail.lectureStateNo === 3 ? <button>인원이 다찼습니다</button> :
                                             lectureDetail.lectureStateNo === 4 ? <button>접수 종료</button> :
                                                 lectureDetail.lectureStateNo === 5 ? <button>접수 불가</button> :
