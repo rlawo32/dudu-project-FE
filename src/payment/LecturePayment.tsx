@@ -1,67 +1,142 @@
-import {useEffect} from "react";
-import {useLocation} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
 
-declare global {
-    interface Window {
-        PaymentWidget: any;
-    }
-}
+import HeaderNavigation from "../navigation/HeaderNavigation";
+import FooterNavigation from "../navigation/FooterNavigation";
+import PaymentWidget from "./paymentComponent/PaymentWidget";
+
+import * as Styled from "./LecturePayment.style";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowUpLong as topIcon, faSearch as searchIcon} from "@fortawesome/free-solid-svg-icons";
+import FindIdModal from "../member/signInComponent/FindIdModal";
+
 
 const LecturePayment = () => {
+    const navigate = useNavigate();
     const location = useLocation();
-    const lectureNo:number = location.state.lectureNo;
-    const lectureFee:number = location.state.lectureFee;
-    const lectureTitle:number = location.state.lectureTitle;
 
-
-    const clientKey:string|undefined = process.env.REACT_APP_TOSS_CLIENT_KEY;
-    const secretKey:string = "";
-    const customerKey:string = "YbX2HuSlsC9uVJW6NMRMj"; // custom 가능 (memberNo 넣어주기)
-
-    useEffect(() => {
-        const script:HTMLScriptElement = document.createElement("script");
-        script.async = true;
-        script.src = `https://js.tosspayments.com/v1/payment-widget`;
-        document.head.appendChild(script);
-
-        script.addEventListener("load", ():void => {
-            const button:HTMLElement|null = document.getElementById("payment-button");
-            const paymentWidget = window.PaymentWidget(clientKey, customerKey);
-
-            paymentWidget.renderPaymentMethods(
-                '#payment-widget',
-                { value: lectureFee },
-                { variantKey: "DEFAULT" })
-            paymentWidget.renderAgreement(
-                '#payment-agreement',
-                { variantKey: "AGREEMENT" })
-
-            if(button !== null) {
-                button.addEventListener("click", ():void => {
-                    // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
-                    // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
-                    paymentWidget.requestPayment({
-                        orderId: lectureNo,
-                        orderName: lectureTitle,
-                        successUrl: window.location.origin + "/paymentSuccess",
-                        failUrl: window.location.origin + "/fail",
-                        customerEmail: "customer123@gmail.com",
-                        customerName: "김토스",
-                        customerMobilePhone: "01012341234",
-                    });
-                });
-            }
-
-        })
-    }, [])
+    const [isPaymentModal, setIsPaymentModal] = useState<boolean>(false);
 
     return (
-        <div>
-            <div>결제금액 : {lectureFee}</div>
-            <div id="payment-widget"></div>
-            <div id="payment-agreement"></div>
-            <button id="payment-button">결제하기</button>
-        </div>
+        <Styled.LecturePaymentView $isModal={isPaymentModal}>
+            <HeaderNavigation />
+
+            <div className="top-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+                <FontAwesomeIcon icon={topIcon} className="icon-custom" />
+            </div>
+
+            <div className="lp-sub">
+                <div className="lp-sub-view">
+                    <div className="lp-sub-title">
+                        수강결제
+                    </div>
+                </div>
+            </div>
+            <div className="lp-main">
+                <div className="lp-main-view">
+                    <div className="lp-main-title">
+                        수강자 정보
+                    </div>
+                    <div className="lp-main-content">
+                        <div className="lp-content-top">
+                            <div className="lp-top-left">
+                                <div className="lp-institution">
+                                    {location.state.lectureInstitution}
+                                </div>
+                                <div className="lp-title">
+                                    {location.state.lectureTitle}
+                                </div>
+                            </div>
+                            <div className="lp-top-right">
+                                <div className="lp-teacher">
+                                    <div className="section-title">
+                                        강사명
+                                    </div>
+                                    {location.state.lectureTeacher}
+                                </div>
+                                <div className="lp-period">
+                                    <div className="section-title">
+                                        강좌기간
+                                    </div>
+                                    {location.state.lecturePeriod}
+                                </div>
+                                <div className="lp-time">
+                                    <div className="section-title">
+                                        강좌시간 / 횟수
+                                    </div>
+                                    {location.state.lectureTime.substring(0, 12)}
+                                    {
+                                        location.state.lectureTime.substring(13, 14) === '1' ? '(월)' :
+                                            location.state.lectureTime.substring(13, 14) === '2' ? '(화)' :
+                                                location.state.lectureTime.substring(13, 14) === '3' ? '(수)' :
+                                                    location.state.lectureTime.substring(13, 14) === '4' ? '(목)' :
+                                                        location.state.lectureTime.substring(13, 14) === '5' ? '(금)' :
+                                                            location.state.lectureTime.substring(13, 14) === '6' ? '(토)' : '(일)'
+                                    }
+                                </div>
+                                <div className="lp-fee">
+                                    <div className="section-title">
+                                        강좌료
+                                    </div>
+                                    {location.state.lectureFee}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="lp-content-bot">
+                            <div className="lp-bot-left">
+                                <div className="lp-member">
+                                    김성재(본인)
+                                </div>
+                            </div>
+                            <div className="lp-bot-right">
+                                <div className="lp-paymentFee">
+                                    <div className="section-title">
+                                        결제예정 금액
+                                    </div>
+                                    {location.state.lectureFee.toLocaleString()}원
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="lp-main-notice">
+                        <div className="section-title">
+                            유의사항
+                        </div>
+                        <ul>
+                            <li>신청하신 강좌는 최소 정원에 미달되거나 사정에 의해 폐강 될 수 있으니 양해 바랍니다.</li>
+                            <li>환불시 강의시작일 3일전부터 환불기준에 따른 환불 차감액이 발생이 됩니다.</li>
+                            <li>환불 및 수강 취소시 강의시작일로부터 3일전은 환불액에서 1/3 환급, 2일전은 1/2 환급, 전날부터는 환불이 불가합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div className="lp-button">
+                <div className="section-button">
+                    <div className="button-fee">
+                        <span>총 결제예정금액</span>
+                        <div>
+                            {location.state.lectureFee.toLocaleString()}
+                        </div>
+                        <span>원</span>
+                    </div>
+                    <div>
+                        <button className="btn-back"
+                                onClick={() => navigate(-1)}>이전</button>
+                        <button className="btn-payment"
+                                onClick={() => {window.scrollTo({ top: 50, behavior: "smooth" });
+                                    setIsPaymentModal(true);}}>결제하기</button>
+                    </div>
+                </div>
+            </div>
+
+            {isPaymentModal ?
+                <div className="lp-modal">
+                    <PaymentWidget isModal={isPaymentModal} setIsModal={setIsPaymentModal} />
+                </div>
+                : <div />}
+
+            <FooterNavigation />
+        </Styled.LecturePaymentView>
     )
 }
 
