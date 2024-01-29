@@ -15,7 +15,7 @@ const LecturePayment = () => {
 
 
     const clientKey:string|undefined = process.env.REACT_APP_TOSS_CLIENT_KEY;
-    const secretKey:string = "test_sk_GePWvyJnrKKGn9pq7GBErgLzN97E";
+    const secretKey:string = "";
     const customerKey:string = "YbX2HuSlsC9uVJW6NMRMj"; // custom 가능 (memberNo 넣어주기)
 
     useEffect(() => {
