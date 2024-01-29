@@ -7,8 +7,7 @@ import PaymentWidget from "./paymentComponent/PaymentWidget";
 
 import * as Styled from "./LecturePayment.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowUpLong as topIcon, faSearch as searchIcon} from "@fortawesome/free-solid-svg-icons";
-import FindIdModal from "../member/signInComponent/FindIdModal";
+import {faArrowUpLong as topIcon} from "@fortawesome/free-solid-svg-icons";
 
 
 const LecturePayment = () => {

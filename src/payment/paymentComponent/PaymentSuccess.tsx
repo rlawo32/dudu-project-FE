@@ -1,13 +1,33 @@
+import {useEffect} from "react";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const PaymentSuccess = () => {
+    const navigate = useNavigate();
     const urlParams = new URLSearchParams(window.location.search);
 
     const paymentKey = urlParams.get("paymentKey");
     const orderId = urlParams.get("orderId");
     const amount = urlParams.get("amount");
-    console.log(paymentKey)
-    console.log(orderId)
-    console.log(amount)
+
+    useEffect(() => {
+        const lectureApplicationData:object = {
+            paymentKey: paymentKey,
+            orderId: orderId,
+            amount: amount,
+        }
+        axios({
+            method: "POST",
+            url: "/lecture/lectureApplicationInsert",
+            data: JSON.stringify(lectureApplicationData),
+            headers: {'Content-type': 'application/json'}
+        }).then((res):void => {
+            alert("결제가 완료되었습니다.");
+            navigate("/");
+        }).catch((err):void => {
+            console.log(err.message);
+        })
+    }, [])
 
     return (
         <div>
