@@ -61,7 +61,6 @@ const PaymentWidgetView = styled.div<{ x: number; y: number; }>`
 const PaymentWidget = (props: Props) => {
     const modalRef:any = useRef<any>();
 
-    const [memberNo, setMemberNo] = useState<number>(0);
     const [logoPos, setLogoPos] = useState({x:0, y:0});
     const bindLogoPos = useDrag((params)=>{
         console.log(params)
@@ -75,8 +74,6 @@ const PaymentWidget = (props: Props) => {
     const lectureNo:number = location.state.lectureNo;
     const lectureFee:number = location.state.lectureFee;
     const lectureTitle:number = location.state.lectureTitle;
-
-    const secretKey:string = "";// custom 가능 (memberNo 넣어주기)
 
     useEffect(() => {
         const script:HTMLScriptElement = document.createElement("script");

@@ -148,6 +148,9 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
               line-height: 32px;
               word-break: break-all;
               
+              span {
+                margin: 0 4px;
+              }
             }
             
             .lp-fee {
@@ -229,7 +232,6 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
     padding: 24px 0;
     border-top: 2px solid ${({theme}) => theme.textColor};
     background-color: ${({theme}) =>theme.bgColor};
-    opacity: ${({$isModal}) => $isModal ? 0.5 : 1};
     
     .section-button {
       display: flex;
@@ -237,6 +239,7 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
       align-items: center;
       width: 1160px;
       margin: 0 auto;
+      opacity: ${({$isModal}) => $isModal ? 0.5 : 1};
       
       .button-fee {
         

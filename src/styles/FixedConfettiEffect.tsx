@@ -2,10 +2,12 @@ import React, {useCallback, useEffect, useRef} from 'react';
 
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import useJoinProgressStore from "../stores/useJoinProgressStore";
+import useLecturePaymentStoreData from "../stores/useLecturePaymentDataStore";
 
 export default function FixedConfettiEffect() {
     const refAnimationInstance = useRef<any>(null);
     const {activeProgressTab} = useJoinProgressStore();
+    const {isSuccess} = useLecturePaymentStoreData();
 
     const getInstance = useCallback((instance:any) => {
         refAnimationInstance.current = instance;
@@ -55,6 +57,19 @@ export default function FixedConfettiEffect() {
     return (
         <>
             {activeProgressTab === 'joinProgress4' ?
+                <ReactCanvasConfetti
+                    refConfetti={getInstance}
+                    style={{
+                        position: 'fixed',
+                        pointerEvents: 'none',
+                        height: '100%',
+                        width: '100%',
+                        top: '5%',
+                        left: 0
+                    }}
+                />
+                : <div />}
+            {isSuccess ?
                 <ReactCanvasConfetti
                     refConfetti={getInstance}
                     style={{
