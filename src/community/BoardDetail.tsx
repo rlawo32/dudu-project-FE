@@ -8,6 +8,7 @@ import HeaderNavigation from "../navigation/HeaderNavigation";
 import FooterNavigation from "../navigation/FooterNavigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpLong as topIcon} from "@fortawesome/free-solid-svg-icons";
+import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
 const BoardDetail = () => {
     const navigate = useNavigate();
@@ -44,10 +45,6 @@ const BoardDetail = () => {
         <Styled.BoardDetailView>
             <HeaderNavigation />
 
-            <div className="top-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                <FontAwesomeIcon icon={topIcon} className="icon-custom" />
-            </div>
-
             <div className="bd-main-view">
                 <div className="bd-head">
                     <div className="head-top">
@@ -79,6 +76,8 @@ const BoardDetail = () => {
                     </button>
                 </div>
             </div>
+
+            <TopButtonNavigation />
 
             <FooterNavigation />
         </Styled.BoardDetailView>
