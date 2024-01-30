@@ -13,6 +13,7 @@ import {
     faExclamation as emptyIcon, faQuoteLeft as quoteLeft, faQuoteRight as quoteRight,
     faSearch as searchIcon
 } from "@fortawesome/free-solid-svg-icons";
+import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
 const BoardList = () => {
     const navigate = useNavigate();
@@ -143,10 +144,6 @@ const BoardList = () => {
         <Styled.BoardListView>
             <HeaderNavigation />
 
-            <div className="top-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                <FontAwesomeIcon icon={topIcon} className="icon-custom" />
-            </div>
-
             <div className="bl-sub-view">
                 <div className="bl-sub">
                     <div className="bl-sub-title">
@@ -251,6 +248,8 @@ const BoardList = () => {
                     </div>
                 </div>
             </div>
+
+            <TopButtonNavigation />
 
             <FooterNavigation />
         </Styled.BoardListView>
