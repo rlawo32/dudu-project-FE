@@ -17,6 +17,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import axios from "axios";
 import BranchInfoMap from "./BranchInfoMap";
+import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
 const BranchInfoList = () => {
     const institutionBtn:any = useRef<any>([]);
@@ -124,10 +125,6 @@ const BranchInfoList = () => {
         <Styled.BranchInfoListView>
             <HeaderNavigation />
 
-            <div className="top-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                <FontAwesomeIcon icon={topIcon} className="icon-custom" />
-            </div>
-
             <div className="bi-sub-view">
                 <div className="bi-sub">
                     <div className="bi-sub-title">
@@ -183,6 +180,8 @@ const BranchInfoList = () => {
                         </div> : <div />
                 }
             </div>
+
+            <TopButtonNavigation />
 
             <FooterNavigation />
         </Styled.BranchInfoListView>
