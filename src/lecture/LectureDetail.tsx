@@ -10,6 +10,7 @@ import FooterNavigation from "../navigation/FooterNavigation";
 import * as Styled from "./LectureDetail.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpLong as topIcon, faChevronDown as arrow} from "@fortawesome/free-solid-svg-icons";
+import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
 const LectureDetail = () => {
     const navigate = useNavigate();
@@ -169,9 +170,6 @@ const LectureDetail = () => {
         <Styled.LectureDetailView $noticeBoxH={1}>
             <div className="header-navigation">
                 <HeaderNavigation />
-            </div>
-            <div className="lt-top-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                <FontAwesomeIcon icon={topIcon} className="icon-custom" />
             </div>
 
             <div className="detail-responsive lt-detail-top">
@@ -367,6 +365,8 @@ const LectureDetail = () => {
                     </div>
                 </div>
             </div>
+
+            <TopButtonNavigation />
 
             <div className="footer-navigation">
                 <FooterNavigation />

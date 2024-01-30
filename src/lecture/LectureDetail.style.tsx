@@ -12,30 +12,6 @@ export const LectureDetailView = styled.div<Props>`
   overflow-wrap: break-word;
   line-height: 1.75;
   font-family: "Noto Sans KR", sans-serif;
-
-  .lt-top-btn {
-    position: fixed;
-    bottom: 40px;
-    @media screen and (max-width: 1280px) {
-      bottom: 160px;
-    }
-    right: 40px;
-    height: 50px;
-    width: 50px;
-    border: 1px solid ${({theme}) => theme.boxBgColor};
-    border-radius: 50%;
-    background-color: ${({theme}) => theme.boxBgColor};
-    color: ${({theme}) => theme.textColor};;
-    text-align: center;
-    z-index: 99;
-    cursor: pointer;
-
-    .icon-custom {
-      position: relative;
-      top: 12px;
-      font-size: 25px;
-    }
-  }
   
   .footer-navigation {
     @media screen and (max-width: 1280px) {
