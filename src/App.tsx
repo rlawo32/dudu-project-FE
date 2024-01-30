@@ -10,6 +10,11 @@ import TermsAgree from "./member/signUpComponent/TermsAgree";
 import EmailAuth from "./member/signUpComponent/EmailAuth";
 import EnterInfo from "./member/signUpComponent/EnterInfo";
 import JoinComplete from "./member/signUpComponent/JoinComplete";
+import MemberInfo from "./member/MemberInfo";
+import LectureBasket from "./member/memberInfoCompnent/LectureBasket";
+import LectureHistory from "./member/memberInfoCompnent/LectureHistory";
+import LectureReview from "./member/memberInfoCompnent/LectureReview";
+import MemberLog from "./member/memberInfoCompnent/MemberLog";
 // lecture
 import LectureWrite from "./lecture/LectureWrite";
 import LectureList from "./lecture/LectureList";
@@ -83,6 +88,12 @@ function App() {
 
                 <Route path="/lecturePayment" element={<LecturePayment />} />
                 <Route path="/paymentSuccess" element={<PaymentSuccess />} />
+
+                <Route path="/memberInfo" element={<MemberInfo />} />
+                <Route path="/lectureBasket" element={<LectureBasket />} />
+                <Route path="/lectureHistory" element={<LectureHistory />} />
+                <Route path="/lectureReview" element={<LectureReview />} />
+                <Route path="/memberLog" element={<MemberLog />} />
 
             </Routes>
         </ThemeProvider>

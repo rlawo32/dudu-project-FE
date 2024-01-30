@@ -216,7 +216,7 @@ const HeaderNavigation = ():any => {
                         {
                             memberRole.length > 0 ?
                                 <>
-                                    <StyledLink to="/" style={{marginLeft: '20px'}}>
+                                    <StyledLink to="/memberInfo" style={{marginLeft: '20px'}}>
                                         <FontAwesomeIcon icon={myPageIcon} className="icon-custom"/>
                                     </StyledLink>
                                     <StyledLink to="/" style={{marginLeft: '20px'}}>
