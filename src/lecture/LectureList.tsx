@@ -15,6 +15,7 @@ import useLectureSearchDataStore from "../stores/useLectureSearchDataStore";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown as arrow, faArrowUpLong as topIcon} from "@fortawesome/free-solid-svg-icons";
 import * as Styled from "./LectureList.style";
+import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
 const LectureList = () => {
     const selectBox:any = useRef<any>();
@@ -149,9 +150,7 @@ const LectureList = () => {
     return (
         <Styled.LectureListView $isShow={isSearchBoxShow}>
             <LectureSearchBoxView isShow={isSearchBoxShow} setIsShow={setIsSearchBoxShow}/>
-            <div className="lt-top-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                <FontAwesomeIcon icon={topIcon} className="icon-custom" />
-            </div>
+
             <div className="lt-list-view" onClick={() => {setIsSearchBoxShow(false)}}>
                 <div className="header-navigation">
                     <HeaderNavigation />
@@ -192,7 +191,9 @@ const LectureList = () => {
                             <div />
                     }
                 </div>
+                <TopButtonNavigation />
             </div>
+
             <FooterNavigation />
         </Styled.LectureListView>
     )

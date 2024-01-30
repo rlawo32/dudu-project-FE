@@ -7,6 +7,7 @@ export const LectureListView = styled.div<{$isShow:boolean}>`
   font-family: "Noto Sans KR";
   
   .lt-list-view {
+    position: relative;
     margin: 0 auto 5%;
     @media screen and (max-width: 1024px) {
       margin: 5% auto 5%;
@@ -16,27 +17,6 @@ export const LectureListView = styled.div<{$isShow:boolean}>`
   
   .header-navigation {
     pointer-events: ${({$isShow}) => $isShow ? "none" : "auto"};
-  }
-  
-  .lt-top-btn {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    height: 50px;
-    width: 50px;
-    border: 1px solid ${({theme}) => theme.boxBgColor};
-    border-radius: 50%;
-    background-color: ${({theme}) => theme.boxBgColor};
-    color: ${({theme}) => theme.textColor};;
-    text-align: center;
-    z-index: 99;
-    cursor: pointer;
-    
-    .icon-custom {
-      position: relative;
-      top: 12px;
-      font-size: 25px;
-    }
   }
   
   .span-line { // 수직 custom border 생성
