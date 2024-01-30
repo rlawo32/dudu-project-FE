@@ -18,6 +18,7 @@ import {Navigation, Pagination} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
 const FaqList = () => {
     const categoryBtn:any = useRef<any>([]);
@@ -194,10 +195,6 @@ const FaqList = () => {
         <Styled.FaqListView>
             <HeaderNavigation />
 
-            <div className="top-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                <FontAwesomeIcon icon={topIcon} className="icon-custom" />
-            </div>
-
             <div className="faq-list-sub">
                 <div className="faq-list-sub-view">
                     <div className="faq-sub-title">
@@ -272,6 +269,8 @@ const FaqList = () => {
 
                 </div>
             </div>
+
+            <TopButtonNavigation />
 
             <FooterNavigation />
         </Styled.FaqListView>
