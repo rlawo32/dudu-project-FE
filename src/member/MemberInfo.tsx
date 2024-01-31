@@ -13,9 +13,12 @@ import * as Styled from "./MemberInfo.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBasketShopping as basketIcon, faChalkboardUser as reviewIcon,
 faClipboard as historyIcon, faClockRotateLeft as logIcon} from "@fortawesome/free-solid-svg-icons";
+import useJoinProgressStore from "../stores/useJoinProgressStore";
 
 const MemberInfo = () => {
     const navigate = useNavigate();
+
+    const {setInputMemberEmail} = useJoinProgressStore();
 
     const [memberInfo, setMemberInfo] = useState<{
         memberNo:number;
@@ -45,6 +48,7 @@ const MemberInfo = () => {
                 url: "/member/findMemberInfo"
             }).then((res):void => {
                 setMemberInfo(res.data.data);
+                setInputMemberEmail(res.data.data.memberEmail);
             }).catch((err):void => {
                 console.log(err.message);
             })

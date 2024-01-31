@@ -308,7 +308,7 @@ const EnterInfo = ():any => {
                                                onBlur={() => {memberBirth.length >= 8 ?
                                                    setMemberBirth(memberBirth.substring(0, 4) + "." + memberBirth.substring(4, 6) + "." + memberBirth.substring(6))
                                                    : setMemberBirth(memberBirth)}} value={memberBirth}
-                                               style={ isMemberPhoneEffect ? {} : {border: '2px solid red'} } />
+                                               style={ isMemberBirthEffect ? {} : {border: '2px solid red'} } />
                         <div style={  isMemberBirthEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
                             {memberBirthMessage}
                         </div>
