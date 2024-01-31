@@ -12,6 +12,7 @@ const EnterInfo = ():any => {
     const [memberName, setMemberName] = useState<string>("");
     const [memberPw, setMemberPw] = useState<string>("");
     const [memberGender, setMemberGender] = useState<string>("");
+    const [memberBirth, setMemberBirth] = useState<string>("");
     const [memberPhone, setMemberPhone] = useState<string>("");
 
     // 경고 메시지
@@ -20,6 +21,7 @@ const EnterInfo = ():any => {
     const [memberPwMessage, setMemberPwMessage] = useState<string>("");
     const [memberPwChkMessage, setMemberPwChkMessage] = useState<string>("");
     const [memberGenderMessage, setMemberGenderMessage] = useState<string>("");
+    const [memberBirthMessage, setMemberBirthMessage] = useState<string>("");
     const [memberPhoneMessage, setMemberPhoneMessage] = useState<string>("");
 
     // 유효성 검사
@@ -28,6 +30,7 @@ const EnterInfo = ():any => {
     const [isMemberPwEffect, setIsMemberPwEffect] = useState<boolean>(true);
     const [isMemberPwChkEffect, setIsMemberPwChkEffect] = useState<boolean>(true);
     const [isMemberGenderEffect, setIsMemberGenderEffect] = useState<boolean>(true);
+    const [isMemberBirthEffect, setIsMemberBirthEffect] = useState<boolean>(true);
     const [isMemberPhoneEffect, setIsMemberPhoneEffect] = useState<boolean>(true);
 
     // 데이터 검사
@@ -35,6 +38,7 @@ const EnterInfo = ():any => {
     const [isMemberNameConfirm, setIsMemberNameConfirm] = useState<boolean>(false);
     const [isMemberPwConfirm, setIsMemberPwConfirm] = useState<boolean>(false);
     const [isMemberGenderConfirm, setIsMemberGenderConfirm] = useState<boolean>(false);
+    const [isMemberBirthConfirm, setIsMemberBirthConfirm] = useState<boolean>(false);
     const [isMemberPhoneConfirm, setIsMemberPhoneConfirm] = useState<boolean>(false);
 
     // 성별 버튼
@@ -143,6 +147,23 @@ const EnterInfo = ():any => {
         setIsMemberGenderConfirm(true);
     }
 
+    const memberBirthRegex = (data:string):void => {
+        const regexChk:RegExp = /^[0-9]{8}$/;
+        const currentData:string = data;
+
+        setMemberBirth(currentData);
+
+        if(!regexChk.test(currentData)) {
+            setMemberBirthMessage('생년월일을 다시 확인해주세요.');
+            setIsMemberBirthEffect(false);
+            setIsMemberBirthConfirm(false);
+        } else {
+            setMemberBirthMessage('');
+            setIsMemberBirthEffect(true);
+            setIsMemberBirthConfirm(true);
+        }
+    }
+
     const memberPhoneRegex = (data:string):void => {
         const regexChk:RegExp = /^[0-9]{11}$/;
         const currentData:string = data;
@@ -168,6 +189,7 @@ const EnterInfo = ():any => {
             memberName: memberName,
             memberPw: memberPw,
             memberGender: memberGender,
+            memberBirth: memberBirth,
             memberPhone: memberPhone,
             memberTermsAgree: inputTermsAgree
         }
@@ -188,6 +210,10 @@ const EnterInfo = ():any => {
             setMemberGenderMessage('성별을 선택해주세요.');
             setIsMemberGenderEffect(false);
             setIsMemberGenderConfirm(false);
+        } else if(!isMemberBirthConfirm) { // memberBirth Check
+            setMemberBirthMessage('생년월일을 다시 확인해주세요.');
+            setIsMemberBirthEffect(false);
+            setIsMemberBirthConfirm(false);
         } else if(!isMemberPhoneConfirm) { // memberPhone Check
             setMemberPhoneMessage('전화번호를 다시 확인해주세요.');
             setIsMemberPhoneEffect(false);
@@ -272,6 +298,19 @@ const EnterInfo = ():any => {
                         </div>
                         <div style={  isMemberGenderEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
                             {memberGenderMessage}
+                        </div>
+                    </div>
+                </div>
+                <div className="input-box">
+                    <span className="input-title">생년월일</span>
+                    <div className="input-text">
+                        <Styled.EnterInfoInput type="text" onChange={(e) => memberBirthRegex(e.target.value)} placeholder="생년월일 8자리"
+                                               onBlur={() => {memberBirth.length >= 8 ?
+                                                   setMemberBirth(memberBirth.substring(0, 4) + "." + memberBirth.substring(4, 6) + "." + memberBirth.substring(6))
+                                                   : setMemberBirth(memberBirth)}} value={memberBirth}
+                                               style={ isMemberPhoneEffect ? {} : {border: '2px solid red'} } />
+                        <div style={  isMemberBirthEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
+                            {memberBirthMessage}
                         </div>
                     </div>
                 </div>
