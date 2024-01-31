@@ -6,14 +6,59 @@ import FooterNavigation from "../../navigation/FooterNavigation";
 import * as Styled from "./LectureHistory.style";
 import {faSearch as searchIcon} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import axios from "axios";
 
 const LectureHistory = () => {
     const categoryBtn:any = useRef<any>([]);
+
+    const [pageNo, setPageNo] = useState<number>(1);
+    const [totalPage, setTotalPage] = useState<number>(0);
+    const [sortType, setSortType] = useState<string>("");
+    const [lectureApplicationList, setLectureApplicationList] = useState<{
+        lectureApplicationNo:number;
+        lectureApplicationOrderId:string;
+        lectureApplicationAmount:number;
+        lectureApplicationCancelYn:string;
+        lectureApplicationCancelDesc:string;
+        lectureApplicationCreatedDate:string;
+        lectureApplicationMemberName:string;
+        lectureInstitutionName:string;
+        lectureTitle:string;
+        lectureTeacher:string;
+        lecturePeriod:string;
+        lectureTime:string;
+        lectureCount:number;
+        lectureFee:number;
+    }[]>([]);
 
     const [isCategorySearch, setIsCategorySearch] = useState<boolean>(false);
     const [categorySelect, setCategorySelect] = useState<number>(0);
     const [isSearchText, setIsSearchText] = useState<boolean>(false);
     const [searchText, setSearchText] = useState<string>("");
+
+    useEffect(() => {
+        const getListData:object = {
+            pageNo: pageNo,
+            sortType: sortType,
+            searchText: searchText
+        }
+        const lectureApplicationListData = async () => {
+            await axios({
+                method: "POST",
+                url: '/lecture/lectureApplicationList',
+                data: JSON.stringify(getListData),
+                headers: {'Content-type': 'application/json'}
+            }).then((res):void => {
+                console.log(res.data.data)
+                setLectureApplicationList(res.data.data.applicationList);
+                setTotalPage(res.data.data.totalPage);
+            }).catch((err):void => {
+                console.log(err.message);
+            });
+        }
+        setTimeout(() => {lectureApplicationListData().then();}, 100);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pageNo, sortType, isSearchText])
 
     useEffect(() => {
         categoryBtn.current[categorySelect].className = categoryBtn.current[categorySelect].className.replace(' category-active', '');
