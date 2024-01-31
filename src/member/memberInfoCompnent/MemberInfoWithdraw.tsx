@@ -1,10 +1,9 @@
-
-
-import * as Styled from "./MemberInfoModal.style";
 import React, {useEffect, useRef, useState} from "react";
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {removeCookie} from "../../Cookie";
+import axios from "axios";
+
+import * as Styled from "./MemberInfoModal.style";
 
 interface Props {
     setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,24 +17,6 @@ const MemberInfoWithdraw = (props:Props) => {
     const [memberPresentPwChk, setMemberPresentPwChk] = useState<string>("");
     const [isPresentPwChkEffect, setIsPresentPwChkEffect] = useState<boolean>(true);
     const [presentPwChkMessage, setPresentPwChkMessage] = useState<string>("");
-
-    const passwordDuplicationChk = async():Promise<void> => {
-        await axios({
-            method: "GET",
-            url: "/member/memberPwDuplicationChk",
-            params: {passwordCheck: memberPresentPwChk}
-        }).then((res):void => {
-            if(res.data) {
-                alert("비밀번호 확인 성공");
-                setPresentPwChkMessage('');
-                setIsPresentPwChkEffect(true);
-            } else {
-                alert("현재 비밀번호와 다릅니다.");
-                setPresentPwChkMessage('현재 비밀번호와 다릅니다.');
-                setIsPresentPwChkEffect(false);
-            }
-        })
-    }
 
     const memberPresentPwCheckHandler = (data:string):void => {
         const passwordRegex:RegExp = /^(?=.*[a-zA-Z])(?=.*[!?@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
