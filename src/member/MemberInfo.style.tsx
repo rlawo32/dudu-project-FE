@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const MemberInfoView = styled.div`
   position: relative;
-
+  
   .mi-sub {
     height: 100%;
     width: 100%;
@@ -79,6 +79,13 @@ export const MemberInfoView = styled.div`
           }
         }
       }
+    }
+    
+    .mi-modal-section {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -25%);
     }
     
     .mi-info-update {
