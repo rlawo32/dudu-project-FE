@@ -74,24 +74,20 @@ const PaymentWidget = (props: Props) => {
     const lectureNo:number = location.state.lectureNo;
     const lectureFee:number = location.state.lectureFee;
     const lectureTitle:number = location.state.lectureTitle;
+    const clientKey:string|undefined = process.env.REACT_APP_TOSS_CLIENT_KEY;
 
     useEffect(() => {
         const script:HTMLScriptElement = document.createElement("script");
         script.async = true;
         script.src = `https://js.tosspayments.com/v1/payment-widget`;
         document.head.appendChild(script);
-        const clientKey:string|undefined = process.env.REACT_APP_TOSS_CLIENT_KEY;
 
         axios({
             method: "GET",
             url: "/member/getMemberNo",
         }).then((res):void => {
-            console.log(res)
             const customerKey:string = Math.random().toString(16).substring(2) + "_" + res.data;
             const orderId:string = Math.random().toString(16).substring(2) + "_" + lectureNo;
-
-            console.log(customerKey)
-            console.log(orderId)
 
             script.addEventListener("load", ():void => {
                 const button:HTMLElement|null = document.getElementById("payment-button");
