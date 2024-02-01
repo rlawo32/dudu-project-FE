@@ -385,7 +385,7 @@ const PaymentSuccess = () => {
 
                 <div className="lp-button-section">
                     <button onClick={() => navigate("/")} className="btn-lp-home">홈으로</button>
-                    <button onClick={() => navigate("/")} className="btn-lp-history">수강내역 조회</button>
+                    <button onClick={() => navigate("/lectureHistory")} className="btn-lp-history">수강내역 조회</button>
                 </div>
             </div>
 

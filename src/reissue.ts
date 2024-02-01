@@ -1,4 +1,5 @@
 import {getCookie, removeCookie, setCookie} from "./Cookie";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 const reissue = async ():Promise<void> => {
@@ -28,6 +29,10 @@ const reissue = async ():Promise<void> => {
             } else {
                 alert('재로그인을 해주세요1');
                 removeCookie('refreshToken');
+                window.localStorage.removeItem("role");
+                const navigate = useNavigate();
+                navigate("/");
+                window.location.reload();
             }
         }).catch((err) => {
             const errCode:string = err.message.substring(err.message.length-3);

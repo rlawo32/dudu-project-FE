@@ -9,6 +9,8 @@ declare module "styled-components" {
         borderColor: string;
         borderBottomColor: string;
         boxBgColor: string;
+        cardBgColor: string;
+        noticeBgColor: string;
         inputBgColor: string;
         toggleColor: string;
         headerBgColor: string;
