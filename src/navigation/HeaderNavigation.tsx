@@ -179,7 +179,9 @@ const HeaderNavigation = ():any => {
                                     공지사항/이벤트
                                 </StyledLink>
                                 <StyledLink to="/" style={{marginLeft: '30px'}}>
-                                    수강후기
+                                    <div onClick={() => alert('개발중..')}>
+                                        수강후기
+                                    </div>
                                 </StyledLink>
                             </div>
                         </LinkBox>
