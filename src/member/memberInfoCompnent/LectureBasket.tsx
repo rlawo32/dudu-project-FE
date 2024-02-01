@@ -1,16 +1,102 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import HeaderNavigation from "../../navigation/HeaderNavigation";
 import FooterNavigation from "../../navigation/FooterNavigation";
 
 import * as Styled from "./LectureBasket.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSearch as searchIcon} from "@fortawesome/free-solid-svg-icons";
+import {
+    faTrashCan as deleteIcon,
+    faSquareCheck as checkIcon,
+    faChevronDown as arrow, faExclamation as emptyIcon, faQuoteLeft as quoteLeft, faQuoteRight as quoteRight
+} from "@fortawesome/free-solid-svg-icons";
+import {faSquareCheck as unCheckIcon} from "@fortawesome/free-regular-svg-icons";
 
 const LectureBasket = () => {
 
-    const [isSearchText, setIsSearchText] = useState<boolean>(false);
-    const [searchText, setSearchText] = useState<string>("");
+    const [pageNo, setPageNo] = useState<number>(1);
+    const [totalPage, setTotalPage] = useState<number>(0);
+    const [lectureBasketList, setLectureBasketList] = useState<{
+        lectureNo:number;
+        lectureTitle:string;
+        lectureStateNo:number;
+        lectureInstitutionNo:number;
+        lectureInstitutionName:string;
+        lectureTeacher:string;
+        lecturePeriod:string;
+        lectureTime:string;
+        lectureCount:number;
+        lectureFee:number;
+    }[]>([{
+        lectureNo: 12,
+        lectureTitle: '[외부 2/3] 민속 문화 유산을 찾아서, 국립민속박물관 A',
+        lectureStateNo: 2,
+        lectureInstitutionNo: 1,
+        lectureInstitutionName: '문화센터',
+        lectureTeacher: '김성하',
+        lecturePeriod: '2024.04.20~2024.04.20',
+        lectureTime: '15:30~17:00 (6)',
+        lectureCount: 1,
+        lectureFee: 10000
+    }, {
+        lectureNo: 42,
+        lectureTitle: '[외부 2/3] 민속 문화 유산을 찾아서, 국립민속박물관 B',
+        lectureStateNo: 2,
+        lectureInstitutionNo: 1,
+        lectureInstitutionName: '문화센터',
+        lectureTeacher: '김성재',
+        lecturePeriod: '2024.04.20~2024.04.20',
+        lectureTime: '15:30~17:00 (6)',
+        lectureCount: 1,
+        lectureFee: 10000
+    }]);
+
+    const [checkItems, setCheckItems] = useState<{
+        lectureNo:number;
+        lectureFee:number;
+    }[]>([]);
+    const [checkFees, setCheckFees] = useState<number>(0);
+
+    // 체크박스 단일 선택
+    const handleSingleCheck = (checked:boolean, lectureNo:number, lectureFee:number):void => {
+        if (checked) {
+            // 단일 선택 시 체크된 아이템을 배열에 추가
+            setCheckItems(prev => [...prev,
+                {lectureNo:lectureNo, lectureFee:lectureFee}]);
+            setCheckFees(checkFees + lectureFee);
+        } else {
+            // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
+            setCheckItems(checkItems.filter((el) =>
+                el.lectureNo !== lectureNo));
+            setCheckFees(checkFees - lectureFee);
+        }
+    };
+
+    // 체크박스 전체 선택
+    const handleAllCheck = (checked:boolean):void => {
+        if(checked) {
+            // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
+            const idArray:{
+                lectureNo:number;
+                lectureFee:number;
+            }[] = [];
+            lectureBasketList.forEach((el) => idArray.push({
+                lectureNo:el.lectureNo,
+                lectureFee:el.lectureFee
+            }));
+            setCheckItems(idArray);
+            let total:number = 0;
+            for(let i:number=0; i<idArray.length; i++) {
+                total += idArray[i].lectureFee;
+            }
+            setCheckFees(total);
+        }
+        else {
+            // 전체 선택 해제 시 checkItems 를 빈 배열로 상태 업데이트
+            setCheckItems([]);
+            setCheckFees(0);
+        }
+    }
 
     return (
         <Styled.LectureBasketView>
@@ -25,33 +111,165 @@ const LectureBasket = () => {
             </div>
 
             <div className="lb-main">
-                <div className="lb-main-notice">
-                    <ul>
-                        <li>데스크에서 접수한 강좌의 경우 방문 시에만 취소 가능합니다. (결제한 카드 및 영수증 지참 필수)</li>
-                        <li>재료 준비가 필요한 일부 강좌(요리, 공예, 플라워 등)는 강좌 시작일의 3일 전까지 취소 가능합니다.</li>
-                        <li>환불 및 수강 취소시 강의시작일로부터 3일전은 환불액에서 1/3 환급, 2일전은 1/2 환급, 전날부터는 환불이 불가합니다.</li>
-                    </ul>
+                <div className="lb-list-view">
+                    <div className="lb-list-top">
+                        <div className="list-top-left">
+                            전체 1개
+                        </div>
+                        <div className="list-top-right">
+                            지점별
+                        </div>
+                    </div>
+                    <div className="lb-list-tool">
+                        <div className="check-all">
+                            <Styled.CheckBoxLabel htmlFor={"chkbxAll"}>
+                                <Styled.CheckBoxInput type="checkbox" id={"chkbxAll"}
+                                                      onChange={(e) =>
+                                                          handleAllCheck(e.target.checked)}
+                                                      checked={checkItems.length === lectureBasketList.length ? true : false}/>
+                                <Styled.CheckBoxText>
+                                    {checkItems.length === lectureBasketList.length ?
+                                        <FontAwesomeIcon icon={checkIcon} className="icon-custom"/> :
+                                        <FontAwesomeIcon icon={unCheckIcon} className="icon-custom"/>}
+                                </Styled.CheckBoxText>
+                                <div>
+                                    전체선택
+                                </div>
+                            </Styled.CheckBoxLabel>
+                        </div>
+                        <div className="check-delete">
+                            <FontAwesomeIcon icon={deleteIcon} className="icon-custom"
+                                             onClick={() => alert('hello')}/>
+                            <div>
+                                선택삭제
+                            </div>
+                        </div>
+                    </div>
+                    {
+                        lectureBasketList.length > 0 ?
+                            <div className="lb-list">
+                                {lectureBasketList.map((item, idx) => (
+                                    <div key={idx} className="lb-list-item">
+                                        <div className="item-checkbox">
+                                            <Styled.CheckBoxLabel htmlFor={"chkbx" + idx} >
+                                                <Styled.CheckBoxInput type="checkbox" id={"chkbx" + idx}
+                                                                      onChange={(e) =>
+                                                                          handleSingleCheck(e.target.checked, item.lectureNo, item.lectureFee)}
+                                                                      checked={checkItems.some(data => data.lectureNo === item.lectureNo) ? true : false}/>
+                                                <Styled.CheckBoxText>
+                                                    {checkItems.some(data => data.lectureNo === item.lectureNo) ?
+                                                        <FontAwesomeIcon icon={checkIcon} className="icon-custom"/> :
+                                                        <FontAwesomeIcon icon={unCheckIcon} className="icon-custom"/>}
+                                                </Styled.CheckBoxText>
+                                            </Styled.CheckBoxLabel>
+                                        </div>
+                                        <div className="item-left">
+                                            <div className="left-top">
+                                                <div className="item-state" style={
+                                                    item.lectureStateNo === 1 ? {backgroundColor: "slategray", color: 'white'} :
+                                                        item.lectureStateNo === 2 ? {backgroundColor: "greenyellow", color: 'black'} :
+                                                            item.lectureStateNo === 3 ? {backgroundColor: "slategray", color: 'black'} :
+                                                                item.lectureStateNo === 4 ? {backgroundColor: "black", color: 'white'} :
+                                                                    item.lectureStateNo === 5 || 6 ? {backgroundColor: "red", color: 'black'} : {}}>
+                                                    {
+                                                        item.lectureStateNo === 1 ? '접수예정' :
+                                                            item.lectureStateNo === 2 ? '접수중' :
+                                                                item.lectureStateNo === 3 ? '대기접수' :
+                                                                    item.lectureStateNo === 4 ? '접수마감' :
+                                                                        item.lectureStateNo === 5 ? '접수불가' : '강의종료'
+                                                    }
+                                                </div>
+                                                <div className="item-institution">
+                                                    {item.lectureInstitutionName}
+                                                </div>
+                                            </div>
+                                            <div className="left-bot">
+                                                <div className="item-title">
+                                                    {item.lectureTitle}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="item-right">
+                                            <div className="item-info">
+                                                <div className="info-title">강사명</div>
+                                                <div className="item-teacher">
+                                                    {item.lectureTeacher}
+                                                </div>
+                                            </div>
+                                            <div className="item-info">
+                                                <div className="info-title">강좌기간</div>
+                                                <div className="item-period">
+                                                    {item.lecturePeriod}
+                                                </div>
+                                            </div>
+                                            <div className="item-info">
+                                                <div className="info-title">강좌시간/횟수</div>
+                                                <div className="item-time">
+                                                    <span>
+                                                        {item.lectureTime.substring(0, 11)}
+                                                    </span>
+                                                    <span>
+                                                        {
+                                                            item.lectureTime.substring(13, 14) === '1' ? ' (월)' :
+                                                                item.lectureTime.substring(13, 14) === '2' ? ' (화)' :
+                                                                    item.lectureTime.substring(13, 14) === '3' ? ' (수)' :
+                                                                        item.lectureTime.substring(13, 14) === '4' ? ' (목)' :
+                                                                            item.lectureTime.substring(13, 14) === '5' ? ' (금)' :
+                                                                                item.lectureTime.substring(13, 14) === '6' ? ' (토)' : ' (일)'
+                                                        }
+                                                    </span>
+                                                    <span> / 총 {item.lectureCount}회</span>
+                                                </div>
+                                            </div>
+                                            <div className="item-info">
+                                                <div className="info-title">강좌료</div>
+                                                <div className="item-fee">
+                                                    {item.lectureFee.toLocaleString()}원
+                                                </div>
+                                            </div>
+                                            <div className="item-info">
+                                                <div className="info-title item-total">총금액</div>
+                                                <div className="item-total">
+                                                    {item.lectureFee.toLocaleString()}원
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="item-delete">
+                                            <FontAwesomeIcon icon={deleteIcon} className="icon-custom"
+                                                             onClick={() => alert('hello')}/>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            :
+                            <div className="lb-list-empty">
+                                <FontAwesomeIcon icon={emptyIcon} className="icon-custom" />
+                            </div>
+                    }
+                    {
+                        totalPage > lectureBasketList.length ?
+                            <div className="ml-more-btn" onClick={() => setPageNo(pageNo + 1)}>
+                                더보기 <FontAwesomeIcon icon={arrow} />
+                            </div>
+                            :
+                            <div />
+                    }
                 </div>
-                <div className="lb-main-list">
-                    <div className="lb-list-search">
-                        <input type="text" onChange={(e) => setSearchText(e.target.value)}
-                               placeholder="주문번호/강좌명으로 검색하세요" />
-                        <FontAwesomeIcon icon={searchIcon} className="icon-custom"
-                                         onClick={() => setIsSearchText(!isSearchText)}/>
-                    </div>
-                    <div className="lb-list-view">
-                        <div className="lb-list-top">
-                            <div className="list-top-left">
-                                전체 1개
-                            </div>
-                            <div className="list-top-right">
-                                전체연도
-                            </div>
+            </div>
+            <div className="lb-button">
+                <div className="button-fee">
+                    <div className="fee-count">{checkItems.length}건</div>
+                    <div className="fee-text">결제 예정 금액</div>
+                    <div className="fee-payment">
+                        <div className="fee-amount">
+                            {checkFees.toLocaleString()}
                         </div>
-                        <div className="lb-list">
-
-                        </div>
+                        <div className="fee-unit">원</div>
                     </div>
+                </div>
+                <div>
+                    <button className="btn-payment"
+                            onClick={() => {window.scrollTo({ top: 50, behavior: "smooth" });}}>결제하기</button>
                 </div>
             </div>
 
