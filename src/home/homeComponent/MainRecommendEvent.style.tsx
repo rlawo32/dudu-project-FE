@@ -55,10 +55,14 @@ export const MainRecommendEventView = styled.div`
     }
 
     .el-list-item {
+      box-sizing: border-box;
       height: 100%;
       width: calc((100% - 48px) / 4);
       margin-right: 32px;
       padding: 5px;
+      border-radius: 8px;
+      background-color: ${({theme}) => theme.cardBgColor};
+      color: ${({theme}) => theme.textColor};
       cursor: pointer;
       @media screen and (max-width: 1024px) {
         display: flex;
@@ -99,6 +103,7 @@ export const MainRecommendEventView = styled.div`
           margin-left: 16px;
           padding: 0 0 25px;
         }
+        padding: 0 5px 5px;
 
         .el-list-state {
           height: 100%;

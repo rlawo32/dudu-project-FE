@@ -34,8 +34,8 @@ export const MemberInfoUpdateView = styled.div`
     padding: 5px 20px;
     margin: 20px auto 10px;
     border-radius: 9px;
-    background-color: #f7f2ef;
-    color: rgba(0,0,0,.6);
+    background-color: ${({theme}) => theme.noticeBgColor};
+    color: ${({theme}) => theme.textColor};
 
     font-size: 14px;
     line-height: 20px;
@@ -87,6 +87,7 @@ export const MemberInfoUpdateView = styled.div`
           border: 1px solid ${({theme}) => theme.rgbaLight};
           border-radius: 4px;
           background-color: ${({theme}) => theme.boxBgColor};
+          color: ${({theme}) => theme.textColor};
           text-align: center;
           cursor: pointer;
         }
@@ -259,8 +260,8 @@ export const MemberInfoPwUpdateView = styled.div`
     padding: 5px 20px;
     margin: 20px auto 10px;
     border-radius: 9px;
-    background-color: #f7f2ef;
-    color: rgba(0,0,0,.6);
+    background-color: ${({theme}) => theme.noticeBgColor};
+    color: ${({theme}) => theme.textColor};
     
     font-size: 14px;
     line-height: 20px;
@@ -369,8 +370,8 @@ export const MemberInfoWithdrawView = styled.div`
     margin: 20px auto 10px;
     border: 1px solid red;
     border-radius: 9px;
-    background-color: #f7f2ef;
-    color: rgba(0,0,0,.6);
+    background-color: ${({theme}) => theme.noticeBgColor};
+    color: ${({theme}) => theme.textColor};
 
     font-size: 14px;
     line-height: 20px;
