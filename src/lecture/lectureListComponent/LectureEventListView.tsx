@@ -163,6 +163,7 @@ const LectureEventListView = () => {
         lectureCount:number;
         lectureEventType:string;
         lectureThumbnail:string;
+        lectureBasketState:string;
     }[]>([]);
 
     const [lectureEventOne, setLectureEventOne] = useState<{
@@ -208,7 +209,7 @@ const LectureEventListView = () => {
                 console.log(err.message);
             });
         }
-        setTimeout(() => {lectureList().then();}, 100);
+        setTimeout(() => {lectureList().then();}, 200);
     }, [sortType])
 
     return (
@@ -241,7 +242,7 @@ const LectureEventListView = () => {
             <div className="le-body">
                 <LectureListToolView ltType={"E"} ltCount={totalPage} isSetBoxShow={setIsSearchBoxShow}
                                      institutionNo={institutionNo} setSortType={setSortType}/>
-                <LectureListMainView ltCount={lectureList.length} lectureList={lectureList} />
+                <LectureListMainView ltCount={lectureList.length} lectureList={lectureList} setLectureList={setLectureList}/>
             </div>
 
             <FooterNavigation />
