@@ -40,7 +40,12 @@ export const LectureBasketView = styled.div`
         align-items: center;
         
         .list-top-left {
-          
+          font-weight: bold;
+
+          span {
+            font-weight: normal;
+            opacity: 0.7;
+          }
         }
         
         .list-top-right {
@@ -187,6 +192,19 @@ export const LectureBasketView = styled.div`
       }
     }
   }
+
+  .lb-more-btn {
+    width: 25%;
+    margin: 40px auto 0;
+    padding: 10px 15px 10px 15px;
+    border: 1px solid ${({theme}) => theme.textColor};
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
     .lb-button {
       position: sticky;
       bottom: 0;
