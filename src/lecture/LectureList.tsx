@@ -39,6 +39,7 @@ const LectureList = () => {
         lectureCount:number;
         lectureEventType:string;
         lectureThumbnail:string;
+        lectureBasketState:string;
     }[]>([]);
 
     const [pageNo, setPageNo] = useState<number>(1);
@@ -122,7 +123,7 @@ const LectureList = () => {
            });
         }
         if(institutionNo > 0) {
-            setTimeout(() => {lectureList().then();}, 0);
+            setTimeout(() => {lectureList().then();}, 200);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [institutionNo, mainCategoryNo, subCategoryNo, searchButton, pageNo, sortType])
@@ -181,7 +182,7 @@ const LectureList = () => {
                     }
                     <LectureListToolView ltType={"L"} ltCount={totalPage} isSetBoxShow={setIsSearchBoxShow}
                                          institutionNo={institutionNo} setSortType={setSortType}/>
-                    <LectureListMainView ltCount={totalPage} lectureList={lectureList}/>
+                    <LectureListMainView ltCount={totalPage} lectureList={lectureList} setLectureList={setLectureList}/>
                     {
                         totalPage > lectureList.length ?
                             <div className="lt-more-btn" onClick={() => setPageNo(pageNo + 1)}>
