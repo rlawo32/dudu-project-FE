@@ -123,17 +123,27 @@ export const LectureListMain = styled.div<{
           margin-right: 4px;
         }
       }
-
-      .lt-list-fee {
-        margin-top: 3px;
-        font-size: 14px;
-        font-weight: bold;
-      }
     }
 
     &:hover img {
       transform: scale(1.1);
       transition: transform .4s ease;
+    }
+  }
+
+  .lt-list-fee {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 20px;
+    padding: 2px 10px;
+    margin-top: 3px;
+    font-size: 14px;
+    font-weight: bold;
+
+    .icon-custom {
+      font-size: 20px;
+      z-index: 10;
     }
   }
   
