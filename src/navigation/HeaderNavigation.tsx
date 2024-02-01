@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {removeCookie} from "../Cookie";
+import {getCookie,removeCookie} from "../Cookie";
 import styled from "styled-components";
 
 import ThemeModeToggle from "./ThemeModeToggle";
@@ -184,7 +184,7 @@ const HeaderNavigation = ():any => {
                             </div>
                         </LinkBox>
                         {
-                            memberRole === 'ROLE_ADMIN' ?
+                            memberRole === 'ROLE_ADMIN' && getCookie("refreshToken") ?
                                 <LinkBox style={{marginLeft: '30px'}}>
                                     <div className="parent-adminPage"
                                          onMouseOver={() => setIsAdminPageHovering(true)}>
@@ -214,7 +214,7 @@ const HeaderNavigation = ():any => {
                     <div className="header-right">
                         <ThemeModeToggle />
                         {
-                            memberRole.length > 0 ?
+                            memberRole.length > 0 && getCookie("refreshToken") ?
                                 <>
                                     <StyledLink to="/memberInfo" style={{marginLeft: '20px'}}>
                                         <FontAwesomeIcon icon={myPageIcon} className="icon-custom"/>

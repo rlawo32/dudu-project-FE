@@ -146,6 +146,7 @@ export const FaqListView = styled.div`
           padding: 32px 32px 58px;
           border: 1px solid #d8c9c9;
           border-radius: 8px;
+          background: ${({theme}) => theme.cardBgColor};
           word-break: keep-all;
           overflow-wrap: break-word;
           
@@ -161,9 +162,22 @@ export const FaqListView = styled.div`
           }
           
           .item-content {
-            max-height: 76px;
+            max-height: 66px;
             margin-top: 24px;
-            overflow: hidden;
+            overflow: auto;
+
+            &::-webkit-scrollbar {
+              width: 5px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              background: gray; /* 스크롤바의 색상 */
+              border-radius: 10px;
+            }
+
+            &::-webkit-scrollbar-track {
+              background: rgba(200, 200, 200, .1);
+            }
           }
         }
       }
