@@ -61,6 +61,7 @@ export const MainRecentEventView = styled.div`
     }
 
     .els-list-item {
+      box-sizing: border-box;
       position: relative;
       height: 100%;
       width: calc(100% / 4);
@@ -68,6 +69,8 @@ export const MainRecentEventView = styled.div`
         width: calc(100% / 2);
       }
       border-radius: 8px;
+      background-color: ${({theme}) => theme.cardBgColor};
+      color: ${({theme}) => theme.textColor};
       overflow: hidden;
       cursor: pointer;
 
@@ -109,6 +112,7 @@ export const MainRecentEventView = styled.div`
       }
 
       .els-list-info {
+        padding: 0 10px 10px;
 
         .els-list-state {
           height: 100%;

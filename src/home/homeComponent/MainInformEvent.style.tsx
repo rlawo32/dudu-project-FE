@@ -40,10 +40,13 @@ export const MainInformEventView = styled.div`
     }
     
     .el-list-item {
+      box-sizing: border-box;
       position: relative;
-      width: calc((100% - 126px) / 4);
+      width: calc((100% - 96px) / 4);
       padding: 40px 40px 85px 40px;
       margin: 0 16px;
+      background-color: ${({theme}) => theme.noticeBgColor};
+      color: ${({theme}) => theme.textColor};
       cursor: pointer;
       @media screen and (max-width: 1024px) {
         min-height: 0;

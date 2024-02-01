@@ -183,6 +183,7 @@ export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
     .reset-btn {
       margin-right: 12px;
       background: none;
+      color: ${({theme}) => theme.textColor};
       font-size: 17px;
       @media screen and (max-width: 1024px) {
         font-size: 12px;

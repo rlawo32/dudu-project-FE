@@ -24,6 +24,9 @@ export const LectureListMain = styled.div<{
     }
     margin: 30px 3px 0 0;
     padding: 5px;
+    border-radius: 10px;
+    background-color: ${({theme}) => theme.cardBgColor};
+    color: ${({theme}) => theme.textColor};
     cursor: pointer;
 
     .lt-list-image {
@@ -54,6 +57,7 @@ export const LectureListMain = styled.div<{
         margin-left: 16px;
         padding: 0 0 25px;
       }
+      padding: 0 5px 5px;
 
       .lt-list-state {
         height: 100%;

@@ -202,8 +202,8 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
         padding: 32px;
         margin-top: 80px;
         border-radius: 12px;
-        background-color: #f7f2ef;
-        color: black;
+        background-color: ${({theme}) => theme.noticeBgColor};
+        color: ${({theme}) => theme.textColor};
 
         .section-title {
           font-size: 16px;
