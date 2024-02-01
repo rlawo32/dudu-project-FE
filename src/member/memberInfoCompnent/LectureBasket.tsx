@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from "react";
+import axios from "axios";
 
 import HeaderNavigation from "../../navigation/HeaderNavigation";
 import FooterNavigation from "../../navigation/FooterNavigation";
 
 import * as Styled from "./LectureBasket.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-    faTrashCan as deleteIcon,
-    faSquareCheck as checkIcon,
-    faChevronDown as arrow, faExclamation as emptyIcon, faQuoteLeft as quoteLeft, faQuoteRight as quoteRight
+import {faTrashCan as deleteIcon, faSquareCheck as checkIcon,
+    faChevronDown as arrow, faExclamation as emptyIcon
 } from "@fortawesome/free-solid-svg-icons";
 import {faSquareCheck as unCheckIcon} from "@fortawesome/free-regular-svg-icons";
 
@@ -16,7 +15,10 @@ const LectureBasket = () => {
 
     const [pageNo, setPageNo] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(0);
+    const [institutionNo, setInstitutionNo] = useState<number>(0);
     const [lectureBasketList, setLectureBasketList] = useState<{
+        lectureBasketNo:number;
+        lectureBasketDate:string;
         lectureNo:number;
         lectureTitle:string;
         lectureStateNo:number;
@@ -27,47 +29,25 @@ const LectureBasket = () => {
         lectureTime:string;
         lectureCount:number;
         lectureFee:number;
-    }[]>([{
-        lectureNo: 12,
-        lectureTitle: '[외부 2/3] 민속 문화 유산을 찾아서, 국립민속박물관 A',
-        lectureStateNo: 2,
-        lectureInstitutionNo: 1,
-        lectureInstitutionName: '문화센터',
-        lectureTeacher: '김성하',
-        lecturePeriod: '2024.04.20~2024.04.20',
-        lectureTime: '15:30~17:00 (6)',
-        lectureCount: 1,
-        lectureFee: 10000
-    }, {
-        lectureNo: 42,
-        lectureTitle: '[외부 2/3] 민속 문화 유산을 찾아서, 국립민속박물관 B',
-        lectureStateNo: 2,
-        lectureInstitutionNo: 1,
-        lectureInstitutionName: '문화센터',
-        lectureTeacher: '김성재',
-        lecturePeriod: '2024.04.20~2024.04.20',
-        lectureTime: '15:30~17:00 (6)',
-        lectureCount: 1,
-        lectureFee: 10000
-    }]);
+    }[]>([]);
 
     const [checkItems, setCheckItems] = useState<{
-        lectureNo:number;
+        lectureBasketNo:number;
         lectureFee:number;
     }[]>([]);
     const [checkFees, setCheckFees] = useState<number>(0);
 
     // 체크박스 단일 선택
-    const handleSingleCheck = (checked:boolean, lectureNo:number, lectureFee:number):void => {
+    const handleSingleCheck = (checked:boolean, lectureBasketNo:number, lectureFee:number):void => {
         if (checked) {
             // 단일 선택 시 체크된 아이템을 배열에 추가
             setCheckItems(prev => [...prev,
-                {lectureNo:lectureNo, lectureFee:lectureFee}]);
+                {lectureBasketNo:lectureBasketNo, lectureFee:lectureFee}]);
             setCheckFees(checkFees + lectureFee);
         } else {
             // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
             setCheckItems(checkItems.filter((el) =>
-                el.lectureNo !== lectureNo));
+                el.lectureBasketNo !== lectureBasketNo));
             setCheckFees(checkFees - lectureFee);
         }
     };
@@ -77,11 +57,11 @@ const LectureBasket = () => {
         if(checked) {
             // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
             const idArray:{
-                lectureNo:number;
+                lectureBasketNo:number;
                 lectureFee:number;
             }[] = [];
             lectureBasketList.forEach((el) => idArray.push({
-                lectureNo:el.lectureNo,
+                lectureBasketNo:el.lectureBasketNo,
                 lectureFee:el.lectureFee
             }));
             setCheckItems(idArray);
@@ -97,6 +77,46 @@ const LectureBasket = () => {
             setCheckFees(0);
         }
     }
+
+    const deleteLectureBasketHandler = (lectureBasketNo:number):boolean => {
+        if(window.confirm('장바구니에서 삭제 하시겠습니까?') === true) {
+            const deleteData:object = {
+                deleteLectureBasketNo: lectureBasketNo,
+                lectureBasketDeleteList: checkItems
+            }
+            axios({
+                method: "DELETE",
+                url: "/lecture/deleteLectureBasket",
+                data: JSON.stringify(deleteData),
+                headers: {'Content-type': 'application/json'}
+            }).then((res):void => {
+                alert('삭제되었습니다.');
+                window.location.reload();
+            }).catch((err):void => {
+                console.log(err.message);
+            })
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    useEffect(() => {
+        const lectureBasketListData = async () => {
+            await axios({
+                method: "POST",
+                url: '/lecture/lectureBasketList',
+                params: {pageNo: pageNo}
+            }).then((res):void => {
+                setLectureBasketList(res.data.data.lectureBasketList);
+                setTotalPage(res.data.data.totalPage);
+            }).catch((err):void => {
+                console.log(err.message);
+            });
+        }
+        setTimeout(() => {lectureBasketListData().then();}, 200);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pageNo])
 
     return (
         <Styled.LectureBasketView>
@@ -114,10 +134,10 @@ const LectureBasket = () => {
                 <div className="lb-list-view">
                     <div className="lb-list-top">
                         <div className="list-top-left">
-                            전체 1개
+                            <span>전체</span> {totalPage}개
                         </div>
                         <div className="list-top-right">
-                            지점별
+
                         </div>
                     </div>
                     <div className="lb-list-tool">
@@ -137,9 +157,8 @@ const LectureBasket = () => {
                                 </div>
                             </Styled.CheckBoxLabel>
                         </div>
-                        <div className="check-delete">
-                            <FontAwesomeIcon icon={deleteIcon} className="icon-custom"
-                                             onClick={() => alert('hello')}/>
+                        <div className="check-delete" onClick={() => deleteLectureBasketHandler(0)}>
+                            <FontAwesomeIcon icon={deleteIcon} className="icon-custom"/>
                             <div>
                                 선택삭제
                             </div>
@@ -154,10 +173,11 @@ const LectureBasket = () => {
                                             <Styled.CheckBoxLabel htmlFor={"chkbx" + idx} >
                                                 <Styled.CheckBoxInput type="checkbox" id={"chkbx" + idx}
                                                                       onChange={(e) =>
-                                                                          handleSingleCheck(e.target.checked, item.lectureNo, item.lectureFee)}
-                                                                      checked={checkItems.some(data => data.lectureNo === item.lectureNo) ? true : false}/>
+                                                                          handleSingleCheck(e.target.checked, item.lectureBasketNo, item.lectureFee)}
+                                                                      checked={checkItems.some(data =>
+                                                                          data.lectureBasketNo === item.lectureBasketNo) ? true : false}/>
                                                 <Styled.CheckBoxText>
-                                                    {checkItems.some(data => data.lectureNo === item.lectureNo) ?
+                                                    {checkItems.some(data => data.lectureBasketNo === item.lectureBasketNo) ?
                                                         <FontAwesomeIcon icon={checkIcon} className="icon-custom"/> :
                                                         <FontAwesomeIcon icon={unCheckIcon} className="icon-custom"/>}
                                                 </Styled.CheckBoxText>
@@ -236,7 +256,7 @@ const LectureBasket = () => {
                                         </div>
                                         <div className="item-delete">
                                             <FontAwesomeIcon icon={deleteIcon} className="icon-custom"
-                                                             onClick={() => alert('hello')}/>
+                                                             onClick={() => deleteLectureBasketHandler(item.lectureBasketNo)}/>
                                         </div>
                                     </div>
                                 ))}
@@ -244,11 +264,14 @@ const LectureBasket = () => {
                             :
                             <div className="lb-list-empty">
                                 <FontAwesomeIcon icon={emptyIcon} className="icon-custom" />
+                                <div className="default-text">
+                                    장바구니에 상품이 없습니다.
+                                </div>
                             </div>
                     }
                     {
                         totalPage > lectureBasketList.length ?
-                            <div className="ml-more-btn" onClick={() => setPageNo(pageNo + 1)}>
+                            <div className="lb-more-btn" onClick={() => setPageNo(pageNo + 1)}>
                                 더보기 <FontAwesomeIcon icon={arrow} />
                             </div>
                             :
