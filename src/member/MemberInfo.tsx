@@ -42,6 +42,9 @@ const MemberInfo = () => {
     const [isInfoWithdrawModal, setIsInfoWithdrawModal] = useState<boolean>(false);
 
     useEffect(() => {
+    })
+
+    useEffect(() => {
         const memberInfoData = async ():Promise<void> => {
             await axios({
                 method: "GET",
@@ -146,7 +149,8 @@ const MemberInfo = () => {
                         <FontAwesomeIcon icon={historyIcon} className="icon-custom" />
                         수강내역
                     </div>
-                    <div className="move-item" onClick={() => navigate("/lectureReview")}>
+                    <div className="move-item" onClick={() => alert('개발중..')}>
+                    {/*<div className="move-item" onClick={() => navigate("/lectureReview")}>*/}
                         <FontAwesomeIcon icon={reviewIcon} className="icon-custom" />
                         수강후기
                     </div>

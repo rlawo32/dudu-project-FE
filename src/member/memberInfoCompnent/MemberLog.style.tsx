@@ -31,60 +31,8 @@ export const MemberLogView = styled.div`
   .ml-main {
     width: 1160px;
     margin: 30px auto 120px;
-
-    .ml-main-notice {
-      position: relative;
-      padding: 32px;
-      margin: 40px 0 30px 0;
-      border-radius: 12px;
-      background-color: #f7f2ef;
-      color: black;
-
-      ul {
-        padding-left: 20px;
-
-        li {
-          line-height: 32px;
-          opacity: 0.7;
-        }
-      }
-    }
     
     .ml-main-list {
-      
-      .ml-list-search {
-        position: relative;
-        width: 600px;
-        @media screen and (max-width: 1024px) {
-          box-sizing: border-box;
-          width: 100%;
-          padding: 0 20px;
-        }
-        margin: 40px auto 0;
-
-        input {
-          box-sizing: border-box;
-          height: 52px;
-          width: 100%;
-          padding: 0 80px 0 25px;
-          background-color: ${({theme}) => theme.boxBgColor};
-          color: ${({theme}) => theme.textColor};
-          border: 1px solid ${({theme}) => theme.textColor};
-          border-radius: 30px;
-          font-size: 20px;
-        }
-        
-        .icon-custom {
-          position: absolute;
-          top: 10px;
-          right: 30px;
-          font-size: 30px;
-          cursor: pointer;
-          @media screen and (max-width: 1024px) {
-            right: 50px;
-          }
-        }
-      }
       
       .ml-list-view {
         
@@ -92,10 +40,173 @@ export const MemberLogView = styled.div`
           display: flex;
           justify-content: space-between;
           align-items: center;
+          height: 68px;
+
+          .list-top-left {
+            font-weight: bold;
+
+            span {
+              font-weight: normal;
+              opacity: 0.7;
+            }
+          }
+
+          .list-top-right {
+            position: relative;
+
+            button {
+              border: none;
+              background: none;
+              color: ${({theme}) => theme.textColor};
+              font-size: 16px;
+              @media screen and (max-width: 1024px) {
+                font-size: 13px;
+              }
+              font-weight: bold;
+              cursor: pointer;
+            }
+
+            .sort-box {
+              position: absolute;
+              top: 105%;
+              right: 0;
+              height: 0;
+              width: 0;
+              padding: 0;
+              margin: 5px auto 0;
+              border: none;
+              border-radius: 5px;
+              background: ${({theme}) => theme.boxBgColor};
+              text-align: center;
+              z-index: 2;
+              transition: all 0.3s ease-in;
+            }
+
+            ul.sort-list {
+              height: 0;
+              width: 0;
+              padding: 0;
+              margin: 5px auto 0;
+              border: none;
+              overflow: auto;
+              background: ${({theme}) => theme.boxBgColor};
+              color: ${({theme}) => theme.textColor};
+              text-align: center;
+              cursor: pointer;
+              z-index: 3;
+              user-select: none;
+              list-style:none;
+              transition: all 0.3s ease-in;
+
+              &::-webkit-scrollbar {
+                width: 5px;
+              }
+
+              &::-webkit-scrollbar-thumb {
+                background: gray; /* 스크롤바의 색상 */
+                border-radius: 15px;
+              }
+
+              &::-webkit-scrollbar-track {
+                background: rgba(200, 200, 200, .1);
+              }
+            }
+
+            ul.sort-list li {
+              padding: 5px;
+              font-size: 12px;
+              line-height: 1.4em;
+              opacity: 0.7;
+              transition: all 0.3s ease-in;
+            }
+
+            .select-arrow {
+              display: inline-block;
+              margin-left: 7px;
+              transition: all .4s linear;
+            }
+
+            .sort-box.show-list {
+              border: 1px solid gray;
+              padding: 5px;
+              margin: 0;
+              height: 65px;
+              width: 70px;
+            }
+
+            .sort-list.show-list {
+              border: none;
+              padding: 5px;
+              margin: 0;
+              height: 55px;
+              width: 60px;
+            }
+
+            ul.sort-list li.sort-active {
+              opacity: 1;
+              font-weight: bold;
+            }
+
+            .select-arrow.show-list {
+              transform: rotate(180deg);
+            }
+          }
         }
         
         .ml-list {
           
+          .ml-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 32px 0;
+            border-bottom: 1px solid ${({theme}) => theme.rgbaLight};
+            transition: border .3s ease;
+            @media screen and (max-width: 1024px) {
+              display: block;
+              padding: 16px 0;
+            }
+
+            &:hover {
+              border-bottom: 1px solid ${({theme}) => theme.rgbaMedium};
+            }
+            
+            .item-info {
+              display: flex;
+              align-items: center;
+              
+              .item-successYn {
+                padding: 2px 4px;
+                margin-right: 5px;
+                border-radius: 5px;
+                font-size: 16px;
+                font-weight: bold;
+              }
+              
+              .item-reason {
+                font-size: 18px;
+                font-weight: bold;
+              }
+            }
+            
+            .item-date {
+              font-size: 16px;
+              opacity: 0.7;
+            }
+          }
+        }
+        
+        .ml-more-btn {
+          width: 25%;
+          margin: 40px auto 0;
+          padding: 10px 15px 10px 15px;
+          border: 1px solid ${({theme}) => theme.textColor};
+          border-radius: 10px;
+          text-align: center;
+          font-size: 20px;
+          font-weight: bold;
+          cursor: pointer;
         }
       }
     }
