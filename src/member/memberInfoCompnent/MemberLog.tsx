@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 
 import HeaderNavigation from "../../navigation/HeaderNavigation";
@@ -6,13 +6,16 @@ import FooterNavigation from "../../navigation/FooterNavigation";
 
 import * as Styled from "./MemberLog.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSearch as searchIcon} from "@fortawesome/free-solid-svg-icons";
+import {faChevronDown as arrow, faSearch as searchIcon} from "@fortawesome/free-solid-svg-icons";
 
 const MemberLog = () => {
+    const sortBox:any = useRef<any>();
+    const sortList:any = useRef<any>();
+    const sortBtn:any = useRef<any>([]);
+    const selectArrow:any = useRef<any>();
 
     const [pageNo, setPageNo] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(0);
-    const [sortType, setSortType] = useState<string>("");
     const [memberLogList, setMemberLogList] = useState<{
         memberLogNo:number;
         memberLogType:string;
@@ -22,8 +25,36 @@ const MemberLog = () => {
         memberLogDate:string;
     }[]>([]);
 
-    const [isSearchText, setIsSearchText] = useState<boolean>(false);
-    const [searchText, setSearchText] = useState<string>("");
+    const sortItem:{
+        sortKey:string;
+        sortValue:string;
+    }[] = [{
+        sortKey: 'N',
+        sortValue: '최신순'
+    }, {
+        sortKey: 'O',
+        sortValue: '오래된순'
+    }];
+    const [sortType, setSortType] = useState<string>("N");
+    const [sortSelect, setSortSelect] = useState<number>(0);
+    const [isSortBoxShow, setIsSortBoxShow] = useState<boolean>(false);
+
+    const sortItemList = ():any[] => {
+        let result:any[] = [];
+        for(let i:number=0; i<sortItem.length; i++) {
+            result.push(<li key={i}
+                            ref={btn => (sortBtn.current[i] = btn)}
+                            onClick={() => onClickSortSelectBox(i, sortItem[i].sortKey)}>
+                {sortItem[i].sortValue}</li>)
+        }
+        return result;
+    }
+
+    const onClickSortSelectBox = (idx:number, sortSelect:string):void => {
+        setIsSortBoxShow(false);
+        setSortSelect(idx);
+        setSortType(sortSelect);
+    }
 
     useEffect(() => {
         const memberLogListData = async ():Promise<void> => {
@@ -32,15 +63,37 @@ const MemberLog = () => {
                 url: "/member/findAllMemberLog",
                 params: {pageNo: pageNo, sortType: sortType}
             }).then((res):void => {
-                console.log(res.data.data)
                 setMemberLogList(res.data.data.loginLogList);
                 setTotalPage(res.data.data.totalPage);
             }).catch((err):void => {
                 console.log(err.message);
             })
         }
-        setTimeout(() => {memberLogListData().then();}, 0);
+        setTimeout(() => {memberLogListData().then();}, 200);
     }, [pageNo, sortType])
+
+    useEffect(() => {
+        if(isSortBoxShow) {
+            sortBox.current.className += " show-list";
+            sortList.current.className += " show-list";
+            selectArrow.current.className += " show-list";
+        } else {
+            sortBox.current.className = sortBox.current.className.replace(' show-list', '');
+            sortList.current.className = sortList.current.className.replace(' show-list', '');
+            selectArrow.current.className = selectArrow.current.className.replace(' show-list', '');
+        }
+    }, [isSortBoxShow])
+
+    useEffect(() => {
+        sortBtn.current[sortSelect].className = sortBtn.current[sortSelect].className.replace('sort-active', '');
+        sortBtn.current[sortSelect].className += 'sort-active';
+
+        for(let i:number=0; i<sortBtn.current.length; i++) {
+            if(i !== sortSelect) {
+                sortBtn.current[i].className = sortBtn.current[i].className.replace('sort-active', '');
+            }
+        }
+    }, [sortSelect])
 
     return (
         <Styled.MemberLogView>
@@ -55,32 +108,55 @@ const MemberLog = () => {
             </div>
 
             <div className="ml-main">
-                <div className="ml-main-notice">
-                    <ul>
-                        <li>데스크에서 접수한 강좌의 경우 방문 시에만 취소 가능합니다. (결제한 카드 및 영수증 지참 필수)</li>
-                        <li>재료 준비가 필요한 일부 강좌(요리, 공예, 플라워 등)는 강좌 시작일의 3일 전까지 취소 가능합니다.</li>
-                        <li>환불 및 수강 취소시 강의시작일로부터 3일전은 환불액에서 1/3 환급, 2일전은 1/2 환급, 전날부터는 환불이 불가합니다.</li>
-                    </ul>
-                </div>
                 <div className="ml-main-list">
-                    <div className="ml-list-search">
-                        <input type="text" onChange={(e) => setSearchText(e.target.value)}
-                               placeholder="날짜를 검색하세요" />
-                        <FontAwesomeIcon icon={searchIcon} className="icon-custom"
-                                         onClick={() => setIsSearchText(!isSearchText)}/>
-                    </div>
                     <div className="ml-list-view">
                         <div className="ml-list-top">
                             <div className="list-top-left">
-                                전체 1개
+                                <span>전체</span> {totalPage}개
                             </div>
                             <div className="list-top-right">
-                                전체연도
+                                <button onClick={() => setIsSortBoxShow(!isSortBoxShow)}>
+                                    {sortItem[sortSelect].sortValue}
+                                    <div className="select-arrow" ref={selectArrow}>
+                                        <FontAwesomeIcon icon={arrow} />
+                                    </div>
+                                </button>
+                                <div className="sort-box" ref={sortBox}>
+                                    <ul className="sort-list" ref={sortList}>
+                                        {sortItemList()}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div className="ml-list">
-
+                            {memberLogList.map((item, idx) => (
+                                <div className="ml-list-item" key={idx}>
+                                    <div className="item-info">
+                                        <div className="item-successYn" style={
+                                            item.memberLogSuccessYn === 'Y' ?
+                                                {backgroundColor: "lightgreen"} :
+                                                {backgroundColor: "orangered"}
+                                        }>
+                                            {item.memberLogSuccessYn === 'Y' ? "성공" : "실패"}
+                                        </div>
+                                        <div className="item-reason">
+                                            {item.memberLogReason}
+                                        </div>
+                                    </div>
+                                    <div className="item-date">
+                                        {item.memberLogDate}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
+                        {
+                            totalPage > memberLogList.length ?
+                                <div className="ml-more-btn" onClick={() => setPageNo(pageNo + 1)}>
+                                    더보기 <FontAwesomeIcon icon={arrow} />
+                                </div>
+                                :
+                                <div />
+                        }
                     </div>
                 </div>
             </div>
