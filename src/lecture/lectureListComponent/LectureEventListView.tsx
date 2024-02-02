@@ -4,35 +4,14 @@ import axios from "axios";
 import styled from "styled-components";
 
 import HeaderNavigation from "../../navigation/HeaderNavigation";
+import FooterNavigation from "../../navigation/FooterNavigation";
+import TopButtonNavigation from "../../navigation/TopButtonNavigation";
 import LectureListMainView from "./LectureListMainView";
 import LectureListToolView from "./LectureListToolView";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowUpLong as topIcon} from "@fortawesome/free-solid-svg-icons";
-import FooterNavigation from "../../navigation/FooterNavigation";
 
 const LectureEventList = styled.div`
   position: relative;
-  
-  .lt-top-btn {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    height: 50px;
-    width: 50px;
-    border: 1px solid ${({theme}) => theme.boxBgColor};
-    border-radius: 50%;
-    background-color: ${({theme}) => theme.boxBgColor};
-    color: ${({theme}) => theme.textColor};;
-    text-align: center;
-    z-index: 99;
-    cursor: pointer;
-
-    .icon-custom {
-      position: relative;
-      top: 12px;
-      font-size: 25px;
-    }
-  }
+  margin: 40px auto 0;
   
   .le-body {
     width: 1160px;
@@ -216,10 +195,6 @@ const LectureEventListView = () => {
         <LectureEventList>
             <HeaderNavigation />
 
-            <div className="lt-top-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                <FontAwesomeIcon icon={topIcon} className="icon-custom" />
-            </div>
-
             <LectureEventMainView $url={lectureEventOne.lectureEventThumbnail}>
                 <div className="le-header-bg">
 
@@ -244,6 +219,7 @@ const LectureEventListView = () => {
                                      institutionNo={institutionNo} setSortType={setSortType}/>
                 <LectureListMainView ltCount={lectureList.length} lectureList={lectureList} setLectureList={setLectureList}/>
             </div>
+            <TopButtonNavigation type={""} />
 
             <FooterNavigation />
         </LectureEventList>
