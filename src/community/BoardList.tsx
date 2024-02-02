@@ -4,16 +4,12 @@ import axios from "axios";
 
 import HeaderNavigation from "../navigation/HeaderNavigation";
 import FooterNavigation from "../navigation/FooterNavigation";
+import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
 import * as Styled from "./BoardList.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-    faArrowUpLong as topIcon,
-    faChevronDown as arrow,
-    faExclamation as emptyIcon, faQuoteLeft as quoteLeft, faQuoteRight as quoteRight,
-    faSearch as searchIcon
-} from "@fortawesome/free-solid-svg-icons";
-import TopButtonNavigation from "../navigation/TopButtonNavigation";
+import {faChevronDown as arrow, faExclamation as emptyIcon, faQuoteLeft as quoteLeft,
+    faQuoteRight as quoteRight, faSearch as searchIcon} from "@fortawesome/free-solid-svg-icons";
 
 const BoardList = () => {
     const navigate = useNavigate();
@@ -249,7 +245,7 @@ const BoardList = () => {
                 </div>
             </div>
 
-            <TopButtonNavigation />
+            <TopButtonNavigation type={""} />
 
             <FooterNavigation />
         </Styled.BoardListView>
