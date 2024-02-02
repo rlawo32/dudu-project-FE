@@ -1,9 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
+import axios from "axios";
 
-import * as Styled from "./MemberInfoModal.style";
 import MemberAuth from "../MemberAuth";
 import useJoinProgressStore from "../../stores/useJoinProgressStore";
-import axios from "axios";
+
+import * as Styled from "./MemberInfoModal.style";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye as passwordSeeIcon} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +23,7 @@ interface Props {
 
 const MemberInfoUpdate = (props:Props) => {
     const modalRef:any = useRef<any>();
+    const passwordRef:any = useRef<any>();
 
     const {inputMemberEmail} = useJoinProgressStore();
 
@@ -135,7 +139,16 @@ const MemberInfoUpdate = (props:Props) => {
         }
     }
 
-    const updateMemberInfo = async():Promise<boolean> => {
+    const passwordSeeHandler = ():void => {
+        const typeCheck = passwordRef.current.type;
+        if(typeCheck === 'password') {
+            passwordRef.current.type = 'text';
+        } else {
+            passwordRef.current.type = 'password';
+        }
+    }
+
+    const updateMemberInfoHandler = async():Promise<boolean> => {
         const memberInfoData = {
             memberName: memberName,
             memberEmail: inputMemberEmail,
@@ -287,15 +300,17 @@ const MemberInfoUpdate = (props:Props) => {
                                 </div>
                                 <div className="modal-infoUpdate-input">
                                     <div>현재 비밀번호 입력</div>
-                                    <input type="password" value={memberPresentPwChk} onChange={(e) => memberPresentPwCheckHandler(e.target.value)}
-                                           style={ isPresentPwChkEffect ? {} : {borderColor:'red'} }/>
-                                    {(
-                                        <div style={ isPresentPwChkEffect ? {} : {color:'red', fontSize:'11px', marginLeft: '5px', fontWeight: 'bold'} }>{presentPwChkMessage}</div>
-                                    )}
+                                    <div className="input-password">
+                                        <input type="password" value={memberPresentPwChk} onChange={(e) => memberPresentPwCheckHandler(e.target.value)}
+                                               style={ isPresentPwChkEffect ? {} : {borderColor:'red'} } ref={passwordRef}/>
+                                        <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
+                                                         onClick={() => passwordSeeHandler()}/>
+                                    </div>
+                                    <div style={ isPresentPwChkEffect ? {} : {color:'red', fontSize:'11px', marginLeft: '5px', fontWeight: 'bold'} }>{presentPwChkMessage}</div>
                                 </div>
                                 <div className="modal-btn">
                                     <button onClick={() => setIsInfoUpdateModal(true)} className="btn-cancel">닫기</button>
-                                    <button onClick={() => updateMemberInfo()} className="btn-submit">확인</button>
+                                    <button onClick={() => updateMemberInfoHandler()} className="btn-submit">확인</button>
                                 </div>
                             </div>}
                     </div>

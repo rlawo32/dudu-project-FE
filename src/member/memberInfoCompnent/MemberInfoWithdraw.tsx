@@ -4,6 +4,8 @@ import {removeCookie} from "../../Cookie";
 import axios from "axios";
 
 import * as Styled from "./MemberInfoModal.style";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye as passwordSeeIcon} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,6 +15,7 @@ interface Props {
 const MemberInfoWithdraw = (props:Props) => {
     const navigate = useNavigate();
     const modalRef:any = useRef<any>();
+    const passwordRef:any = useRef<any>();
 
     const [memberPresentPwChk, setMemberPresentPwChk] = useState<string>("");
     const [isPresentPwChkEffect, setIsPresentPwChkEffect] = useState<boolean>(true);
@@ -30,6 +33,15 @@ const MemberInfoWithdraw = (props:Props) => {
             setIsPresentPwChkEffect(true);
         }
         setMemberPresentPwChk(presentPwChk);
+    }
+
+    const passwordSeeHandler = ():void => {
+        const typeCheck = passwordRef.current.type;
+        if(typeCheck === 'password') {
+            passwordRef.current.type = 'text';
+        } else {
+            passwordRef.current.type = 'password';
+        }
     }
 
     const memberSecessionHandler = async ():Promise<boolean> => {
@@ -101,11 +113,13 @@ const MemberInfoWithdraw = (props:Props) => {
                     </div>
                     <div className="input-item">
                         <div>현재 비밀번호</div>
-                        <input type="password" value={memberPresentPwChk} onChange={(e) => memberPresentPwCheckHandler(e.target.value)}
-                               style={ isPresentPwChkEffect ? {} : {borderColor:'red'} }/>
-                        {(
-                            <span style={ isPresentPwChkEffect ? {} : {color:'red', fontSize:'12px', marginLeft: '7px', fontWeight: 'bold'} }>{presentPwChkMessage}</span>
-                        )}
+                        <div className="input-password">
+                            <input type="password" value={memberPresentPwChk} onChange={(e) => memberPresentPwCheckHandler(e.target.value)}
+                                   style={ isPresentPwChkEffect ? {} : {borderColor:'red'} } ref={passwordRef}/>
+                            <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
+                                             onClick={() => passwordSeeHandler()}/>
+                        </div>
+                        <span style={ isPresentPwChkEffect ? {} : {color:'red', fontSize:'12px', marginLeft: '7px', fontWeight: 'bold'} }>{presentPwChkMessage}</span>
                     </div>
                 </div>
             </div>

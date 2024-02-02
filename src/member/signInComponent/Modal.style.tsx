@@ -41,6 +41,24 @@ export const ModalFindView = styled.div`
     height: 170px;
     width: fit-content;
     margin: auto;
+
+    .input-password {
+      position: relative;
+
+      .icon-see {
+        position: absolute;
+        top: 15px;
+        right: 12px;
+        font-size: 19px;
+        color: ${({theme}) => theme.textColor};
+        z-index: 3;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
   }
 
   .findIdView-text {
@@ -69,6 +87,7 @@ export const ModalFindView = styled.div`
 `;
 
 export const ModalInput = styled.input`
+  position: relative;
   display: block;
   height: 30px;
   width: 250px;
