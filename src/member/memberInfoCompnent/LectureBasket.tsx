@@ -4,6 +4,7 @@ import axios from "axios";
 
 import HeaderNavigation from "../../navigation/HeaderNavigation";
 import FooterNavigation from "../../navigation/FooterNavigation";
+import TopButtonNavigation from "../../navigation/TopButtonNavigation";
 
 import * as Styled from "./LectureBasket.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -283,6 +284,8 @@ const LectureBasket = () => {
                     }
                 </div>
             </div>
+            <TopButtonNavigation type={"D"} />
+
             <div className="lb-button">
                 <div className="button-fee">
                     <div className="fee-count">{checkItems.length}건</div>
@@ -299,7 +302,6 @@ const LectureBasket = () => {
                             onClick={() => {window.scrollTo({ top: 50, behavior: "smooth" });}}>결제하기</button>
                 </div>
             </div>
-
             <FooterNavigation />
         </Styled.LectureBasketView>
     )
