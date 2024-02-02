@@ -3,22 +3,17 @@ import axios from "axios";
 
 import HeaderNavigation from "../navigation/HeaderNavigation";
 import FooterNavigation from "../navigation/FooterNavigation";
+import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
 import * as Styled from "./Faq.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-    faArrowUpLong as topIcon,
-    faChevronDown as arrow,
-    faQ as qIcon,
-    faSearch as searchIcon
-} from "@fortawesome/free-solid-svg-icons"
+import {faChevronDown as arrow, faQ as qIcon, faSearch as searchIcon} from "@fortawesome/free-solid-svg-icons"
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {Navigation, Pagination} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
 const FaqList = () => {
     const categoryBtn:any = useRef<any>([]);
@@ -270,7 +265,7 @@ const FaqList = () => {
                 </div>
             </div>
 
-            <TopButtonNavigation />
+            <TopButtonNavigation type={""} />
 
             <FooterNavigation />
         </Styled.FaqListView>
