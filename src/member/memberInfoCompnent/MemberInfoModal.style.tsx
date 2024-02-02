@@ -146,6 +146,24 @@ export const MemberInfoUpdateView = styled.div`
           height: 120px;
           width: fit-content;
           margin: 40px auto 0;
+
+          .input-password {
+            position: relative;
+
+            .icon-see {
+              position: absolute;
+              top: 12px;
+              right: 12px;
+              font-size: 18px;
+              color: ${({theme}) => theme.textColor};
+              z-index: 3;
+              cursor: pointer;
+
+              &:hover {
+                opacity: 0.5;
+              }
+            }
+          }
         }
         
         .modal-btn {
@@ -281,9 +299,28 @@ export const MemberInfoPwUpdateView = styled.div`
       height: 60px;
       width: 280px;
       margin: 0 auto 24px;
+      
+      .input-password {
+        position: relative;
+
+        .icon-see {
+          position: absolute;
+          top: 13px;
+          right: 15px;
+          font-size: 18px;
+          color: ${({theme}) => theme.textColor};
+          z-index: 3;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
     }
     
     input {
+      position: relative;
       box-sizing: border-box;
       height: 36px;
       width: 100%;
@@ -391,6 +428,24 @@ export const MemberInfoWithdrawView = styled.div`
       height: 60px;
       width: 280px;
       margin: 0 auto 22px;
+
+      .input-password {
+        position: relative;
+
+        .icon-see {
+          position: absolute;
+          top: 13px;
+          right: 15px;
+          font-size: 18px;
+          color: ${({theme}) => theme.textColor};
+          z-index: 3;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
     }
     
     input {

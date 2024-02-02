@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 
 import * as Styled from "./MemberInfoModal.style";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye as passwordSeeIcon} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,6 +12,9 @@ interface Props {
 
 const MemberInfoPwUpdate = (props:Props) => {
     const modalRef:any = useRef<any>();
+    const passwordPreRef:any = useRef<any>();
+    const passwordRef:any = useRef<any>();
+    const passwordChkRef:any = useRef<any>();
 
     const passwordRegex:RegExp = /^(?=.*[a-zA-Z])(?=.*[!?@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 
@@ -51,7 +56,7 @@ const MemberInfoPwUpdate = (props:Props) => {
         const presentPwChk:string = data;
 
         if (!passwordRegex.test(presentPwChk)) {
-            setPresentPwChkMessage('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
+            setPresentPwChkMessage('비밀번호를 다시 확인해주세요.');
             setIsPresentPwChkEffect(false);
         } else {
             setPresentPwChkMessage('');
@@ -64,7 +69,7 @@ const MemberInfoPwUpdate = (props:Props) => {
         const changePw:string = data;
 
         if (!passwordRegex.test(changePw)) {
-            setChangePwMessage('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
+            setChangePwMessage('8~16자 영문 대 소문자, 숫자, 특수문자를 조합해주세요.');
             setIsChangePwEffect(false);
         } else {
             if(memberPresentPwChk === changePw) {
@@ -82,7 +87,7 @@ const MemberInfoPwUpdate = (props:Props) => {
         const changePwChk:string = data;
 
         if (!passwordRegex.test(changePwChk)) {
-            setChangePwChkMessage('8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.');
+            setChangePwChkMessage('8~16자 영문 대 소문자, 숫자, 특수문자를 조합해주세요.');
             setIsChangePwChkEffect(false);
         } else {
             if(memberChangePw !== changePwChk) {
@@ -96,7 +101,32 @@ const MemberInfoPwUpdate = (props:Props) => {
         setMemberChangePwChk(changePwChk);
     }
 
-    const changeMemberPassword = async():Promise<boolean> => {
+    const passwordSeeHandler = (type:string):void => {
+        if(type === 'chk') {
+            const typeCheck = passwordChkRef.current.type;
+            if(typeCheck === 'password') {
+                passwordChkRef.current.type = 'text';
+            } else {
+                passwordChkRef.current.type = 'password';
+            }
+        } else if(type === 'pre') {
+            const typeCheck = passwordPreRef.current.type;
+            if(typeCheck === 'password') {
+                passwordPreRef.current.type = 'text';
+            } else {
+                passwordPreRef.current.type = 'password';
+            }
+        } else {
+            const typeCheck = passwordRef.current.type
+            if(typeCheck === 'password') {
+                passwordRef.current.type = 'text';
+            } else {
+                passwordRef.current.type = 'password';
+            }
+        }
+    }
+
+    const changeMemberPasswordHandler = async():Promise<boolean> => {
         if(isPresentPwChkEffect && isChangePwEffect && isChangePwChkEffect) {
             if(window.confirm('정말 비밀번호 변경을 하시겠습니까?') === true) {
                 await axios({
@@ -169,17 +199,23 @@ const MemberInfoPwUpdate = (props:Props) => {
                             <div className="pwUpdate-step2">
                                 <div className="input-item">
                                     <div>신규 비밀번호</div>
-                                    <input type="password" value={memberChangePw} onChange={(e) => memberChangePwHandler(e.target.value)}
-                                           style={ isChangePwEffect ? {} : {borderColor:'red'} }/>
-                                    <span style={ isChangePwEffect ? {} : {color:'red', fontSize:'12px', marginLeft: '7px', fontWeight: 'bold'} }>{changePwMessage}</span>
+                                    <div className="input-password">
+                                        <input type="password" value={memberChangePw} onChange={(e) => memberChangePwHandler(e.target.value)}
+                                               style={ isChangePwEffect ? {} : {borderColor:'red'} } ref={passwordRef}/>
+                                        <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
+                                                         onClick={() => passwordSeeHandler("")}/>
+                                    </div>
+                                    <span style={ isChangePwEffect ? {} : {color:'red', fontSize:'11px', marginLeft: '7px', fontWeight: 'bold'} }>{changePwMessage}</span>
                                 </div>
                                 <div className="input-item">
                                     <div>비밀번호 확인</div>
-                                    <input type="password" value={memberChangePwChk} onChange={(e) => memberChangePwCheckHandler(e.target.value)}
-                                           style={ isChangePwChkEffect ? {} : {borderColor:'red'} }/>
-                                    {(
-                                        <span style={ isChangePwChkEffect ? {} : {color:'red', fontSize:'12px', marginLeft: '7px', fontWeight: 'bold'} }>{changePwChkMessage}</span>
-                                    )}
+                                    <div className="input-password">
+                                        <input type="password" value={memberChangePwChk} onChange={(e) => memberChangePwCheckHandler(e.target.value)}
+                                               style={ isChangePwChkEffect ? {} : {borderColor:'red'} } ref={passwordChkRef}/>
+                                        <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
+                                                         onClick={() => passwordSeeHandler("chk")}/>
+                                    </div>
+                                    <span style={ isChangePwChkEffect ? {} : {color:'red', fontSize:'11px', marginLeft: '7px', fontWeight: 'bold'} }>{changePwChkMessage}</span>
                                 </div>
                             </div>
                             :
@@ -190,11 +226,13 @@ const MemberInfoPwUpdate = (props:Props) => {
                                 </div>
                                 <div className="input-item">
                                     <div>현재 비밀번호</div>
-                                    <input type="password" value={memberPresentPwChk} onChange={(e) => memberPresentPwCheckHandler(e.target.value)}
-                                           style={ isPresentPwChkEffect ? {} : {borderColor:'red'} }/>
-                                    {(
-                                        <span style={ isPresentPwChkEffect ? {} : {color:'red', fontSize:'12px', marginLeft: '7px', fontWeight: 'bold'} }>{presentPwChkMessage}</span>
-                                    )}
+                                    <div className="input-password">
+                                        <input type="password" value={memberPresentPwChk} onChange={(e) => memberPresentPwCheckHandler(e.target.value)}
+                                               style={ isPresentPwChkEffect ? {} : {borderColor:'red'} } ref={passwordPreRef}/>
+                                        <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
+                                                         onClick={() => passwordSeeHandler("pre")}/>
+                                    </div>
+                                    <span style={ isPresentPwChkEffect ? {} : {color:'red', fontSize:'12px', marginLeft: '7px', fontWeight: 'bold'} }>{presentPwChkMessage}</span>
                                 </div>
                             </div>
                     }
@@ -204,7 +242,7 @@ const MemberInfoPwUpdate = (props:Props) => {
                 <button onClick={() => props.setIsModal(false)} className="btn-cancel">취소</button>
                 {
                     isChangePwProgress ?
-                        <button onClick={() => changeMemberPassword()} className="btn-submit">변경하기</button>
+                        <button onClick={() => changeMemberPasswordHandler()} className="btn-submit">변경하기</button>
                         :
                         <button onClick={() => passwordDuplicationChk()} className="btn-submit">확인</button>
                 }
