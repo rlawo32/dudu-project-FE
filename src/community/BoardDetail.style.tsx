@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 export const BoardDetailView = styled.div`
   position: relative;
-  padding-top: 60px;
+  padding-top: 80px;
+  margin: 70px auto 0;
   
   .bd-main-view {
     width: 1160px;

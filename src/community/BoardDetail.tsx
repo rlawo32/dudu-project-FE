@@ -3,12 +3,11 @@ import {useLocation, useNavigate} from "react-router-dom";
 import dompurify from "dompurify";
 import axios from "axios";
 
-import * as Styled from "./BoardDetail.style";
 import HeaderNavigation from "../navigation/HeaderNavigation";
 import FooterNavigation from "../navigation/FooterNavigation";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowUpLong as topIcon} from "@fortawesome/free-solid-svg-icons";
 import TopButtonNavigation from "../navigation/TopButtonNavigation";
+
+import * as Styled from "./BoardDetail.style";
 
 const BoardDetail = () => {
     const navigate = useNavigate();
@@ -77,7 +76,7 @@ const BoardDetail = () => {
                 </div>
             </div>
 
-            <TopButtonNavigation />
+            <TopButtonNavigation type={""} />
 
             <FooterNavigation />
         </Styled.BoardDetailView>
