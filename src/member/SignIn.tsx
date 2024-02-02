@@ -1,21 +1,23 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {setCookie} from "../Cookie";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 import HeaderNavigation from "../navigation/HeaderNavigation";
 import FooterNavigation from "../navigation/FooterNavigation";
-import useJoinProgressStore from "../stores/useJoinProgressStore";
 import FindIdModal from "./signInComponent/FindIdModal";
 import FindPwModal from "./signInComponent/FindPwModal";
+import useJoinProgressStore from "../stores/useJoinProgressStore";
 
 import * as Styled from "./SignIn.style";
 import * as Modal from "./signInComponent/Modal.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUser as idIcon, faLock as pwIcon, faComment as kakaoIcon} from "@fortawesome/free-solid-svg-icons";
+import {faUser as idIcon, faLock as pwIcon, faChevronRight as arrowIcon,
+    faEye as passwordSeeIcon, faComment as kakaoIcon} from "@fortawesome/free-solid-svg-icons";
 
 const SignIn = ():any => {
     const navigate = useNavigate();
+    const passwordRef:any = useRef<any>();
 
     const [loginMemberId, setLoginMemberId] = useState<string>("");
     const [loginMemberPw, setLoginMemberPw] = useState<string>("");
@@ -23,6 +25,15 @@ const SignIn = ():any => {
     const [isFindPwModal, setIsFindPwModal] = useState<boolean>(false);
 
     const {setActiveProgressTab} = useJoinProgressStore();
+
+    const passwordSeeHandler = ():void => {
+        const typeCheck = passwordRef.current.type;
+        if(typeCheck === 'password') {
+            passwordRef.current.type = 'text';
+        } else {
+            passwordRef.current.type = 'password';
+        }
+    }
 
     const activeEnter = (e:any):void => {
         if(e.key === "Enter") {
@@ -95,7 +106,7 @@ const SignIn = ():any => {
                             수강신청 관련 서비스를 이용하시려면 회원가입을 해주세요.
                         </p>
                         <Link to="/signUp" onClick={() => setActiveProgressTab("joinProgress1")} className="link-custom">
-                            회원가입 {'>'}
+                            회원가입 <FontAwesomeIcon icon={arrowIcon} className="icon-custom" />
                         </Link>
                     </div>
                 </div>
@@ -110,7 +121,10 @@ const SignIn = ():any => {
                         <Styled.InputBox>
                             <FontAwesomeIcon icon={pwIcon} className="icon-custom" />
                             <Styled.SignInInput type="password" onChange={(e) => setLoginMemberPw(e.target.value)}
-                                                onKeyDown={(e) => activeEnter(e)} placeholder="비밀번호를 입력해주세요."/>
+                                                onKeyDown={(e) => activeEnter(e)} placeholder="비밀번호를 입력해주세요."
+                                                ref={passwordRef}/>
+                            <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
+                                             onClick={() => passwordSeeHandler()}/>
                         </Styled.InputBox>
 
                         <Styled.SignInButton onClick={() => signInHandler()}>로그인</Styled.SignInButton>

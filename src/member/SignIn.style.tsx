@@ -69,6 +69,11 @@ export const SignInMain = styled.div`
           font-size: 20px;
         }
         font-weight: bold;
+        
+        .icon-custom {
+          margin-left: 3px;
+          font-size: 25px;
+        }
       }
     }
   }
@@ -93,14 +98,30 @@ export const InputBox = styled.div`
   
   .icon-custom {
     position: absolute;
-    top: 20%;
-    left: 5%;
+    top: 13px;
+    left: 27px;
     font-size: 35px;
     color: ${({theme}) => theme.textColor};
+    z-index: 3;
+  }
+  
+  .icon-see {
+    position: absolute;
+    top: 19px;
+    right: 22px;
+    font-size: 25px;
+    color: ${({theme}) => theme.textColor};
+    z-index: 3;
+    cursor: pointer;
+    
+    &:hover {
+      opacity: 0.5;
+    }
   }
 `;
 
 export const SignInInput = styled.input`
+  position: relative;
   display: block;
   border: ${({theme}) => theme.borderColor};
   border-radius: 30px;

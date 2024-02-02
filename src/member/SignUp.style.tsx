@@ -14,6 +14,20 @@ export const TermsAgreeView = styled.div`
   
   .terms-box {
     margin-bottom: 40px;
+    
+    .terms-text {
+      box-sizing: border-box;
+      height: 150px;
+      width: 400px;
+      @media screen and (max-width: 750px) {
+        width: 300px;
+      }
+      padding: 15px 10px;
+      border: 1px solid #ddcdc5;
+      border-radius: 10px;
+      background: ${({theme}) => theme.cardBgColor};
+      
+    }
   }
   
   .terms-title {
@@ -34,12 +48,31 @@ export const TermsAgreeView = styled.div`
   }
   
   textarea {
-    width: 400px;
+    box-sizing: border-box;
+    height: 120px;
+    width: 370px;
     @media screen and (max-width: 750px) {
-      width: 300px;
+      width: 270px;
     }
+    padding: 0 10px;
+    border: none;
     border-radius: 10px;
+    background: ${({theme}) => theme.cardBgColor};
+    overflow: auto;
     resize: none;
+    
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: gray; /* 스크롤바의 색상 */
+      border-radius: 15px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(200, 200, 200, .1);
+    }
   }
   
   span {
@@ -125,6 +158,24 @@ export const EnterInfoView = styled.div`
     
     .input-text {
       height: 40px;
+      
+      .input-password {
+        position: relative;
+        
+        .icon-see {
+          position: absolute;
+          top: 10px;
+          right: 12px;
+          font-size: 17px;
+          color: ${({theme}) => theme.textColor};
+          z-index: 3;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
     }
     
     .input-gender {
@@ -141,6 +192,7 @@ export const EnterInfoView = styled.div`
 `;
 
 export const EnterInfoInput = styled.input`
+  position: relative;
   display: inline-block;
   border: ${({theme}) => theme.borderColor};
   border-radius: 7px;
@@ -150,6 +202,7 @@ export const EnterInfoInput = styled.input`
   font-size: 15px;
   color: ${({theme}) => theme.textColor};
   background-color: ${({theme}) => theme.inputBgColor};
+  outline: none;
 `;
 
 export const EnterInfoButtonM = styled.button`

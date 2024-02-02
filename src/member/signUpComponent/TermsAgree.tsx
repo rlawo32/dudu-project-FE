@@ -33,7 +33,7 @@ const TermsAgree = ():any => {
             <div className="terms-box">
                 <div className="terms-title">문화센터 이용약관</div>
                 <div className="terms-text">
-                    <textarea readOnly={true}>
+                    <textarea readOnly={true} defaultValue={"..."}>
 
                     </textarea>
                 </div>
@@ -48,7 +48,7 @@ const TermsAgree = ():any => {
             <div className="terms-box">
                 <div className="terms-title">개인정보 수집 및 이용</div>
                 <div className="terms-text">
-                    <textarea readOnly={true}>
+                    <textarea readOnly={true} defaultValue={"..."}>
 
                     </textarea>
                 </div>
@@ -63,7 +63,7 @@ const TermsAgree = ():any => {
             <div className="terms-box">
                 <div className="terms-title">이벤트 • 혜택 정보 수신</div>
                 <div className="terms-text">
-                    <textarea readOnly={true}>
+                    <textarea readOnly={true} defaultValue={"..."}>
 
                     </textarea>
                 </div>
