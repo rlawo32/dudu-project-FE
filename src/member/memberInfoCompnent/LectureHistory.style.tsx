@@ -6,6 +6,7 @@ export const LectureHistoryView = styled.div`
   .lh-sub {
     height: 100%;
     width: 100%;
+    margin: 40px auto 0;
     background: rgba(216,201,201,0.5);
 
     .lh-sub-view {

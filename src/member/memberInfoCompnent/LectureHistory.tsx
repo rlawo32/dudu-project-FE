@@ -4,6 +4,7 @@ import axios from "axios";
 
 import HeaderNavigation from "../../navigation/HeaderNavigation";
 import FooterNavigation from "../../navigation/FooterNavigation";
+import TopButtonNavigation from "../../navigation/TopButtonNavigation";
 import LectureCancelModal from "./LectureCancelModal";
 import useLectureSearchDataStore from "../../stores/useLectureSearchDataStore";
 
@@ -355,6 +356,7 @@ const LectureHistory = () => {
                     </div>
                 </div>
             </div>
+            <TopButtonNavigation type={""} />
 
             <FooterNavigation />
         </Styled.LectureHistoryView>
