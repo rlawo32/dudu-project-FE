@@ -13,6 +13,14 @@ interface lectureSearchDataStore {
     setLtStateArr: (idx:number, stItem:number, stName:string) => void;
     removeLtStateArr: (rmItem:number) => void;
     removeAllLtStateArr: () => void;
+    ltDowArr: {idx:number; dwItem:number; dwName:string}[];
+    setLtDowArr: (idx:number, dwItem:number, dwName:string) => void;
+    removeLtDowArr: (rmItem:number) => void;
+    removeAllLtDowArr: () => void;
+    ltFeeArr: {idx:number; feItem:number; feKey:string; feValue:string; feName:string}[];
+    setLtFeeArr: (idx:number, feItem:number, feKey:string, feValue:string, feName:string) => void;
+    removeLtFeeArr: (rmItem:number) => void;
+    removeAllLtFeeArr: () => void;
 }
 
 const useLectureSearchDataStore = create<lectureSearchDataStore>((set) => ({
@@ -51,6 +59,32 @@ const useLectureSearchDataStore = create<lectureSearchDataStore>((set) => ({
     removeAllLtStateArr: () =>
         set(() => ({
             ltStateArr: [],
+        })),
+    ltDowArr: [],
+    setLtDowArr: (idx: number, dwItem: number, dwName: string) =>
+        set((state) => ({
+            ltDowArr: [...state.ltDowArr, {idx, dwItem, dwName}],
+        })),
+    removeLtDowArr: (rmItem: number) =>
+        set((state) => ({
+            ltDowArr: state.ltDowArr.filter((dwArr) => dwArr.dwItem !== rmItem),
+        })),
+    removeAllLtDowArr: () =>
+        set(() => ({
+            ltDowArr: [],
+        })),
+    ltFeeArr: [],
+    setLtFeeArr: (idx: number, feItem: number, feKey: string, feValue: string, feName: string) =>
+        set((state) => ({
+            ltFeeArr: [...state.ltFeeArr, {idx, feItem, feKey, feValue, feName}],
+        })),
+    removeLtFeeArr: (rmItem: number) =>
+        set((state) => ({
+            ltFeeArr: state.ltFeeArr.filter((feArr) => feArr.feItem !== rmItem),
+        })),
+    removeAllLtFeeArr: () =>
+        set(() => ({
+            ltFeeArr: [],
         })),
 }));
 
