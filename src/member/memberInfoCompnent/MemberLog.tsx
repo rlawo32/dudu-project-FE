@@ -3,10 +3,11 @@ import axios from "axios";
 
 import HeaderNavigation from "../../navigation/HeaderNavigation";
 import FooterNavigation from "../../navigation/FooterNavigation";
+import TopButtonNavigation from "../../navigation/TopButtonNavigation";
 
 import * as Styled from "./MemberLog.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChevronDown as arrow, faSearch as searchIcon} from "@fortawesome/free-solid-svg-icons";
+import {faChevronDown as arrow} from "@fortawesome/free-solid-svg-icons";
 
 const MemberLog = () => {
     const sortBox:any = useRef<any>();
@@ -160,6 +161,7 @@ const MemberLog = () => {
                     </div>
                 </div>
             </div>
+            <TopButtonNavigation type={""} />
 
             <FooterNavigation />
         </Styled.MemberLogView>
