@@ -214,7 +214,7 @@ const HeaderNavigation = ():any => {
                                             강좌개설
                                         </StyledLink>
                                         <StyledLink to="/lectureEventWrite" style={{marginLeft: '30px'}}>
-                                            강좌이벤트개설
+                                            강좌관리
                                         </StyledLink>
                                         <StyledLink to="/boardWrite" style={{marginLeft: '30px'}}>
                                             게시글작성

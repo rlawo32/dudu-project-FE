@@ -77,10 +77,28 @@ const CustomQuillEditorView = styled.div`
     background-color: ${({theme}) => theme.boxBgColor};
     
     .ql-container {
+      box-sizing: border-box;
       height: 650px;
       width: 100%;
+      padding: 5px 10px;
       border: none;
       font-size: 25px;
+      
+      .ql-editor {
+
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: gray; /* 스크롤바의 색상 */
+          border-radius: 15px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: rgba(200, 200, 200, .1);
+        }
+      }
     }
   }
   

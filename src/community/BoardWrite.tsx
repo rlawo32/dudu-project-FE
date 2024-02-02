@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 import LectureQuillEditor from "../lecture/lectureWriteComponent/LectureQuillEditor";
 import HeaderNavigation from "../navigation/HeaderNavigation";
 import FooterNavigation from "../navigation/FooterNavigation";
 
 import * as Styled from "./BoardWrite.style";
-import axios from "axios";
-import {useNavigate} from "react-router-dom";
 
 const BoardWrite = () => {
     const navigate = useNavigate();
