@@ -138,6 +138,7 @@ export const LectureBasketView = styled.div`
                 letter-spacing: -.6px;
                 word-break: keep-all;
                 overflow-wrap: break-word;
+                cursor: pointer;
               }
             }
           }

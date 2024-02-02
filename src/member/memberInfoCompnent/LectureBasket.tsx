@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 import HeaderNavigation from "../../navigation/HeaderNavigation";
@@ -12,6 +13,7 @@ import {faTrashCan as deleteIcon, faSquareCheck as checkIcon,
 import {faSquareCheck as unCheckIcon} from "@fortawesome/free-regular-svg-icons";
 
 const LectureBasket = () => {
+    const navigate = useNavigate();
 
     const [pageNo, setPageNo] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(0);
@@ -204,7 +206,9 @@ const LectureBasket = () => {
                                                 </div>
                                             </div>
                                             <div className="left-bot">
-                                                <div className="item-title">
+                                                <div className="item-title"
+                                                     onClick={() => navigate("/lectureDetail/" + item.lectureNo,
+                                                    { state: {lectureNo: item.lectureNo}})}>
                                                     {item.lectureTitle}
                                                 </div>
                                             </div>

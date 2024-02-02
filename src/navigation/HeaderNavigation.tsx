@@ -10,8 +10,8 @@ import {faArrowRightToBracket as loginIcon, faArrowRightFromBracket as logoutIco
     faUser as myPageIcon} from "@fortawesome/free-solid-svg-icons";
 
 const StyledLink:any = styled(Link)`
+  color: ${({theme}) => theme.textColor};
   text-decoration: none;
-  color: ${({theme}) => theme.headerTextColor};
   font-size: 16px;
   font-weight: bold;
   
@@ -27,7 +27,7 @@ const StyledLink:any = styled(Link)`
 `;
 
 const LinkBox = styled.div`
-  color: ${({theme}) => theme.headerTextColor};
+  color: ${({theme}) => theme.textColor};
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
@@ -51,14 +51,24 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     left: 0;
     width: 100%;
     height: 7%;
-    background: ${({theme}) => theme.headerBgColor};
+    background: ${({theme}) => theme.noticeBgColor};
+    color: ${({theme}) => theme.textColor};
     z-index: 99;
     
     .header-left {
+      box-sizing: border-box;
       display: flex;
       align-items: center;
+      height: 100%;
       width: ${({$getRole}) => $getRole === "" ? 0 : "173px"};
       margin-left: 50px;
+
+      img {
+        margin-top: 5px;
+        height: 60px;
+        width: 170px;
+        object-fit: cover;
+      }
     }
 
     .header-center {
@@ -87,7 +97,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     justify-content: center;
     height: 0;
     width: 100%;
-    background: ${({theme}) => theme.headerBgColor};
+    background: ${({theme}) => theme.noticeBgColor};
     overflow: hidden;
     z-index: 99;
     transition: height 0.3s ease-in;
@@ -140,7 +150,7 @@ const HeaderNavigation = ():any => {
                 <div className="header-parent">
                     <div className="header-left">
                         <StyledLink to="/">
-                            Home
+                            <img src={"https://react-project-bucket.s3.ap-northeast-2.amazonaws.com/defaultImage/mainlog01.png"} alt={"메인로고"}/>
                         </StyledLink>
                     </div>
                     <div className="header-center">
