@@ -8,6 +8,8 @@ import MemberAuth from "../MemberAuth";
 import useJoinProgressStore from "../../stores/useJoinProgressStore";
 
 import * as Modal from "./Modal.style";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye as passwordSeeIcon} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     setIsFindPwModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,6 +33,8 @@ const FindPwModalView = styled.div<modalPosition>`
 
 const FindPwModal = (props: Props) => {
     const modalRef:any = useRef<any>();
+    const passwordRef:any = useRef<any>();
+    const passwordChkRef:any = useRef<any>();
 
     const [logoPos, setLogoPos] = useState({x:0, y:0})
     const bindLogoPos = useDrag((params)=>{
@@ -55,7 +59,7 @@ const FindPwModal = (props: Props) => {
         setChangePw(currentData);
 
         if(!regexChk.test(currentData)) {
-            setChangePwMessage('비밀번호를 다시 확인해주세요.');
+            setChangePwMessage('8~16자 영문 대 소문자, 숫자, 특수문자를 조합해주세요.');
             setIsChangePwEffect(false);
         } else {
             setChangePwMessage('');
@@ -74,6 +78,24 @@ const FindPwModal = (props: Props) => {
             setChangePwMessage('');
             setIsChangePwEffect(true);
             setIsChangePwConfirm(true);
+        }
+    }
+
+    const passwordSeeHandler = (type:string):void => {
+        if(type === 'chk') {
+            const typeCheck = passwordChkRef.current.type;
+            if(typeCheck === 'password') {
+                passwordChkRef.current.type = 'text';
+            } else {
+                passwordChkRef.current.type = 'password';
+            }
+        } else {
+            const typeCheck = passwordRef.current.type;
+            if(typeCheck === 'password') {
+                passwordRef.current.type = 'text';
+            } else {
+                passwordRef.current.type = 'password';
+            }
         }
     }
 
@@ -120,13 +142,21 @@ const FindPwModal = (props: Props) => {
                         <div className="findIdView-box">
                             <div>
                                 <div style={{marginTop: "25px"}}>비밀번호 입력</div>
-                                <Modal.ModalInput type="password" onChange={(e) => changePwRegex(e.target.value)}
-                                                  placeholder="비밀번호를 입력해주세요." />
+                                <div className="input-password">
+                                    <Modal.ModalInput type="password" onChange={(e) => changePwRegex(e.target.value)}
+                                                      placeholder="비밀번호를 입력해주세요." ref={passwordRef}/>
+                                    <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
+                                                     onClick={() => passwordSeeHandler("")}/>
+                                </div>
                             </div>
                             <div>
                                 <div>비밀번호 확인</div>
-                                <Modal.ModalInput type="password" onChange={(e) => changePwChkRegex(e.target.value)}
-                                                  placeholder="비밀번호 확인을 해주세요." />
+                                <div className="input-password">
+                                    <Modal.ModalInput type="password" onChange={(e) => changePwChkRegex(e.target.value)}
+                                                      placeholder="비밀번호 확인을 해주세요." ref={passwordChkRef}/>
+                                    <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
+                                                     onClick={() => passwordSeeHandler("chk")}/>
+                                </div>
                             </div>
                             <div>
                                 <Modal.ModalButton onClick={() => props.setIsFindPwModal(false)}>취소</Modal.ModalButton>
