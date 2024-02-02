@@ -25,14 +25,26 @@ const LectureListToolView = (props : Props) => {
 
     const [isSearchInventory, setIsSearchInventory] = useState<boolean>(false);
     const [isSearchText, setIsSearchText] = useState<string>("");
-    const [isSearchDivision, setIsSearchDivision] = useState<{
+    const [isSearchDivisionArr, setIsSearchDivisionArr] = useState<{
         idx:number;
         dvItem:string;
     }[]>([]);
-    const [isSearchState, setIsSearchState] = useState<{
+    const [isSearchStateArr, setIsSearchStateArr] = useState<{
         idx:number;
         stItem:number;
         stName:string;
+    }[]>([]);
+    const [isSearchDowArr, setIsSearchDowArr] = useState<{
+        idx:number;
+        dwItem:number;
+        dwName:string;
+    }[]>([]);
+    const [isSearchFeeArr, setIsSearchFeeArr] = useState<{
+        idx:number;
+        feItem:number;
+        feKey:string;
+        feValue:string;
+        feName:string;
     }[]>([]);
 
     const [isSortBoxShow, setIsSortBoxShow] = useState<boolean>(false);
@@ -47,7 +59,9 @@ const LectureListToolView = (props : Props) => {
 
     const {searchButton, setSearchButton, searchText, setSearchText,
         ltDivisionArr, removeLtDivisionArr, removeAllLtDivisionArr,
-        ltStateArr, removeLtStateArr, removeAllLtStateArr} = useLectureSearchDataStore();
+        ltStateArr, removeLtStateArr, removeAllLtStateArr,
+        ltDowArr, removeLtDowArr, removeAllLtDowArr,
+        ltFeeArr, removeLtFeeArr, removeAllLtFeeArr} = useLectureSearchDataStore();
 
     const sortItemList = ():any[] => {
         let result:any[] = [];
@@ -71,6 +85,8 @@ const LectureListToolView = (props : Props) => {
         setSearchText("");
         removeAllLtDivisionArr();
         removeAllLtStateArr();
+        removeAllLtDowArr();
+        removeAllLtFeeArr();
         setSearchButton(!searchButton);
     }
 
@@ -80,9 +96,12 @@ const LectureListToolView = (props : Props) => {
 
     useEffect(() => {
         setIsSearchText(searchText);
-        setIsSearchDivision(ltDivisionArr);
-        setIsSearchState(ltStateArr);
-        if(searchText.length > 0 || ltDivisionArr.length > 0 || ltStateArr.length > 0) {
+        setIsSearchDivisionArr(ltDivisionArr);
+        setIsSearchStateArr(ltStateArr);
+        setIsSearchDowArr(ltDowArr);
+        setIsSearchFeeArr(ltFeeArr);
+        if(searchText.length > 0 || ltDivisionArr.length > 0 ||
+            ltStateArr.length > 0 || ltDowArr.length > 0 || ltFeeArr.length > 0) {
             setIsSearchInventory(true);
         } else {
             setIsSearchInventory(false);
@@ -90,11 +109,12 @@ const LectureListToolView = (props : Props) => {
     }, [searchButton])
 
     useEffect(() => {
-        if(isSearchText.length > 0 || isSearchDivision.length > 0 || isSearchState.length > 0) {
+        if(isSearchText.length > 0 || isSearchDivisionArr.length > 0 ||
+            isSearchStateArr.length > 0 || isSearchDowArr.length > 0 || isSearchFeeArr.length > 0) {
         } else {
             setIsSearchInventory(false);
         }
-    }, [searchText, ltDivisionArr, ltStateArr])
+    }, [searchText, ltDivisionArr, ltStateArr, ltDowArr, ltFeeArr])
 
     useEffect(() => {
         if(isSortBoxShow) {
@@ -117,7 +137,8 @@ const LectureListToolView = (props : Props) => {
 
     return (
         <Styled.LectureListTool $isInventory={isSearchInventory} $searchText={searchText}
-                                $searchDivision={ltDivisionArr} $searchState={ltStateArr}>
+                                $searchDivision={ltDivisionArr} $searchState={ltStateArr}
+                                $searchDow={ltDowArr} $searchFee={ltFeeArr}>
             <div className="lt-list-tool">
                 <div className="tool-left">
                     <div className="tool-total">
@@ -164,7 +185,7 @@ const LectureListToolView = (props : Props) => {
                     </span>
                 </div>
                 {
-                    isSearchDivision.map((item) => (
+                    isSearchDivisionArr.map((item) => (
                         <div key={item.dvItem} className="inventory-item item-searchDivision">
                             <span>{item.dvItem}</span>
                             <span>
@@ -175,12 +196,34 @@ const LectureListToolView = (props : Props) => {
                     ))
                 }
                 {
-                    isSearchState.map((item) => (
+                    isSearchStateArr.map((item) => (
                         <div key={item.stItem} className="inventory-item item-searchState">
                             <span>{item.stName}</span>
                             <span>
                                 <FontAwesomeIcon icon={deleteBtn} className="icon-custom"
                                                  onClick={() => {removeLtStateArr(item.stItem); setSearchButton(!searchButton)}}/>
+                            </span>
+                        </div>
+                    ))
+                }
+                {
+                    isSearchDowArr.map((item) => (
+                        <div key={item.dwItem} className="inventory-item item-searchDow">
+                            <span>{item.dwName}</span>
+                            <span>
+                                <FontAwesomeIcon icon={deleteBtn} className="icon-custom"
+                                                 onClick={() => {removeLtDowArr(item.dwItem); setSearchButton(!searchButton)}}/>
+                            </span>
+                        </div>
+                    ))
+                }
+                {
+                    isSearchFeeArr.map((item) => (
+                        <div key={item.feItem} className="inventory-item item-searchFee">
+                            <span>{item.feName}</span>
+                            <span>
+                                <FontAwesomeIcon icon={deleteBtn} className="icon-custom"
+                                                 onClick={() => {removeLtFeeArr(item.feItem); setSearchButton(!searchButton)}}/>
                             </span>
                         </div>
                     ))

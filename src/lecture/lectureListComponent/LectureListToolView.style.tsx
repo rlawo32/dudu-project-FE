@@ -5,6 +5,8 @@ export const LectureListTool = styled.div<{
     $searchText:string;
     $searchDivision:{dvItem:string}[];
     $searchState:{stItem:number; stName:string}[];
+    $searchDow:{dwItem:number; dwName:string}[];
+    $searchFee:{feItem:number; feKey:string; feValue:string; feName:string}[];
 }>`
   position: relative;
   
@@ -150,6 +152,16 @@ export const LectureListTool = styled.div<{
       display: ${({$isInventory}) => $isInventory ?
     ({$searchState}) => $searchState.length !== 0 ?
         "block" : "none" : "none"};
+    }
+    .inventory-item.item-searchDow {
+      display: ${({$isInventory}) => $isInventory ?
+              ({$searchDow}) => $searchDow.length !== 0 ?
+                      "block" : "none" : "none"};
+    }
+    .inventory-item.item-searchFee {
+      display: ${({$isInventory}) => $isInventory ?
+              ({$searchFee}) => $searchFee.length !== 0 ?
+                      "block" : "none" : "none"};
     }
   }
 `;
