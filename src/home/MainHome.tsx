@@ -31,27 +31,33 @@ const MainHome = ():any => {
                 // // httpOnly: true,
                 // expires
             });
-            axios({
-                method: "GET",
-                url: "/member/getRole"
-            }).then((res) => {
-                window.localStorage.setItem("role", res.data);
-                setEasyLoginState(!easyLoginState);
-            }).catch((err) => {
-                console.log(err.message);
-            })
+
+            const storageAddRole = async ():Promise<void> => {
+                axios({
+                    method: "GET",
+                    url: "/member/getRole"
+                }).then((res) => {
+                    window.localStorage.setItem("role", res.data);
+                    setSearchParams("");
+                    setEasyLoginState(!easyLoginState);
+                    window.location.reload();
+                }).catch((err) => {
+                    console.log(err.message);
+                })
+            }
+            setTimeout(() => {storageAddRole().then();}, 100);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    useEffect(() => {
-        if(easyLoginState) {
-            setSearchParams("");
-            setEasyLoginState(!easyLoginState);
-            window.location.reload();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [easyLoginState])
+    // useEffect(() => {
+    //     if(easyLoginState) {
+    //         setSearchParams("");
+    //         setEasyLoginState(!easyLoginState);
+    //         window.location.reload();
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [easyLoginState])
     // 간편로그인 성공 시 생성되는 토큰들을 헤더와 쿠키에 넣어주는 작업
 
     return (

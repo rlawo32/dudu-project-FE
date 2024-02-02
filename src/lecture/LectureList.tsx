@@ -112,7 +112,7 @@ const LectureList = () => {
             searchDow: ltDowArr,
             searchFee: ltFeeArr
         }
-        const lectureList = async () => {
+        const lectureList = async ():Promise<void> => {
            await axios({
                method: "POST",
                url: '/lecture/lectureList',

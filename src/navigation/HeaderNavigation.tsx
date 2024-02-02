@@ -50,7 +50,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     top: 0;
     left: 0;
     width: 100%;
-    height: 7%;
+    height: 60px;
     background: ${({theme}) => theme.noticeBgColor};
     color: ${({theme}) => theme.textColor};
     z-index: 99;
@@ -90,7 +90,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
   
   .header-child {
     position: fixed;
-    top: 7%;
+    top: 60px;
     left: 0;
     display: flex;
     align-items: center;
