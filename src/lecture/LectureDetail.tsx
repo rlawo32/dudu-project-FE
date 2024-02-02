@@ -11,6 +11,7 @@ import * as Styled from "./LectureDetail.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpLong as topIcon, faChevronDown as arrow} from "@fortawesome/free-solid-svg-icons";
 import TopButtonNavigation from "../navigation/TopButtonNavigation";
+import {getCookie} from "../Cookie";
 
 const LectureDetail = () => {
     const navigate = useNavigate();
@@ -85,6 +86,17 @@ const LectureDetail = () => {
                 }
                 let date:string = startDate.add(i, "day").format("MM/DD") + "(" + week + ")";
                 setLectureScheduleDateArr(lectureScheduleDateArr => [...lectureScheduleDateArr, date]);
+            }
+        }
+    }
+
+    const lectureApplicationHandler = ():void => {
+        if(window.localStorage.getItem("role") && getCookie("refreshToken")) {
+            navigate("/lecturePayment", { state: lectureDetail})
+        } else {
+            alert("로그인이 필요한 기능입니다.");
+            if(window.confirm('바로 로그인 하시겠습니까?') === true) {
+                navigate("/signIn");
             }
         }
     }
@@ -354,8 +366,7 @@ const LectureDetail = () => {
                             {
                                 lectureDetail.lectureStateNo === 1 ?
                                     <button style={{backgroundColor: "gray"}}>접수 기간이 아닙니다.</button> :
-                                    lectureDetail.lectureStateNo === 2 ? <button onClick={() => navigate("/lecturePayment",
-                                            { state: lectureDetail})}>수강 신청하기</button> :
+                                    lectureDetail.lectureStateNo === 2 ? <button onClick={() => lectureApplicationHandler()}>수강 신청하기</button> :
                                         lectureDetail.lectureStateNo === 3 ? <button>인원이 다찼습니다</button> :
                                             lectureDetail.lectureStateNo === 4 ? <button>접수 종료</button> :
                                                 lectureDetail.lectureStateNo === 5 ? <button>접수 불가</button> :

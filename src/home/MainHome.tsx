@@ -31,8 +31,15 @@ const MainHome = ():any => {
                 // // httpOnly: true,
                 // expires
             });
-
-            setEasyLoginState(!easyLoginState);
+            axios({
+                method: "GET",
+                url: "/member/getRole"
+            }).then((res) => {
+                window.localStorage.setItem("role", res.data);
+                setEasyLoginState(!easyLoginState);
+            }).catch((err) => {
+                console.log(err.message);
+            })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

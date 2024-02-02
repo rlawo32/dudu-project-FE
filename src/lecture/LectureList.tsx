@@ -3,6 +3,7 @@ import axios from "axios";
 
 import HeaderNavigation from "../navigation/HeaderNavigation";
 import FooterNavigation from "../navigation/FooterNavigation";
+import TopButtonNavigation from "../navigation/TopButtonNavigation";
 import LectureEventSwiperView from "./lectureListComponent/LectureEventSwiperView";
 import LectureMainCategoryView from "./lectureListComponent/LectureMainCategoryView";
 import LectureSubCategoryView from "./lectureListComponent/LectureSubCategoryView";
@@ -13,9 +14,8 @@ import LectureSearchBoxView from "./lectureListComponent/LectureSearchBoxView";
 import useLectureSearchDataStore from "../stores/useLectureSearchDataStore";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChevronDown as arrow, faArrowUpLong as topIcon} from "@fortawesome/free-solid-svg-icons";
+import {faChevronDown as arrow} from "@fortawesome/free-solid-svg-icons";
 import * as Styled from "./LectureList.style";
-import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
 const LectureList = () => {
     const selectBox:any = useRef<any>();
@@ -53,7 +53,8 @@ const LectureList = () => {
     const [isSearchBoxShow, setIsSearchBoxShow] = useState<boolean>(false);
 
     const {searchButton, searchText,
-        ltDivisionArr, ltStateArr} = useLectureSearchDataStore();
+        ltDivisionArr, ltStateArr,
+        ltDowArr, ltFeeArr} = useLectureSearchDataStore();
 
     const customInstitutionSelectBox = ():any => {
         const result:any[] = [];
@@ -107,7 +108,9 @@ const LectureList = () => {
             subCategoryNo: subCategoryNo,
             searchText: searchText,
             searchDivision: ltDivisionArr,
-            searchState: ltStateArr
+            searchState: ltStateArr,
+            searchDow: ltDowArr,
+            searchFee: ltFeeArr
         }
         const lectureList = async () => {
            await axios({
