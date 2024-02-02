@@ -2,31 +2,11 @@ import styled from "styled-components";
 
 export const LecturePaymentView = styled.div<{$isModal:boolean}>`
   position: relative;
-  
-  .top-btn {
-    position: fixed;
-    bottom: 160px;
-    right: 40px;
-    height: 50px;
-    width: 50px;
-    border: 1px solid ${({theme}) => theme.boxBgColor};
-    border-radius: 50%;
-    background-color: ${({theme}) => theme.boxBgColor};
-    color: ${({theme}) => theme.textColor};;
-    text-align: center;
-    z-index: 99;
-    cursor: pointer;
-
-    .icon-custom {
-      position: relative;
-      top: 12px;
-      font-size: 25px;
-    }
-  }
 
   .lp-sub {
     height: 100%;
     width: 100%;
+    margin: 40px auto 0;
     background: rgba(216,201,201,0.5);
     opacity: ${({$isModal}) => $isModal ? 0.5 : 1};
 
@@ -52,7 +32,7 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
   
   .lp-main {
     width: 1160px;
-    margin: 100px auto 10%;
+    margin: 100px auto 50px;
     @media screen and (max-width: 1280px) {
       box-sizing: border-box;
       width: 100%;
