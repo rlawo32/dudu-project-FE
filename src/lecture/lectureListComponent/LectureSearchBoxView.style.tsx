@@ -12,7 +12,7 @@ export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
   padding: ${({$showBox}) => $showBox ? "25px" : 0};
   border-left: 1px solid rgba(0,0,0,0.3);
   background-color: ${({theme}) => theme.boxBgColor};
-  z-index: 3;
+  z-index: 99;
   transition: all 0.4s ease-in;
   
   .search-title {
@@ -60,8 +60,27 @@ export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
   }
 
   .search-body {
+    position: relative;
+    min-height: 650px;
+    max-height: 850px;
+    padding-right: 10px;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: gray; /* 스크롤바의 색상 */
+      border-radius: 15px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(200, 200, 200, .1);
+    }
     
     ul {
+      box-sizing: border-box;
       position: relative;
       top: 105%;
       height: 0;
@@ -84,7 +103,7 @@ export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
     ul li {
       float: left;
       padding: 5px 10px 5px 10px;
-      margin: 10px 10px 0 0;
+      margin: 7px 5px 0 0;
       border-radius: 7px;
       background-color: lightgray;
       color: black;
@@ -93,49 +112,42 @@ export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
       transition: all 0.3s ease-in;
     }
     
-    ul li.dvBtn-active {
+    ul li.btn-active {
       background-color: springgreen;
       font-weight: bold;
     }
     
-    ul li.stBtn-active {
+    ul li.btn-active {
       background-color: springgreen;
       font-weight: bold;
     }
     
-    .search-division {
+    .search-item-section {
       position: relative;
       margin: 0 auto 25px;
       border-bottom: 1px solid lightsteelblue;
       outline: none;
       
-      .division-arrow {
+      .item-arrow {
         display: inline-block;
         margin-left: 15px;
         transition: all .4s linear;
       }
+
+      .item-arrow.show-list {
+        transform: rotate(180deg);
+      }
+    }
+    
+    .search-division {
 
       .division-item-list.show-list {
         padding: 5px;
         height: 52px;
       }
-
-      .division-arrow.show-list {
-        transform: rotate(180deg);
-      }
     }
 
     .search-state {
-      position: relative;
-      margin: 0 auto 25px;
-      border-bottom: 1px solid lightsteelblue;
-      outline: none;
-
-      .state-arrow {
-        display: inline-block;
-        margin-left: 15px;
-        transition: all .4s linear;
-      }
 
       .state-item-list.show-list {
         padding: 5px;
@@ -144,9 +156,31 @@ export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
           height: 127px;
         }
       }
+    }
 
-      .state-arrow.show-list {
-        transform: rotate(180deg);
+    .search-dow {
+
+      .dow-item-list.show-list {
+        padding: 5px;
+        height: 92px;
+        @media screen and (max-width: 1024px) {
+          height: 127px;
+        }
+      }
+    }
+
+    .search-fee {
+
+      ul li {
+        font-size: 12px;
+      }
+
+      .fee-item-list.show-list {
+        padding: 5px;
+        height: 112px;
+        @media screen and (max-width: 1024px) {
+          height: 147px;
+        }
       }
     }
     
@@ -167,10 +201,11 @@ export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
   .search-footer {
     display: flex;
     box-sizing: border-box;
-    position: absolute;
-    bottom: 70px;
+    position: sticky;
+    top: 50px;
     width: 100%;
     margin: auto;
+    z-index: 5;
     
     button {
       box-sizing: border-box;
