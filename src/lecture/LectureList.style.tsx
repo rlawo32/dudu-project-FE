@@ -41,7 +41,7 @@ export const LectureListView = styled.div<{$isShow:boolean}>`
       margin: 0 2rem;
       width: calc(100% - 4rem);
     }
-    margin: auto;
+    margin: 40px auto 0;
     flex-direction: column;
     text-align: center;
     pointer-events: ${({$isShow}) => $isShow ? "none" : "auto"};

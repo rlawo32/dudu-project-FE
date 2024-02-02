@@ -195,7 +195,7 @@ const LectureList = () => {
                             <div />
                     }
                 </div>
-                <TopButtonNavigation />
+                <TopButtonNavigation type={""} />
             </div>
 
             <FooterNavigation />
