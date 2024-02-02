@@ -9,6 +9,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamation as emptyIcon, faQuoteLeft as quoteLeft,
     faQuoteRight as quoteRight, faBagShopping as basketIcon} from "@fortawesome/free-solid-svg-icons";
 import {faClock as clockIcon} from "@fortawesome/free-regular-svg-icons";
+import {getCookie} from "../../Cookie";
 
 interface Props {
     ltCount:number;
@@ -32,44 +33,51 @@ const LectureListMainView = (props : Props) => {
     const {searchText} = useLectureSearchDataStore();
 
     const insertLectureBasketHandler = (itemData:any):void => {
-        const basketData:object = {
-            lectureNo: itemData.lectureNo
-        }
-        if(itemData.lectureBasketState === 'Y') {
-            alert("이미 장바구니에 있는 강좌입니다.");
-        } else {
-            axios({
-                method: "POST",
-                url: "/lecture/insertLectureBasket",
-                data: JSON.stringify(basketData),
-                headers: {'Content-type': 'application/json'}
-            }).then((res):void => {
-                if(res.data.result) {
-                    alert("장바구니에 추가되었습니다.");
-                    if(window.confirm('바로 장바구니를 확인하시겠습니까?') === true) {
-                        navigate("/lectureBasket");
+        if(window.localStorage.getItem("role") && getCookie("refreshToken")) {
+            const basketData:object = {
+                lectureNo: itemData.lectureNo
+            }
+            if(itemData.lectureBasketState === 'Y') {
+                alert("이미 장바구니에 있는 강좌입니다.");
+            } else {
+                axios({
+                    method: "POST",
+                    url: "/lecture/insertLectureBasket",
+                    data: JSON.stringify(basketData),
+                    headers: {'Content-type': 'application/json'}
+                }).then((res):void => {
+                    if(res.data.result) {
+                        alert("장바구니에 추가되었습니다.");
+                        if(window.confirm('바로 장바구니를 확인하시겠습니까?') === true) {
+                            navigate("/lectureBasket");
+                        }
+                        const listCopy: {
+                            lectureNo:number;
+                            lectureTitle:string;
+                            lectureDivision:string;
+                            lectureTeacher:string;
+                            lectureTime:string;
+                            lectureFee:number;
+                            lectureInstitution:string;
+                            lectureStateNo:number;
+                            lectureCount:number;
+                            lectureThumbnail:string;
+                            lectureBasketState:string;
+                        }[] = JSON.parse(JSON.stringify(props.lectureList));
+                        const idx:number = listCopy.findIndex(
+                            (el) => el.lectureNo === itemData.lectureNo);
+                        listCopy[idx].lectureBasketState = "Y";
+                        props.setLectureList(listCopy);
                     }
-                    const listCopy: {
-                        lectureNo:number;
-                        lectureTitle:string;
-                        lectureDivision:string;
-                        lectureTeacher:string;
-                        lectureTime:string;
-                        lectureFee:number;
-                        lectureInstitution:string;
-                        lectureStateNo:number;
-                        lectureCount:number;
-                        lectureThumbnail:string;
-                        lectureBasketState:string;
-                    }[] = JSON.parse(JSON.stringify(props.lectureList));
-                    const idx:number = listCopy.findIndex(
-                        (el) => el.lectureNo === itemData.lectureNo);
-                    listCopy[idx].lectureBasketState = "Y";
-                    props.setLectureList(listCopy);
-                }
-            }).catch((err):void => {
-                console.log(err.message);
-            })
+                }).catch((err):void => {
+                    console.log(err.message);
+                })
+            }
+        } else {
+            alert("로그인이 필요한 기능입니다.");
+            if(window.confirm('바로 로그인 하시겠습니까?') === true) {
+                navigate("/signIn");
+            }
         }
     }
 
