@@ -12,11 +12,11 @@ import {faArrowRightToBracket as loginIcon, faArrowRightFromBracket as logoutIco
 const StyledLink:any = styled(Link)`
   color: ${({theme}) => theme.textColor};
   text-decoration: none;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   
   .icon-custom {
-    font-size: 29px;
+    font-size: 32px;
   }
   
   div {
@@ -28,7 +28,7 @@ const StyledLink:any = styled(Link)`
 
 const LinkBox = styled.div`
   color: ${({theme}) => theme.textColor};
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   cursor: pointer;
   
@@ -50,7 +50,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     top: 0;
     left: 0;
     width: 100%;
-    height: 80px;
+    height: 90px;
     background: ${({theme}) => theme.noticeBgColor};
     color: ${({theme}) => theme.textColor};
     z-index: 99;
@@ -66,7 +66,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
       img {
         margin-top: 5px;
         height: 80px;
-        width: 180px;
+        width: 200px;
         object-fit: cover;
       }
     }
@@ -77,7 +77,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
       }
       display: flex;
       align-items: center;
-      font-size: 16px;
+      font-size: 20px;
     }
 
     .header-right {
@@ -90,7 +90,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
   
   .header-child {
     position: fixed;
-    top: 80px;
+    top: 90px;
     left: 0;
     display: flex;
     align-items: center;
@@ -98,6 +98,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     height: 0;
     width: 100%;
     background: ${({theme}) => theme.noticeBgColor};
+    font-size: 16px;
     overflow: hidden;
     z-index: 99;
     transition: height 0.3s ease-in;

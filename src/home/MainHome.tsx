@@ -72,7 +72,7 @@ const MainHome = ():any => {
 
             <MainInformEvent />
 
-            <TopButtonNavigation />
+            <TopButtonNavigation type={""} />
 
             <FooterNavigation />
         </Styled.MainHomeView>
