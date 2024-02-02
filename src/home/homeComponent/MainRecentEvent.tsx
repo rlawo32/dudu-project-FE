@@ -105,7 +105,9 @@ const MainRecentEvent = () => {
             subCategoryNo: 0,
             searchText: "",
             searchDivision: [],
-            searchState: []
+            searchState: [],
+            searchDow: [],
+            searchFee: []
         }
         const eventList = async () => {
             await axios({
