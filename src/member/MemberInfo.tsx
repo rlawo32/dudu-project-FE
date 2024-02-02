@@ -20,6 +20,7 @@ const MemberInfo = () => {
 
     const {setInputMemberEmail} = useJoinProgressStore();
 
+    const [memberRole, setMemberRole] = useState<string>("");
     const [memberInfo, setMemberInfo] = useState<{
         memberNo:number;
         memberEmail:string;
@@ -42,9 +43,11 @@ const MemberInfo = () => {
     const [isInfoWithdrawModal, setIsInfoWithdrawModal] = useState<boolean>(false);
 
     useEffect(() => {
-    })
+        const localRole:string|null = window.localStorage.getItem("role");
 
-    useEffect(() => {
+        if(localRole) {
+            setMemberRole(localRole);
+        }
         const memberInfoData = async ():Promise<void> => {
             await axios({
                 method: "GET",
@@ -93,11 +96,15 @@ const MemberInfo = () => {
                             </div>
                             <div className="content-item mi-phone">
                                 <span>휴대전화</span>
-                                <div>
-                                    {memberInfo?.memberPhone.substring(0, 3) + "-" +
-                                        memberInfo?.memberPhone.substring(3, 7) + "-" +
-                                        memberInfo?.memberPhone.substring(7)}
-                                </div>
+                                {memberInfo?.memberPhone !== '-' ?
+                                    <div>
+                                        {memberInfo?.memberPhone.substring(0, 3) + "-" +
+                                            memberInfo?.memberPhone.substring(3, 7) + "-" +
+                                            memberInfo?.memberPhone.substring(7)}
+                                    </div>
+                                    :
+                                    <div>{memberInfo?.memberPhone}</div>
+                                }
                             </div>
                         </div>
                         <div className="content-right">
@@ -115,9 +122,13 @@ const MemberInfo = () => {
                             </div>
                             <div className="content-item mi-gender">
                                 <span>성별</span>
-                                <div>
-                                    {memberInfo?.memberGender === 'M' ? "남" : "여"}
-                                </div>
+                                {memberInfo?.memberGender !== '-' ?
+                                    <div>
+                                        {memberInfo?.memberGender === 'M' ? "남" : "여"}
+                                    </div>
+                                    :
+                                    <div>{memberInfo?.memberGender}</div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -130,14 +141,19 @@ const MemberInfo = () => {
                 </div>
 
                 <div className="mi-info-update">
-                    <div className="mi-button-section">
-                        <button onClick={() => {window.scrollTo({ top: 50, behavior: "smooth" });
-                            setIsInfoWithdrawModal(true);}} style={{borderColor: "red"}}>회원 탈퇴</button>
-                        <button onClick={() => {window.scrollTo({ top: 50, behavior: "smooth" });
-                            setIsInfoPwUpdateModal(true);}}>비밀번호 변경</button>
-                        <button onClick={() => {window.scrollTo({ top: 50, behavior: "smooth" });
-                            setIsInfoUpdateModal(true);}}>회원정보 변경</button>
-                    </div>
+                    {memberRole !== 'ROLE_SOCIAL' ?
+                        <div className="mi-button-section">
+                            <button onClick={() => {window.scrollTo({ top: 50, behavior: "smooth" });
+                                setIsInfoWithdrawModal(true);}} style={{borderColor: "red"}}>회원 탈퇴</button>
+                            <button onClick={() => {window.scrollTo({ top: 50, behavior: "smooth" });
+                                setIsInfoPwUpdateModal(true);}}>비밀번호 변경</button>
+                            <button onClick={() => {window.scrollTo({ top: 50, behavior: "smooth" });
+                                setIsInfoUpdateModal(true);}}>회원정보 변경</button>
+                        </div>
+                        :
+                        <div className="mi-button-section" />
+                    }
+
                 </div>
 
                 <div className="mi-move-view">

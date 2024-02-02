@@ -127,11 +127,16 @@ const HeaderNavigation = ():any => {
         }
     }, [])
 
-    const logout = ():void => {
-        removeCookie("refreshToken");
-        window.localStorage.removeItem("role");
-        navigate("/");
-        window.location.reload();
+    const logout = ():boolean => {
+        if(window.confirm('로그아웃 하시겠습니까?') === true) {
+            removeCookie("refreshToken");
+            window.localStorage.removeItem("role");
+            navigate("/");
+            window.location.reload();
+            return true;
+        } else {
+            return false;
+        }
         // axios({
         //     method: "POST",
         //     url: "/logout"
