@@ -35,7 +35,6 @@ const LectureListMainView = (props : Props) => {
         const basketData:object = {
             lectureNo: itemData.lectureNo
         }
-        console.log(itemData.lectureBasketState)
         if(itemData.lectureBasketState === 'Y') {
             alert("이미 장바구니에 있는 강좌입니다.");
         } else {
