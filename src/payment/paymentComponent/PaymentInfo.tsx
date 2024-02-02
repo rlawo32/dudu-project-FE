@@ -1,6 +1,6 @@
-import PaymentWidget from "./PaymentWidget";
 import React from "react";
 import {useNavigate} from "react-router-dom";
+import TopButtonNavigation from "../../navigation/TopButtonNavigation";
 
 interface Props {
     lectureInfo:{
@@ -102,6 +102,8 @@ const PaymentInfo = (props:Props) => {
                     </div>
                 </div>
             </div>
+
+            <TopButtonNavigation type={"D"} />
             <div className="lp-button">
                 <div className="section-button">
                     <div className="button-fee">
