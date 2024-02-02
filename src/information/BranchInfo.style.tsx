@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const BranchInfoWriteView = styled.div`
   
-  
   .bi-write-main {
     height: 400px;
     width: 1160px;
@@ -86,6 +85,7 @@ export const BranchInfoListView = styled.div`
   .bi-sub-view {
     height: 100%;
     width: 100%;
+    margin: 40px auto 0;
     background: rgba(216,201,201,0.5);
 
     .bi-sub {

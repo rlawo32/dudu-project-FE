@@ -1,23 +1,21 @@
 import React, {useEffect, useRef, useState} from "react";
+import axios from "axios";
 
 import HeaderNavigation from "../navigation/HeaderNavigation";
 import FooterNavigation from "../navigation/FooterNavigation";
+import TopButtonNavigation from "../navigation/TopButtonNavigation";
+import BranchInfoMap from "./BranchInfoMap";
 
 import * as Styled from "./BranchInfo.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-    faArrowUpLong as topIcon, faLocationDot as positionIcon,
-    faPhone as contactIcon, faDoorClosed as roomIcon
-} from "@fortawesome/free-solid-svg-icons";
+import {faLocationDot as positionIcon, faPhone as contactIcon,
+    faDoorClosed as roomIcon} from "@fortawesome/free-solid-svg-icons";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {Navigation, Pagination} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import axios from "axios";
-import BranchInfoMap from "./BranchInfoMap";
-import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
 const BranchInfoList = () => {
     const institutionBtn:any = useRef<any>([]);
@@ -181,7 +179,7 @@ const BranchInfoList = () => {
                 }
             </div>
 
-            <TopButtonNavigation />
+            <TopButtonNavigation type={""} />
 
             <FooterNavigation />
         </Styled.BranchInfoListView>
