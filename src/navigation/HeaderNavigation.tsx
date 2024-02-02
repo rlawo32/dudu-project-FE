@@ -50,7 +50,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px;
+    height: 80px;
     background: ${({theme}) => theme.noticeBgColor};
     color: ${({theme}) => theme.textColor};
     z-index: 99;
@@ -65,8 +65,8 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
 
       img {
         margin-top: 5px;
-        height: 60px;
-        width: 170px;
+        height: 80px;
+        width: 180px;
         object-fit: cover;
       }
     }
@@ -90,7 +90,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
   
   .header-child {
     position: fixed;
-    top: 60px;
+    top: 80px;
     left: 0;
     display: flex;
     align-items: center;
