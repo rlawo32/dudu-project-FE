@@ -1,17 +1,17 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
+import {getCookie} from "../Cookie";
 import axios from "axios";
 import dayjs from "dayjs";
 import dompurify from "dompurify";
 
 import HeaderNavigation from "../navigation/HeaderNavigation";
 import FooterNavigation from "../navigation/FooterNavigation";
+import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
 import * as Styled from "./LectureDetail.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowUpLong as topIcon, faChevronDown as arrow} from "@fortawesome/free-solid-svg-icons";
-import TopButtonNavigation from "../navigation/TopButtonNavigation";
-import {getCookie} from "../Cookie";
+import {faChevronDown as arrow} from "@fortawesome/free-solid-svg-icons";
 
 const LectureDetail = () => {
     const navigate = useNavigate();
@@ -377,7 +377,7 @@ const LectureDetail = () => {
                 </div>
             </div>
 
-            <TopButtonNavigation />
+            <TopButtonNavigation type={""} />
 
             <div className="footer-navigation">
                 <FooterNavigation />

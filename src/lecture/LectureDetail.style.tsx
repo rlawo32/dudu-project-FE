@@ -7,7 +7,7 @@ interface Props {
 export const LectureDetailView = styled.div<Props>`
   position: relative;
   box-sizing: border-box;
-  margin-top: 8%;
+  margin-top: 200px;
   word-break: keep-all;
   overflow-wrap: break-word;
   line-height: 1.75;
