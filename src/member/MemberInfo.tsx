@@ -177,7 +177,7 @@ const MemberInfo = () => {
                 </div>
             </div>
 
-            <TopButtonNavigation />
+            <TopButtonNavigation type={""} />
 
             <FooterNavigation />
         </Styled.MemberInfoView>

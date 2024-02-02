@@ -6,6 +6,7 @@ export const MemberInfoView = styled.div`
   .mi-sub {
     height: 100%;
     width: 100%;
+    margin: 40px auto 0;
     background: rgba(216,201,201,0.5);
 
     .mi-sub-view {
