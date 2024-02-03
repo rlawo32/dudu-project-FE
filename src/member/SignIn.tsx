@@ -24,6 +24,9 @@ const SignIn = ():any => {
     const [isFindIdModal, setIsFindIdModal] = useState<boolean>(false);
     const [isFindPwModal, setIsFindPwModal] = useState<boolean>(false);
 
+    const [loginPwMessage, setLoginPwMessage] = useState<string>("");
+    const [isLoginPwEffect, setIsLoginPwEffect] = useState<boolean>(true);
+
     const {setActiveProgressTab} = useJoinProgressStore();
 
     const passwordSeeHandler = ():void => {
@@ -38,6 +41,16 @@ const SignIn = ():any => {
     const activeEnter = (e:any):void => {
         if(e.key === "Enter") {
             signInHandler();
+        }
+    }
+
+    const activeCapsLock = (e:any):void => {
+        if(e.getModifierState("CapsLock")) {
+            setLoginPwMessage('CapsLock 켜짐');
+            setIsLoginPwEffect(false);
+        } else {
+            setLoginPwMessage('');
+            setIsLoginPwEffect(true);
         }
     }
 
@@ -116,16 +129,22 @@ const SignIn = ():any => {
                         <Styled.InputBox>
                             <FontAwesomeIcon icon={idIcon} className="icon-custom" />
                             <Styled.SignInInput type="text" onChange={(e) => setLoginMemberId(e.target.value)}
-                                                onKeyDown={(e) => activeEnter(e)}placeholder="아이디를 입력해주세요."/>
+                                                onKeyDown={(e) => activeEnter(e)} placeholder="아이디를 입력해주세요."/>
                         </Styled.InputBox>
-                        <Styled.InputBox>
-                            <FontAwesomeIcon icon={pwIcon} className="icon-custom" />
-                            <Styled.SignInInput type="password" onChange={(e) => setLoginMemberPw(e.target.value)}
-                                                onKeyDown={(e) => activeEnter(e)} placeholder="비밀번호를 입력해주세요."
-                                                ref={passwordRef}/>
-                            <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
-                                             onClick={() => passwordSeeHandler()}/>
-                        </Styled.InputBox>
+                        <div className="section-password">
+                            <Styled.InputBox>
+                                <FontAwesomeIcon icon={pwIcon} className="icon-custom" />
+                                <Styled.SignInInput type="password" onChange={(e) => setLoginMemberPw(e.target.value)}
+                                                    onKeyPress={(e) => activeCapsLock(e)}
+                                                    onKeyDown={(e) => activeEnter(e)} placeholder="비밀번호를 입력해주세요."
+                                                    ref={passwordRef}/>
+                                <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
+                                                 onClick={() => passwordSeeHandler()}/>
+                            </Styled.InputBox>
+                            <div style={  isLoginPwEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'14px', marginLeft:'35px'} }>
+                                {loginPwMessage}
+                            </div>
+                        </div>
 
                         <Styled.SignInButton onClick={() => signInHandler()}>로그인</Styled.SignInButton>
 

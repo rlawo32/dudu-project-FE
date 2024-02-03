@@ -88,6 +88,10 @@ export const SignInMain = styled.div`
     .signIn-box {
       margin: auto;
       width: fit-content;
+      
+      .section-password {
+        height: 70px;
+      }
     }
   }
 `;
