@@ -148,6 +148,7 @@ export const EnterInfoView = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 22px;
+    word-break: keep-all;
     
     .input-title {
       height: 30px;
@@ -157,6 +158,7 @@ export const EnterInfoView = styled.div`
     }
     
     .input-text {
+      position: relative;
       height: 40px;
       
       .input-password {
@@ -242,13 +244,55 @@ export const JoinCompleteView = styled.div`
   }
   margin: auto;
   
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
   h1 {
     text-align: center;
     margin-bottom: 40px;
+  }
+  
+  .jc-title {
+    position: relative;
+    top: 180px;
+    
+  }
+
+  .jc-button-section {
+    position: relative;
+    top: 370px;
+    width: fit-content;
+    margin: auto;
+    
+    .btn-home {
+        display: inline-block;
+        min-height: 40px;
+        min-width: 120px;
+        padding: 12px 10px 13px;
+        border: 2px solid ${({theme}) => theme.rgbaMedium};
+        border-radius: 8px;
+        background-color: ${({theme}) => theme.bgColor};
+        color: ${({theme}) => theme.textColor};
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        transition: all .4s ease;
+        cursor: pointer;
+      }
+      
+      .btn-login {
+        display: inline-block;
+        min-height: 40px;
+        min-width: 120px;
+        padding: 12px 10px 13px;
+        margin-left: 10px;
+        border: 1px solid ${({theme}) => theme.rgbaLight};
+        border-radius: 8px;
+        background-color: ${({theme}) => theme.reverseBgColor};
+        color: ${({theme}) => theme.reverseTextColor};
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        transition: all .4s ease;
+        cursor: pointer;
+      }
   }
 `;
 
