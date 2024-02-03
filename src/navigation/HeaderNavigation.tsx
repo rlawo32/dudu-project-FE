@@ -72,7 +72,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     }
 
     .header-center {
-      @media screen and (max-width: 720px) {
+      @media screen and (max-width: 1024px) {
         display: none;
       }
       display: flex;
@@ -90,7 +90,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
   
   .header-child {
     position: fixed;
-    top: 90px;
+    top: 70px;
     left: 0;
     display: flex;
     align-items: center;
@@ -106,7 +106,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
   }
 
   .header-child.active {
-    height: 50px;
+    height: 70px;
   }
 `;
 
