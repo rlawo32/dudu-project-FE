@@ -99,6 +99,9 @@ const LectureList = () => {
     }, [])
 
     useEffect(() => {
+        if(mainCategoryNo === 0) {
+            setSubCategoryNo(0);
+        }
         const getListData:object = {
             listType: "A",
             pageNo: pageNo,
