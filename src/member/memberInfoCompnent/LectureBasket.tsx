@@ -82,25 +82,38 @@ const LectureBasket = () => {
     }
 
     const deleteLectureBasketHandler = (lectureBasketNo:number):boolean => {
-        if(window.confirm('장바구니에서 삭제 하시겠습니까?') === true) {
-            const deleteData:object = {
-                deleteLectureBasketNo: lectureBasketNo,
-                lectureBasketDeleteList: checkItems
+        if(checkItems.length > 0) {
+            if(window.confirm('장바구니에서 삭제 하시겠습니까?') === true) {
+                const deleteData:object = {
+                    deleteLectureBasketNo: lectureBasketNo,
+                    lectureBasketDeleteList: checkItems
+                }
+                axios({
+                    method: "DELETE",
+                    url: "/lecture/deleteLectureBasket",
+                    data: JSON.stringify(deleteData),
+                    headers: {'Content-type': 'application/json'}
+                }).then((res):void => {
+                    alert('삭제되었습니다.');
+                    window.location.reload();
+                }).catch((err):void => {
+                    console.log(err.message);
+                })
+                return true;
+            } else {
+                return false;
             }
-            axios({
-                method: "DELETE",
-                url: "/lecture/deleteLectureBasket",
-                data: JSON.stringify(deleteData),
-                headers: {'Content-type': 'application/json'}
-            }).then((res):void => {
-                alert('삭제되었습니다.');
-                window.location.reload();
-            }).catch((err):void => {
-                console.log(err.message);
-            })
-            return true;
         } else {
+            alert('삭제할 강좌를 선택해주세요');
             return false;
+        }
+    }
+
+    const lectureApplicationHandler = ():void => {
+        if(checkItems.length > 0) {
+            navigate("/lecturePayment", { state: checkItems})
+        } else {
+            alert("결제할 강좌를 선택해주세요");
         }
     }
 
@@ -299,7 +312,7 @@ const LectureBasket = () => {
                 </div>
                 <div>
                     <button className="btn-payment"
-                            onClick={() => {window.scrollTo({ top: 50, behavior: "smooth" });}}>결제하기</button>
+                            onClick={() => lectureApplicationHandler()}>결제하기</button>
                 </div>
             </div>
             <FooterNavigation />
