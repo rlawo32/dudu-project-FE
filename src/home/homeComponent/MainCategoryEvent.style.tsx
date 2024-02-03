@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 export const MainCategoryEventView = styled.div`
+  margin: 500px auto;
 
   .el-title {
     width: 1440px;
-    margin: 5% auto;
+    margin: 80px auto;
     @media screen and (max-width: 1440px) {
       width: 1024px;
-      margin: 10% auto;
+      margin: 300px auto;
     }
     @media screen and (max-width: 1024px) {
       width: fit-content;
@@ -54,6 +55,7 @@ export const MainCategoryEventView = styled.div`
       position: relative;
       display: inline-block;
       height: 100vh;
+      min-height: 700px;
       width: 70%;
       border-radius: 0 12px 12px 0;
       @media screen and (max-width: 1440px) {
