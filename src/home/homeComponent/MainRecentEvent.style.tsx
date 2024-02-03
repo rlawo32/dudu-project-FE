@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 export const MainRecentEventView = styled.div`
+  position: relative;
   width: 1440px;
-  margin: 5% auto;
+  margin: 500px auto;
   @media screen and (max-width: 1440px) {
     width: 1024px;
-    margin: 10% auto;
+    margin: 300px auto;
   }
   @media screen and (max-width: 1024px) {
     width: 100%;
