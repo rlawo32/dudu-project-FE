@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const MainRecommendEventView = styled.div`
   width: 1440px;
-  margin: 10% auto;
+  margin: 200px auto;
   @media screen and (max-width: 1440px) {
     width: 1024px;
     margin: 20% auto 10%;
