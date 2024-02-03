@@ -57,6 +57,7 @@ const TabLectureSubCategory = styled.div`
         font-size: 25px;
         background-color: lightgrey;
         text-align: center;
+        color: black;
 
         .sc-item-cover {
           display: none;
