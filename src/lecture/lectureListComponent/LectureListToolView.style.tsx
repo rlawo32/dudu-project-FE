@@ -96,10 +96,10 @@ export const LectureListTool = styled.div<{
   }
 
   .lt-search-inventory {
+    box-sizing: border-box;
     position: relative;
-    height: ${({$isInventory}) => $isInventory ? "60px" : 0};
+    height: ${({$isInventory}) => $isInventory ? "70px" : 0};
     width: 100%;
-    box-sizing: border-box; // padding 값을 줄 때 부모 영역을 벗어나는 문제를 해결
     padding: ${({$isInventory}) => $isInventory ? "5px 10px" : 0};
     margin-top: 20px;
     border: none;
@@ -107,61 +107,84 @@ export const LectureListTool = styled.div<{
     background-color: ${({theme}) => theme.boxBgColor};
     transition: all 0.5s ease-in-out;
     
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    
-    .inventory-item {
-      height: fit-content;
-      width: fit-content;
-      margin: 5px; 
-      padding: 5px 10px;
-      border: 1px solid grey;
-      border-radius: 20px;
-      background-color: ${({theme}) => theme.bgColor};
-      font-size: 13px;
-      font-weight: bold;
-      
-      .icon-custom {
-        margin-left: 5px;
-        cursor: pointer;
-        opacity: 0.7;
-      }
-    }
+    .lt-search-inventory-box {
+      box-sizing: border-box;
+      position: relative;
+      height: ${({$isInventory}) => $isInventory ? "58px" : 0};
+      width: 100%;
+      padding: ${({$isInventory}) => $isInventory ? "2px" : 0};
+      overflow-x: auto;
+      white-space: nowrap;
+      transition: all 0.5s ease-in-out;
 
-    .inventory-item.item-reset {
-      display: ${({$isInventory}) => $isInventory ? "block" : "none"};
-      margin-right: 25px;
-      padding: 0;
-      border: none;
-      background: none;
-      font-size: 25px;
-    }
-    
-    .inventory-item.item-searchText {
-      display: ${({$isInventory}) => $isInventory ?
-    ({$searchText}) => $searchText !== "" ?
-        "block" : "none" : "none"};
-    }
-    .inventory-item.item-searchDivision {
-      display: ${({$isInventory}) => $isInventory ?
-    ({$searchDivision}) => $searchDivision.length !== 0 ?
-        "block" : "none" : "none"};
-    }
-    .inventory-item.item-searchState {
-      display: ${({$isInventory}) => $isInventory ?
-    ({$searchState}) => $searchState.length !== 0 ?
-        "block" : "none" : "none"};
-    }
-    .inventory-item.item-searchDow {
-      display: ${({$isInventory}) => $isInventory ?
-              ({$searchDow}) => $searchDow.length !== 0 ?
-                      "block" : "none" : "none"};
-    }
-    .inventory-item.item-searchFee {
-      display: ${({$isInventory}) => $isInventory ?
-              ({$searchFee}) => $searchFee.length !== 0 ?
-                      "block" : "none" : "none"};
+      display: flex;
+      align-items: center;
+
+      &::-webkit-scrollbar {
+        height: 5px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: gray; /* 스크롤바의 색상 */
+        border-radius: 15px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: rgba(200, 200, 200, .1);
+      }
+      
+      .inventory-item {
+        height: fit-content;
+        width: fit-content;
+        margin: 5px;
+        padding: 5px 10px;
+        border: 1px solid grey;
+        border-radius: 20px;
+        background-color: ${({theme}) => theme.bgColor};
+        font-size: 13px;
+        font-weight: bold;
+
+        .icon-custom {
+          margin-left: 5px;
+          cursor: pointer;
+          opacity: 0.7;
+        }
+      }
+      
+      .inventory-item.item-reset {
+        display: ${({$isInventory}) => $isInventory ? "block" : "none"};
+        margin-right: 25px;
+        padding: 0;
+        border: none;
+        background: none;
+        font-size: 25px;
+      }
+
+      .inventory-item.item-searchText {
+        display: ${({$isInventory}) => $isInventory ?
+                ({$searchText}) => $searchText !== "" ?
+                        "block" : "none" : "none"};
+      }
+      .inventory-item.item-searchDivision {
+        display: ${({$isInventory}) => $isInventory ?
+                ({$searchDivision}) => $searchDivision.length !== 0 ?
+                        "block" : "none" : "none"};
+      }
+      .inventory-item.item-searchState {
+        display: ${({$isInventory}) => $isInventory ?
+                ({$searchState}) => $searchState.length !== 0 ?
+                        "block" : "none" : "none"};
+      }
+      .inventory-item.item-searchDow {
+        display: ${({$isInventory}) => $isInventory ?
+                ({$searchDow}) => $searchDow.length !== 0 ?
+                        "block" : "none" : "none"};
+      }
+      .inventory-item.item-searchFee {
+        display: ${({$isInventory}) => $isInventory ?
+                ({$searchFee}) => $searchFee.length !== 0 ?
+                        "block" : "none" : "none"};
+      }
     }
   }
 `;

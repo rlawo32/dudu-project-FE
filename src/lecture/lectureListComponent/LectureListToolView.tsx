@@ -174,60 +174,62 @@ const LectureListToolView = (props : Props) => {
                 </div>
             </div>
             <div className="lt-search-inventory">
-                <div className="inventory-item item-reset">
-                    <FontAwesomeIcon icon={resetIcon} className="icon-custom" onClick={() => onClickSearchReset()} />
-                </div>
-                <div className="inventory-item item-searchText">
-                    <span>{isSearchText}</span>
-                    <span>
+                <div className="lt-search-inventory-box">
+                    <div className="inventory-item item-reset">
+                        <FontAwesomeIcon icon={resetIcon} className="icon-custom" onClick={() => onClickSearchReset()} />
+                    </div>
+                    <div className="inventory-item item-searchText">
+                        <span>{isSearchText}</span>
+                        <span>
                         <FontAwesomeIcon icon={deleteBtn} className="icon-custom"
                                          onClick={() => {setSearchText(""); setSearchButton(!searchButton)}}/>
                     </span>
-                </div>
-                {
-                    isSearchDivisionArr.map((item) => (
-                        <div key={item.dvItem} className="inventory-item item-searchDivision">
-                            <span>{item.dvItem}</span>
-                            <span>
+                    </div>
+                    {
+                        isSearchDivisionArr.map((item) => (
+                            <div key={item.dvItem} className="inventory-item item-searchDivision">
+                                <span>{item.dvItem}</span>
+                                <span>
                                 <FontAwesomeIcon icon={deleteBtn} className="icon-custom"
                                                  onClick={() => {removeLtDivisionArr(item.dvItem); setSearchButton(!searchButton)}}/>
                             </span>
-                        </div>
-                    ))
-                }
-                {
-                    isSearchStateArr.map((item) => (
-                        <div key={item.stItem} className="inventory-item item-searchState">
-                            <span>{item.stName}</span>
-                            <span>
+                            </div>
+                        ))
+                    }
+                    {
+                        isSearchStateArr.map((item) => (
+                            <div key={item.stItem} className="inventory-item item-searchState">
+                                <span>{item.stName}</span>
+                                <span>
                                 <FontAwesomeIcon icon={deleteBtn} className="icon-custom"
                                                  onClick={() => {removeLtStateArr(item.stItem); setSearchButton(!searchButton)}}/>
                             </span>
-                        </div>
-                    ))
-                }
-                {
-                    isSearchDowArr.map((item) => (
-                        <div key={item.dwItem} className="inventory-item item-searchDow">
-                            <span>{item.dwName}</span>
-                            <span>
+                            </div>
+                        ))
+                    }
+                    {
+                        isSearchDowArr.map((item) => (
+                            <div key={item.dwItem} className="inventory-item item-searchDow">
+                                <span>{item.dwName}</span>
+                                <span>
                                 <FontAwesomeIcon icon={deleteBtn} className="icon-custom"
                                                  onClick={() => {removeLtDowArr(item.dwItem); setSearchButton(!searchButton)}}/>
                             </span>
-                        </div>
-                    ))
-                }
-                {
-                    isSearchFeeArr.map((item) => (
-                        <div key={item.feItem} className="inventory-item item-searchFee">
-                            <span>{item.feName}</span>
-                            <span>
+                            </div>
+                        ))
+                    }
+                    {
+                        isSearchFeeArr.map((item) => (
+                            <div key={item.feItem} className="inventory-item item-searchFee">
+                                <span>{item.feName}</span>
+                                <span>
                                 <FontAwesomeIcon icon={deleteBtn} className="icon-custom"
                                                  onClick={() => {removeLtFeeArr(item.feItem); setSearchButton(!searchButton)}}/>
                             </span>
-                        </div>
-                    ))
-                }
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
         </Styled.LectureListTool>
     )
