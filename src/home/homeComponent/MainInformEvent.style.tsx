@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const MainInformEventView = styled.div`
+  position: relative;
   width: 1440px;
-  margin: 160px auto;
+  margin: 150px auto;
   @media screen and (max-width: 1440px) {
     width: 100%;
     margin: 10% auto;
@@ -50,9 +51,10 @@ export const MainInformEventView = styled.div`
       cursor: pointer;
       @media screen and (max-width: 1024px) {
         min-height: 0;
-        width: calc(100% - 126px);
+        width: calc(100% - 56px);
         padding: 20px 20px 45px 20px;
         border-bottom: 1px solid #d8c9c9;
+        background: none;
       }
       @media screen and (min-width: 1024px) {
         min-height: 150px;
