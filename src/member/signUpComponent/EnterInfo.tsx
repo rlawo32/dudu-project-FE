@@ -112,7 +112,7 @@ const EnterInfo = ():any => {
         setMemberPw(currentData);
 
         if(!regexChk.test(currentData)) {
-            setMemberPwMessage('8~16자 영문 대 소문자, 숫자, 특수문자를 조합해주세요.');
+            setMemberPwMessage('8~16자 영문 대소문자, 숫자, 특수문자를 조합해주세요');
             setIsMemberPwEffect(false);
         } else {
             setMemberPwMessage('');
@@ -247,7 +247,6 @@ const EnterInfo = ():any => {
                 data: JSON.stringify(signUpData),
                 headers: {'Content-type': 'application/json'}
             }).then((res) => {
-                window.alert("회원가입 완료");
                 setActiveProgressTab("joinProgress4");
             }).catch((err):void => {
                 console.log(err.message);
@@ -294,7 +293,7 @@ const EnterInfo = ():any => {
                             <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
                                              onClick={() => passwordSeeHandler("")}/>
                         </div>
-                        <div style={  isMemberPwEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
+                        <div style={  isMemberPwEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'10px', marginLeft:'5px'} }>
                             {memberPwMessage}
                         </div>
                     </div>
@@ -308,7 +307,7 @@ const EnterInfo = ():any => {
                             <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
                                              onClick={() => passwordSeeHandler("chk")}/>
                         </div>
-                        <div style={  isMemberPwChkEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
+                        <div style={  isMemberPwChkEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'11px', marginLeft:'5px'} }>
                             {memberPwChkMessage}
                         </div>
                     </div>
