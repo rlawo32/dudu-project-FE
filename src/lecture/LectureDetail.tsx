@@ -92,7 +92,8 @@ const LectureDetail = () => {
 
     const lectureApplicationHandler = ():void => {
         if(window.localStorage.getItem("role") && getCookie("refreshToken")) {
-            navigate("/lecturePayment", { state: lectureDetail})
+            navigate("/lecturePayment", { state: [{lectureNo:lectureDetail.lectureNo,
+                    lectureTitle:lectureDetail.lectureTitle, lectureFee: lectureDetail.lectureFee}]})
         } else {
             alert("로그인이 필요한 기능입니다.");
             if(window.confirm('바로 로그인 하시겠습니까?') === true) {
