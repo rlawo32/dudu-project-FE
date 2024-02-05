@@ -28,19 +28,16 @@ const MemberInfoUpdate = (props:Props) => {
     const {inputMemberEmail} = useJoinProgressStore();
 
     const [memberName, setMemberName] = useState<string>(props.memberData.memberName);
-    const [memberEmail, setMemberEmail] = useState<string>(props.memberData.memberEmail);
     const [memberBirth, setMemberBirth] = useState<string>(props.memberData.memberBirth);
     const [memberPhone, setMemberPhone] = useState<string>(props.memberData.memberPhone);
     const [memberGender, setMemberGender] = useState<string>(props.memberData.memberGender);
 
     const [memberNameMessage, setMemberNameMessage] = useState<string>("");
-    const [memberEmailMessage, setMemberEmailMessage] = useState<string>("");
     const [memberBirthMessage, setMemberBirthMessage] = useState<string>("");
     const [memberPhoneMessage, setMemberPhoneMessage] = useState<string>("");
     const [memberGenderMessage, setMemberGenderMessage] = useState<string>("");
 
     const [isMemberNameEffect, setIsMemberNameEffect] = useState<boolean>(true);
-    const [isMemberEmailEffect, setIsMemberEmailEffect] = useState<boolean>(true);
     const [isMemberBirthEffect, setIsMemberBirthEffect] = useState<boolean>(true);
     const [isMemberPhoneEffect, setIsMemberPhoneEffect] = useState<boolean>(true);
     const [isMemberGenderEffect, setIsMemberGenderEffect] = useState<boolean>(true);
@@ -51,6 +48,9 @@ const MemberInfoUpdate = (props:Props) => {
     const [memberPresentPwChk, setMemberPresentPwChk] = useState<string>("");
     const [isPresentPwChkEffect, setIsPresentPwChkEffect] = useState<boolean>(true);
     const [presentPwChkMessage, setPresentPwChkMessage] = useState<string>("");
+
+    const [isCapsLockEffect, setIsCapsLockEffect] = useState<boolean>(true);
+    const [capsLockMessage, setCapsLockMessage] = useState<string>("");
 
     const memberNameRegex = (data:string):void => {
         const regexChk:RegExp = /^[ㄱ-ㅎ가-힣a-zA-Z]+$/i;
@@ -145,6 +145,16 @@ const MemberInfoUpdate = (props:Props) => {
             passwordRef.current.type = 'text';
         } else {
             passwordRef.current.type = 'password';
+        }
+    }
+
+    const activeCapsLock = (e:any):void => {
+        if(e.getModifierState("CapsLock")) {
+            setCapsLockMessage('CapsLock 켜짐');
+            setIsCapsLockEffect(false);
+        } else {
+            setCapsLockMessage('');
+            setIsCapsLockEffect(true);
         }
     }
 
@@ -301,12 +311,17 @@ const MemberInfoUpdate = (props:Props) => {
                                 <div className="modal-infoUpdate-input">
                                     <div>현재 비밀번호 입력</div>
                                     <div className="input-password">
-                                        <input type="password" value={memberPresentPwChk} onChange={(e) => memberPresentPwCheckHandler(e.target.value)}
-                                               style={ isPresentPwChkEffect ? {} : {borderColor:'red'} } ref={passwordRef}/>
+                                        <input type="password" value={memberPresentPwChk} style={ isPresentPwChkEffect ? {} : {borderColor:'red'} }
+                                               onChange={(e) => memberPresentPwCheckHandler(e.target.value)}
+                                               onKeyPress={(e) => activeCapsLock(e)} ref={passwordRef}/>
                                         <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
                                                          onClick={() => passwordSeeHandler()}/>
                                     </div>
                                     <div style={ isPresentPwChkEffect ? {} : {color:'red', fontSize:'11px', marginLeft: '5px', fontWeight: 'bold'} }>{presentPwChkMessage}</div>
+                                    <div style={ isCapsLockEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'10px', marginLeft:'5px'} }
+                                         className="capsLock-section">
+                                        {capsLockMessage}
+                                    </div>
                                 </div>
                                 <div className="modal-btn">
                                     <button onClick={() => setIsInfoUpdateModal(true)} className="btn-cancel">닫기</button>
