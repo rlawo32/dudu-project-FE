@@ -56,7 +56,7 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
       
       .lp-main-content {
         padding: 40px;
-        margin-top: 0;
+        margin-top: 20px;
         border: 1px solid #ddcdc5;
         border-radius: 12px;
         
