@@ -52,6 +52,7 @@ export const MemberInfoUpdateView = styled.div`
     margin: 20px auto 0;
     
     .input-item {
+      position: relative;
       height: 60px;
       
       .item-top {
@@ -143,6 +144,7 @@ export const MemberInfoUpdateView = styled.div`
         }
         
         .modal-infoUpdate-input {
+          position: relative;
           height: 120px;
           width: fit-content;
           margin: 40px auto 0;
@@ -163,6 +165,12 @@ export const MemberInfoUpdateView = styled.div`
                 opacity: 0.5;
               }
             }
+          }
+
+          .capsLock-section {
+            position: absolute;
+            top: 38px;
+            right: -70px;
           }
         }
         
@@ -296,6 +304,7 @@ export const MemberInfoPwUpdateView = styled.div`
     margin: 0 auto;
     
     .input-item {
+      position: relative;
       height: 60px;
       width: 280px;
       margin: 0 auto 24px;
@@ -316,6 +325,12 @@ export const MemberInfoPwUpdateView = styled.div`
             opacity: 0.5;
           }
         }
+      }
+      
+      .capsLock-section {
+        position: absolute;
+        top: 5px;
+        left: 95px;
       }
     }
     
@@ -425,6 +440,7 @@ export const MemberInfoWithdrawView = styled.div`
     margin: 0 auto;
     
     .input-item {
+      position: relative;
       height: 60px;
       width: 280px;
       margin: 0 auto 22px;
@@ -445,6 +461,12 @@ export const MemberInfoWithdrawView = styled.div`
             opacity: 0.5;
           }
         }
+      }
+
+      .capsLock-section {
+        position: absolute;
+        top: 5px;
+        left: 95px;
       }
     }
     
