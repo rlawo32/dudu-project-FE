@@ -144,14 +144,17 @@ export const EnterInfoView = styled.div`
   }
   
   .input-box {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: fit-content;
     margin-bottom: 22px;
     word-break: keep-all;
     
     .input-title {
       height: 30px;
+      width: 100px;
       margin-right: 30px;
       font-size: 17px;
       font-weight: bold;
@@ -177,6 +180,18 @@ export const EnterInfoView = styled.div`
             opacity: 0.5;
           }
         }
+      }
+    }
+    
+    .capsLock-section {
+      position: absolute;
+      top: 10px;
+      right: -70px;
+
+      @media screen and (max-width: 800px) {
+        top: 2px;
+        right: -62px;
+        width: 60px;
       }
     }
     
