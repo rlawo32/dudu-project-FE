@@ -46,9 +46,19 @@ const FindPwModal = (props: Props) => {
 
     const [isMemberEmailCheck, setIsMemberEmailCheck] = useState<boolean>(false);
     const [changePw, setChangePw] = useState<string>("");
+
     const [changePwMessage, setChangePwMessage] = useState<string>("");
+    const [changeChkPwMessage, setChangeChkPwMessage] = useState<string>("");
+    const [capsLockMessage, setCapsLockMessage] = useState<string>("");
+    const [chkCapsLockMessage, setChkCapsLockMessage] = useState<string>("");
+
     const [isChangePwEffect, setIsChangePwEffect] = useState<boolean>(true);
+    const [isChangeChkPwEffect, setIsChangeChkPwEffect] = useState<boolean>(true);
+    const [isCapsLockEffect, setIsCapsLockEffect] = useState<boolean>(true);
+    const [isChkCapsLockEffect, setIsChkCapsLockEffect] = useState<boolean>(true);
+
     const [isChangePwConfirm, setIsChangePwConfirm] = useState<boolean>(false);
+    const [isChangeChkPwConfirm, setIsChangeChkPwConfirm] = useState<boolean>(false);
 
     const {inputMemberEmail} = useJoinProgressStore();
 
@@ -61,9 +71,11 @@ const FindPwModal = (props: Props) => {
         if(!regexChk.test(currentData)) {
             setChangePwMessage('8~16자 영문 대 소문자, 숫자, 특수문자를 조합해주세요.');
             setIsChangePwEffect(false);
+            setIsChangePwConfirm(false);
         } else {
             setChangePwMessage('');
             setIsChangePwEffect(true);
+            setIsChangePwConfirm(true);
         }
     }
 
@@ -71,13 +83,13 @@ const FindPwModal = (props: Props) => {
         const currentData:string = data;
 
         if(changePw !== currentData) {
-            setChangePwMessage('비밀번호를 다시 확인해주세요.');
-            setIsChangePwEffect(false);
-            setIsChangePwConfirm(false);
+            setChangeChkPwMessage('비밀번호를 다시 확인해주세요.');
+            setIsChangeChkPwEffect(false);
+            setIsChangeChkPwConfirm(false);
         } else {
-            setChangePwMessage('');
-            setIsChangePwEffect(true);
-            setIsChangePwConfirm(true);
+            setChangeChkPwMessage('');
+            setIsChangeChkPwEffect(true);
+            setIsChangeChkPwConfirm(true);
         }
     }
 
@@ -99,13 +111,32 @@ const FindPwModal = (props: Props) => {
         }
     }
 
+    const activeCapsLock = (e:any, type:string):void => {
+        if(type === 'chk') {
+            if(e.getModifierState("CapsLock")) {
+                setChkCapsLockMessage('CapsLock 켜짐');
+                setIsChkCapsLockEffect(false);
+            } else {
+                setChkCapsLockMessage('');
+                setIsChkCapsLockEffect(true);
+            }
+        } else {
+            if(e.getModifierState("CapsLock")) {
+                setCapsLockMessage('CapsLock 켜짐');
+                setIsCapsLockEffect(false);
+            } else {
+                setCapsLockMessage('');
+                setIsCapsLockEffect(true);
+            }
+        }
+    }
+
     const changePwHandler = ():void => {
         const changePwData:object = {
             memberEmail: inputMemberEmail,
             memberPw: changePw
         }
-
-        if(isChangePwConfirm) {
+        if(isChangePwConfirm && isChangeChkPwConfirm) {
             axios({
                 method: "POST",
                 url: "/member/findMemberPw",
@@ -113,6 +144,7 @@ const FindPwModal = (props: Props) => {
                 headers: {'Content-type': 'application/json'}
             }).then((res) => {
                 alert('변경완료');
+                window.location.reload();
             }).catch((err) => {
                 console.log(err);
             })
@@ -130,7 +162,7 @@ const FindPwModal = (props: Props) => {
             {
                 isMemberEmailCheck ?
                     <Modal.ModalFindView>
-                        <div className="findIdView-box">
+                        <div className="findView-title">
                             <p>
                                 비밀번호 찾기
                             </p>
@@ -138,27 +170,44 @@ const FindPwModal = (props: Props) => {
                                 비밀번호를 새롭게 설정하실 수 있습니다.
                             </p>
                         </div>
-                        <span></span>
-                        <div className="findIdView-box">
-                            <div>
-                                <div style={{marginTop: "25px"}}>비밀번호 입력</div>
-                                <div className="input-password">
-                                    <Modal.ModalInput type="password" onChange={(e) => changePwRegex(e.target.value)}
+                        <div className="findView-box">
+                            <div className="input-section">
+                                <div className="section-title">비밀번호 입력</div>
+                                <div className="section-password">
+                                    <Modal.ModalInput type="password" style={ isChangePwEffect ? {} : {border: "3px solid red"} }
+                                                      onChange={(e) => changePwRegex(e.target.value)}
+                                                      onKeyPress={(e) => activeCapsLock(e, "")}
                                                       placeholder="비밀번호를 입력해주세요." ref={passwordRef}/>
                                     <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
                                                      onClick={() => passwordSeeHandler("")}/>
                                 </div>
+                                <div style={ isChangePwEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'12px', marginLeft:'5px'} }>
+                                    {changePwMessage}
+                                </div>
+                                <div style={ isCapsLockEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'10px', marginLeft:'5px'} }
+                                     className="capsLock-section">
+                                    {capsLockMessage}
+                                </div>
                             </div>
-                            <div>
-                                <div>비밀번호 확인</div>
-                                <div className="input-password">
-                                    <Modal.ModalInput type="password" onChange={(e) => changePwChkRegex(e.target.value)}
+                            <div className="input-section">
+                                <div className="section-title">비밀번호 확인</div>
+                                <div className="section-password">
+                                    <Modal.ModalInput type="password" style={ isChangeChkPwEffect ? {} : {border: "3px solid red"} }
+                                                      onChange={(e) => changePwChkRegex(e.target.value)}
+                                                      onKeyPress={(e) => activeCapsLock(e, "chk")}
                                                       placeholder="비밀번호 확인을 해주세요." ref={passwordChkRef}/>
                                     <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
                                                      onClick={() => passwordSeeHandler("chk")}/>
                                 </div>
+                                <div style={ isChangeChkPwEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'12px', marginLeft:'5px'} }>
+                                    {changeChkPwMessage}
+                                </div>
+                                <div style={ isChkCapsLockEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'10px', marginLeft:'5px'} }
+                                     className="capsLock-section">
+                                    {chkCapsLockMessage}
+                                </div>
                             </div>
-                            <div>
+                            <div className="button-section">
                                 <Modal.ModalButton onClick={() => props.setIsFindPwModal(false)}>취소</Modal.ModalButton>
                                 <Modal.ModalButton onClick={() => changePwHandler()}>변경</Modal.ModalButton>
                             </div>
@@ -166,7 +215,7 @@ const FindPwModal = (props: Props) => {
                     </Modal.ModalFindView>
                     :
                     <Modal.ModalFindView>
-                        <div className="findIdView-box">
+                        <div className="findView-title">
                             <p>
                                 비밀번호 찾기
                             </p>
@@ -174,8 +223,7 @@ const FindPwModal = (props: Props) => {
                                 이메일 인증 후 비밀번호를 다시 설정하실 수 있습니다.
                             </p>
                         </div>
-                        <span></span>
-                        <div className="findIdView-box" style={{marginTop: "25px"}}>
+                        <div className="findView-box" style={{marginTop: "25px"}}>
                             <h3>이메일 인증</h3>
                             <MemberAuth setIsMemberEmailCheck={setIsMemberEmailCheck} duplicationChk={false}/>
                         </div>
