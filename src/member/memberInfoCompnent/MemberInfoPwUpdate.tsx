@@ -25,10 +25,16 @@ const MemberInfoPwUpdate = (props:Props) => {
     const [isPresentPwChkEffect, setIsPresentPwChkEffect] = useState<boolean>(true);
     const [isChangePwEffect, setIsChangePwEffect] = useState<boolean>(true);
     const [isChangePwChkEffect, setIsChangePwChkEffect] = useState<boolean>(true);
+    const [isPreCapsLockEffect, setIsPreCapsLockEffect] = useState<boolean>(true);
+    const [isCapsLockEffect, setIsCapsLockEffect] = useState<boolean>(true);
+    const [isChkCapsLockEffect, setIsChkCapsLockEffect] = useState<boolean>(true);
 
     const [presentPwChkMessage, setPresentPwChkMessage] = useState<string>("");
     const [changePwMessage, setChangePwMessage] = useState<string>("");
     const [changePwChkMessage, setChangePwChkMessage] = useState<string>("");
+    const [preCapsLockMessage, setPreCapsLockMessage] = useState<string>("");
+    const [capsLockMessage, setCapsLockMessage] = useState<string>("");
+    const [chkCapsLockMessage, setChkCapsLockMessage] = useState<string>("");
 
     const [isChangePwProgress, setIsChangePwProgress] = useState<boolean>(false);
 
@@ -126,6 +132,34 @@ const MemberInfoPwUpdate = (props:Props) => {
         }
     }
 
+    const activeCapsLock = (e:any, type:string):void => {
+        if(type === 'chk') {
+            if(e.getModifierState("CapsLock")) {
+                setChkCapsLockMessage('CapsLock 켜짐');
+                setIsChkCapsLockEffect(false);
+            } else {
+                setChkCapsLockMessage('');
+                setIsChkCapsLockEffect(true);
+            }
+        } else if(type === 'pre') {
+            if(e.getModifierState("CapsLock")) {
+                setPreCapsLockMessage('CapsLock 켜짐');
+                setIsPreCapsLockEffect(false);
+            } else {
+                setPreCapsLockMessage('');
+                setIsPreCapsLockEffect(true);
+            }
+        } else {
+            if(e.getModifierState("CapsLock")) {
+                setCapsLockMessage('CapsLock 켜짐');
+                setIsCapsLockEffect(false);
+            } else {
+                setCapsLockMessage('');
+                setIsCapsLockEffect(true);
+            }
+        }
+    }
+
     const changeMemberPasswordHandler = async():Promise<boolean> => {
         if(isPresentPwChkEffect && isChangePwEffect && isChangePwChkEffect) {
             if(window.confirm('정말 비밀번호 변경을 하시겠습니까?') === true) {
@@ -200,22 +234,32 @@ const MemberInfoPwUpdate = (props:Props) => {
                                 <div className="input-item">
                                     <div>신규 비밀번호</div>
                                     <div className="input-password">
-                                        <input type="password" value={memberChangePw} onChange={(e) => memberChangePwHandler(e.target.value)}
-                                               style={ isChangePwEffect ? {} : {borderColor:'red'} } ref={passwordRef}/>
+                                        <input type="password" value={memberChangePw} style={ isChangePwEffect ? {} : {borderColor:'red'} }
+                                               onChange={(e) => memberChangePwHandler(e.target.value)}
+                                               onKeyPress={(e) => activeCapsLock(e, "")} ref={passwordRef}/>
                                         <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
                                                          onClick={() => passwordSeeHandler("")}/>
                                     </div>
-                                    <span style={ isChangePwEffect ? {} : {color:'red', fontSize:'11px', marginLeft: '7px', fontWeight: 'bold'} }>{changePwMessage}</span>
+                                    <div style={ isChangePwEffect ? {} : {color:'red', fontSize:'11px', margin: '4px 7px', fontWeight: 'bold'} }>{changePwMessage}</div>
+                                    <div style={ isCapsLockEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'10px', marginLeft:'5px'} }
+                                         className="capsLock-section">
+                                        {capsLockMessage}
+                                    </div>
                                 </div>
                                 <div className="input-item">
                                     <div>비밀번호 확인</div>
                                     <div className="input-password">
-                                        <input type="password" value={memberChangePwChk} onChange={(e) => memberChangePwCheckHandler(e.target.value)}
-                                               style={ isChangePwChkEffect ? {} : {borderColor:'red'} } ref={passwordChkRef}/>
+                                        <input type="password" value={memberChangePwChk} style={ isChangePwChkEffect ? {} : {borderColor:'red'} }
+                                               onChange={(e) => memberChangePwCheckHandler(e.target.value)}
+                                               onKeyPress={(e) => activeCapsLock(e, "chk")} ref={passwordChkRef}/>
                                         <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
                                                          onClick={() => passwordSeeHandler("chk")}/>
                                     </div>
-                                    <span style={ isChangePwChkEffect ? {} : {color:'red', fontSize:'11px', marginLeft: '7px', fontWeight: 'bold'} }>{changePwChkMessage}</span>
+                                    <div style={ isChangePwChkEffect ? {} : {color:'red', fontSize:'11px', margin: '4px 7px', fontWeight: 'bold'} }>{changePwChkMessage}</div>
+                                    <div style={ isChkCapsLockEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'10px', marginLeft:'5px'} }
+                                         className="capsLock-section">
+                                        {chkCapsLockMessage}
+                                    </div>
                                 </div>
                             </div>
                             :
@@ -227,12 +271,17 @@ const MemberInfoPwUpdate = (props:Props) => {
                                 <div className="input-item">
                                     <div>현재 비밀번호</div>
                                     <div className="input-password">
-                                        <input type="password" value={memberPresentPwChk} onChange={(e) => memberPresentPwCheckHandler(e.target.value)}
-                                               style={ isPresentPwChkEffect ? {} : {borderColor:'red'} } ref={passwordPreRef}/>
+                                        <input type="password" value={memberPresentPwChk} style={ isPresentPwChkEffect ? {} : {borderColor:'red'} }
+                                               onChange={(e) => memberPresentPwCheckHandler(e.target.value)}
+                                               onKeyPress={(e) => activeCapsLock(e, "pre")} ref={passwordPreRef}/>
                                         <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
                                                          onClick={() => passwordSeeHandler("pre")}/>
                                     </div>
-                                    <span style={ isPresentPwChkEffect ? {} : {color:'red', fontSize:'12px', marginLeft: '7px', fontWeight: 'bold'} }>{presentPwChkMessage}</span>
+                                    <div style={ isPresentPwChkEffect ? {} : {color:'red', fontSize:'12px', margin: '4px 7px', fontWeight: 'bold'} }>{presentPwChkMessage}</div>
+                                    <div style={ isPreCapsLockEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'10px', marginLeft:'5px'} }
+                                         className="capsLock-section">
+                                        {preCapsLockMessage}
+                                    </div>
                                 </div>
                             </div>
                     }
