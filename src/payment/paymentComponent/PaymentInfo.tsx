@@ -1,17 +1,11 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+
 import TopButtonNavigation from "../../navigation/TopButtonNavigation";
 
 interface Props {
-    lectureInfo:{
-        lectureInstitution:string;
-        lectureTitle:string;
-        lectureTeacher:string;
-        lecturePeriod:string;
-        lectureTime:string;
-        lectureCount:number;
-        lectureFee:number;
-    }
+    paymentInfo:{lectureNo:number}[];
     isModal:boolean;
     setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -19,77 +13,124 @@ interface Props {
 const PaymentInfo = (props:Props) => {
     const navigate = useNavigate();
 
+    const [paymentDetail, setPaymentDetail] = useState<{
+        lectureNo:number; lectureInstitution:string; lectureTitle:string; lectureTeacher:string;
+        lecturePeriod:string; lectureTime:string; lectureCount:number; lectureFee:number;
+    }[]>([]);
+    const [totalPaymentFee, setTotalPaymentFee] = useState<number>(0);
+
+    const lectureApplicationDuplicationHandler = async ():Promise<void> => {
+        let duplicationChk:boolean = true;
+        for(let i:number=0; i<paymentDetail.length; i++) {
+            await axios({
+                method: "GET",
+                url: "/lecture/lectureApplicationDuplicationChk",
+                params: {lectureNo: paymentDetail[i].lectureNo}
+            }).then((res):void => {
+                console.log(res.data)
+                if(res.data) {
+                    duplicationChk = false;
+                }
+            }).catch((err):void => {
+                console.log(err.message);
+            })
+        }
+        if(duplicationChk) {
+            window.scrollTo({ top: 50, behavior: "smooth" });
+            props.setIsModal(true);
+        } else {
+            alert('이미 수강신청한 강좌입니다.');
+        }
+    }
+
+    useEffect(() => {
+        for(let i:number=0; i<props.paymentInfo.length; i++) {
+            axios({
+                method: "GET",
+                url: "/lecture/lectureDetail",
+                params: {lectureNo: props.paymentInfo[i].lectureNo}
+            }).then((res):void => {
+                setPaymentDetail(prev => [...prev, res.data.data]);
+                setTotalPaymentFee(prev => prev + res.data.data.lectureFee);
+            }).catch((err):void => {
+                console.log(err.message);
+            })
+        }
+    }, [])
+
     return (
         <div>
 
             <div className="lp-main">
                 <div className="lp-main-view">
                     <div className="lp-main-title">
-                        수강자 정보
+                        강좌 정보
                     </div>
-                    <div className="lp-main-content">
-                        <div className="lp-content-top">
-                            <div className="lp-top-left">
-                                <div className="lp-institution">
-                                    {props.lectureInfo.lectureInstitution}
+                    {paymentDetail.map((item, idx) => (
+                        <div key={idx} className="lp-main-content">
+                            <div className="lp-content-top">
+                                <div className="lp-top-left">
+                                    <div className="lp-institution">
+                                        {item.lectureInstitution}
+                                    </div>
+                                    <div className="lp-title">
+                                        {item.lectureTitle}
+                                    </div>
                                 </div>
-                                <div className="lp-title">
-                                    {props.lectureInfo.lectureTitle}
+                                <div className="lp-top-right">
+                                    <div className="lp-teacher">
+                                        <div className="section-title">
+                                            강사명
+                                        </div>
+                                        {item.lectureTeacher}
+                                    </div>
+                                    <div className="lp-period">
+                                        <div className="section-title">
+                                            강좌기간
+                                        </div>
+                                        {item.lecturePeriod}
+                                    </div>
+                                    <div className="lp-time">
+                                        <div className="section-title">
+                                            강좌시간 / 횟수
+                                        </div>
+                                        {item.lectureTime.substring(0, 12)}
+                                        {
+                                            item.lectureTime.substring(13, 14) === '1' ? '(월)' :
+                                                item.lectureTime.substring(13, 14) === '2' ? '(화)' :
+                                                    item.lectureTime.substring(13, 14) === '3' ? '(수)' :
+                                                        item.lectureTime.substring(13, 14) === '4' ? '(목)' :
+                                                            item.lectureTime.substring(13, 14) === '5' ? '(금)' :
+                                                                item.lectureTime.substring(13, 14) === '6' ? '(토)' : '(일)'
+                                        }
+                                        <span>/</span>
+                                        {item.lectureCount}회
+                                    </div>
+                                    <div className="lp-fee">
+                                        <div className="section-title">
+                                            강좌료
+                                        </div>
+                                        {item.lectureFee.toLocaleString()}원
+                                    </div>
                                 </div>
                             </div>
-                            <div className="lp-top-right">
-                                <div className="lp-teacher">
-                                    <div className="section-title">
-                                        강사명
+                            <div className="lp-content-bot">
+                                <div className="lp-bot-left">
+                                    <div className="lp-member">
+                                        김성재(본인)
                                     </div>
-                                    {props.lectureInfo.lectureTeacher}
                                 </div>
-                                <div className="lp-period">
-                                    <div className="section-title">
-                                        강좌기간
+                                <div className="lp-bot-right">
+                                    <div className="lp-paymentFee">
+                                        <div className="section-title">
+                                            결제예정 금액
+                                        </div>
+                                        {item.lectureFee.toLocaleString()}원
                                     </div>
-                                    {props.lectureInfo.lecturePeriod}
-                                </div>
-                                <div className="lp-time">
-                                    <div className="section-title">
-                                        강좌시간 / 횟수
-                                    </div>
-                                    {props.lectureInfo.lectureTime.substring(0, 12)}
-                                    {
-                                        props.lectureInfo.lectureTime.substring(13, 14) === '1' ? '(월)' :
-                                            props.lectureInfo.lectureTime.substring(13, 14) === '2' ? '(화)' :
-                                                props.lectureInfo.lectureTime.substring(13, 14) === '3' ? '(수)' :
-                                                    props.lectureInfo.lectureTime.substring(13, 14) === '4' ? '(목)' :
-                                                        props.lectureInfo.lectureTime.substring(13, 14) === '5' ? '(금)' :
-                                                            props.lectureInfo.lectureTime.substring(13, 14) === '6' ? '(토)' : '(일)'
-                                    }
-                                    <span>/</span>
-                                    {props.lectureInfo.lectureCount}회
-                                </div>
-                                <div className="lp-fee">
-                                    <div className="section-title">
-                                        강좌료
-                                    </div>
-                                    {props.lectureInfo.lectureFee.toLocaleString()}원
                                 </div>
                             </div>
                         </div>
-                        <div className="lp-content-bot">
-                            <div className="lp-bot-left">
-                                <div className="lp-member">
-                                    김성재(본인)
-                                </div>
-                            </div>
-                            <div className="lp-bot-right">
-                                <div className="lp-paymentFee">
-                                    <div className="section-title">
-                                        결제예정 금액
-                                    </div>
-                                    {props.lectureInfo.lectureFee.toLocaleString()}원
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                     <div className="lp-main-notice">
                         <div className="section-title">
                             유의사항
@@ -109,7 +150,7 @@ const PaymentInfo = (props:Props) => {
                     <div className="button-fee">
                         <span>총 결제예정금액</span>
                         <div>
-                            {props.lectureInfo.lectureFee.toLocaleString()}
+                            {totalPaymentFee.toLocaleString()}
                         </div>
                         <span>원</span>
                     </div>
@@ -117,8 +158,7 @@ const PaymentInfo = (props:Props) => {
                         <button className="btn-back"
                                 onClick={() => navigate(-1)}>이전</button>
                         <button className="btn-payment"
-                                onClick={() => {window.scrollTo({ top: 50, behavior: "smooth" });
-                                    props.setIsModal(true);}}>결제하기</button>
+                                onClick={() => lectureApplicationDuplicationHandler()}>결제하기</button>
                     </div>
                 </div>
             </div>
