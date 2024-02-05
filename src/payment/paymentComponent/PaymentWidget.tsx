@@ -63,7 +63,6 @@ const PaymentWidget = (props: Props) => {
 
     const [logoPos, setLogoPos] = useState({x:0, y:0});
     const bindLogoPos = useDrag((params)=>{
-        console.log(params)
         setLogoPos({
             x: params.offset[0],
             y: params.offset[1]
@@ -71,9 +70,7 @@ const PaymentWidget = (props: Props) => {
     });
 
     const location = useLocation();
-    const lectureNo:number = location.state.lectureNo;
-    const lectureFee:number = location.state.lectureFee;
-    const lectureTitle:number = location.state.lectureTitle;
+    console.log(location.state)
     const clientKey:string|undefined = process.env.REACT_APP_TOSS_CLIENT_KEY;
 
     useEffect(() => {
@@ -84,10 +81,24 @@ const PaymentWidget = (props: Props) => {
 
         axios({
             method: "GET",
-            url: "/member/getMemberNo",
+            url: "/member/findMemberInfo",
         }).then((res):void => {
-            const customerKey:string = Math.random().toString(16).substring(2) + "_" + res.data;
-            const orderId:string = Math.random().toString(16).substring(2) + "_" + lectureNo;
+            const paymentInfo:any[] = location.state;
+            const customerKey:string = Math.random().toString(16).substring(2) + "_" + res.data.memberNo;
+            let orderId:string = Math.random().toString(16).substring(2);
+            let orderName:string = paymentInfo[0].lectureTitle;
+            if(paymentInfo.length > 1) {
+                orderName += " 외 " + (paymentInfo.length-1) + "건";
+            }
+            let paymentFee:number = 0;
+            for(let i:number=0; i<paymentInfo.length; i++) {
+                orderId += "_" + paymentInfo[i].lectureNo;
+                paymentFee += paymentInfo[i].lectureFee;
+            }
+
+            console.log(orderId)
+            console.log(orderName)
+            console.log(paymentFee)
 
             script.addEventListener("load", ():void => {
                 const button:HTMLElement|null = document.getElementById("payment-button");
@@ -95,7 +106,7 @@ const PaymentWidget = (props: Props) => {
 
                 paymentWidget.renderPaymentMethods(
                     '#payment-widget',
-                    { value: lectureFee },
+                    { value: paymentFee },
                     { variantKey: "DEFAULT" })
                 paymentWidget.renderAgreement(
                     '#payment-agreement',
@@ -107,12 +118,12 @@ const PaymentWidget = (props: Props) => {
                         // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
                         paymentWidget.requestPayment({
                             orderId: orderId,
-                            orderName: lectureTitle,
+                            orderName: orderName,
                             successUrl: window.location.origin + "/paymentSuccess",
                             failUrl: window.location.origin + "/fail",
-                            customerEmail: "customer123@gmail.com",
-                            customerName: "김토스",
-                            customerMobilePhone: "01012341234",
+                            customerEmail: res.data.memberEmail,
+                            customerName: res.data.memberName,
+                            customerMobilePhone: res.data.memberPhone
                         });
                     });
                 }
