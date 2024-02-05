@@ -27,7 +27,6 @@ const PaymentInfo = (props:Props) => {
                 url: "/lecture/lectureApplicationDuplicationChk",
                 params: {lectureNo: paymentDetail[i].lectureNo}
             }).then((res):void => {
-                console.log(res.data)
                 if(res.data) {
                     duplicationChk = false;
                 }
