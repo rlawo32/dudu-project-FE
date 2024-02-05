@@ -36,22 +36,27 @@ const LectureBasket = () => {
 
     const [checkItems, setCheckItems] = useState<{
         lectureBasketNo:number;
+        lectureNo:number;
+        lectureTitle:string;
+        lectureStateNo:number;
         lectureFee:number;
     }[]>([]);
     const [checkFees, setCheckFees] = useState<number>(0);
 
     // 체크박스 단일 선택
-    const handleSingleCheck = (checked:boolean, lectureBasketNo:number, lectureFee:number):void => {
+    const handleSingleCheck = (checked:boolean, lectureBasketNo:number, lectureNo:number,
+                               lectureTitle:string, lectureStateNo:number, lectureFee:number):void => {
         if (checked) {
             // 단일 선택 시 체크된 아이템을 배열에 추가
             setCheckItems(prev => [...prev,
-                {lectureBasketNo:lectureBasketNo, lectureFee:lectureFee}]);
-            setCheckFees(checkFees + lectureFee);
+                {lectureBasketNo:lectureBasketNo, lectureNo:lectureNo, lectureTitle:lectureTitle,
+                    lectureStateNo:lectureStateNo, lectureFee:lectureFee}]);
+            setCheckFees(prev => prev + lectureFee);
         } else {
             // 단일 선택 해제 시 체크된 아이템을 제외한 배열 (필터)
             setCheckItems(checkItems.filter((el) =>
                 el.lectureBasketNo !== lectureBasketNo));
-            setCheckFees(checkFees - lectureFee);
+            setCheckFees(prev => prev - lectureFee);
         }
     };
 
@@ -61,10 +66,16 @@ const LectureBasket = () => {
             // 전체 선택 클릭 시 데이터의 모든 아이템(id)를 담은 배열로 checkItems 상태 업데이트
             const idArray:{
                 lectureBasketNo:number;
+                lectureNo:number;
+                lectureTitle:string;
+                lectureStateNo:number;
                 lectureFee:number;
             }[] = [];
             lectureBasketList.forEach((el) => idArray.push({
                 lectureBasketNo:el.lectureBasketNo,
+                lectureNo:el.lectureNo,
+                lectureTitle:el.lectureTitle,
+                lectureStateNo:el.lectureStateNo,
                 lectureFee:el.lectureFee
             }));
             setCheckItems(idArray);
@@ -82,11 +93,38 @@ const LectureBasket = () => {
     }
 
     const deleteLectureBasketHandler = (lectureBasketNo:number):boolean => {
-        if(checkItems.length > 0) {
+        if(lectureBasketNo === 0) {
+            if(checkItems.length > 0) {
+                if(window.confirm('장바구니에서 삭제 하시겠습니까?') === true) {
+                    const deleteData:object = {
+                        deleteLectureBasketNo: 0,
+                        lectureBasketDeleteList: checkItems
+                    }
+                    axios({
+                        method: "DELETE",
+                        url: "/lecture/deleteLectureBasket",
+                        data: JSON.stringify(deleteData),
+                        headers: {'Content-type': 'application/json'}
+                    }).then((res):void => {
+                        alert('삭제되었습니다.');
+                        window.location.reload();
+                    }).catch((err):void => {
+                        console.log(err.message);
+                    })
+                    return true;
+                } else {
+                    return false;
+                }
+                return true;
+            } else {
+                alert('삭제할 강좌를 선택해주세요');
+                return false;
+            }
+        } else {
             if(window.confirm('장바구니에서 삭제 하시겠습니까?') === true) {
                 const deleteData:object = {
                     deleteLectureBasketNo: lectureBasketNo,
-                    lectureBasketDeleteList: checkItems
+                    lectureBasketDeleteList: []
                 }
                 axios({
                     method: "DELETE",
@@ -103,17 +141,27 @@ const LectureBasket = () => {
             } else {
                 return false;
             }
-        } else {
-            alert('삭제할 강좌를 선택해주세요');
-            return false;
+            return true;
         }
     }
 
-    const lectureApplicationHandler = ():void => {
+    const lectureApplicationHandler = ():boolean => {
         if(checkItems.length > 0) {
-            navigate("/lecturePayment", { state: checkItems})
+            for(let i:number=0; i<checkItems.length; i++) {
+                if(checkItems[i].lectureStateNo !== 2) {
+                    alert("결제가 불가능한 강의가 있습니다.");
+                    return false;
+                }
+            }
+            if(window.confirm('결제를 진행 하시겠습니까?') === true) {
+                navigate("/lecturePayment", { state: checkItems});
+                return true;
+            } else {
+                return false;
+            }
         } else {
             alert("결제할 강좌를 선택해주세요");
+            return false;
         }
     }
 
@@ -189,7 +237,9 @@ const LectureBasket = () => {
                                             <Styled.CheckBoxLabel htmlFor={"chkbx" + idx} >
                                                 <Styled.CheckBoxInput type="checkbox" id={"chkbx" + idx}
                                                                       onChange={(e) =>
-                                                                          handleSingleCheck(e.target.checked, item.lectureBasketNo, item.lectureFee)}
+                                                                          handleSingleCheck(e.target.checked, item.lectureBasketNo,
+                                                                              item.lectureNo, item.lectureTitle, item.lectureStateNo,
+                                                                              item.lectureFee)}
                                                                       checked={checkItems.some(data =>
                                                                           data.lectureBasketNo === item.lectureBasketNo) ? true : false}/>
                                                 <Styled.CheckBoxText>
