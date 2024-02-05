@@ -21,6 +21,9 @@ const MemberInfoWithdraw = (props:Props) => {
     const [isPresentPwChkEffect, setIsPresentPwChkEffect] = useState<boolean>(true);
     const [presentPwChkMessage, setPresentPwChkMessage] = useState<string>("");
 
+    const [isPreCapsLockEffect, setIsPreCapsLockEffect] = useState<boolean>(true);
+    const [preCapsLockMessage, setPreCapsLockMessage] = useState<string>("");
+
     const memberPresentPwCheckHandler = (data:string):void => {
         const passwordRegex:RegExp = /^(?=.*[a-zA-Z])(?=.*[!?@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
         const presentPwChk:string = data;
@@ -41,6 +44,16 @@ const MemberInfoWithdraw = (props:Props) => {
             passwordRef.current.type = 'text';
         } else {
             passwordRef.current.type = 'password';
+        }
+    }
+
+    const activeCapsLock = (e:any):void => {
+        if(e.getModifierState("CapsLock")) {
+            setPreCapsLockMessage('CapsLock 켜짐');
+            setIsPreCapsLockEffect(false);
+        } else {
+            setPreCapsLockMessage('');
+            setIsPreCapsLockEffect(true);
         }
     }
 
@@ -114,12 +127,17 @@ const MemberInfoWithdraw = (props:Props) => {
                     <div className="input-item">
                         <div>현재 비밀번호</div>
                         <div className="input-password">
-                            <input type="password" value={memberPresentPwChk} onChange={(e) => memberPresentPwCheckHandler(e.target.value)}
-                                   style={ isPresentPwChkEffect ? {} : {borderColor:'red'} } ref={passwordRef}/>
+                            <input type="password" value={memberPresentPwChk} style={ isPresentPwChkEffect ? {} : {borderColor:'red'} }
+                                   onChange={(e) => memberPresentPwCheckHandler(e.target.value)}
+                                   onKeyPress={(e) => activeCapsLock(e)} ref={passwordRef}/>
                             <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
                                              onClick={() => passwordSeeHandler()}/>
                         </div>
-                        <span style={ isPresentPwChkEffect ? {} : {color:'red', fontSize:'12px', marginLeft: '7px', fontWeight: 'bold'} }>{presentPwChkMessage}</span>
+                        <div style={ isPresentPwChkEffect ? {} : {color:'red', fontSize:'12px', marginLeft: '7px', fontWeight: 'bold'} }>{presentPwChkMessage}</div>
+                        <div style={ isPreCapsLockEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'10px', marginLeft:'5px'} }
+                             className="capsLock-section">
+                            {preCapsLockMessage}
+                        </div>
                     </div>
                 </div>
             </div>
