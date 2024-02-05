@@ -3,37 +3,15 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
-import useLecturePaymentStoreData from "../../stores/useLecturePaymentDataStore";
 import HeaderNavigation from "../../navigation/HeaderNavigation";
 import FooterNavigation from "../../navigation/FooterNavigation";
+import TopButtonNavigation from "../../navigation/TopButtonNavigation";
 import FixedConfettiEffect from "../../styles/FixedConfettiEffect";
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowUpLong as topIcon} from "@fortawesome/free-solid-svg-icons";
+import useLecturePaymentStoreData from "../../stores/useLecturePaymentDataStore";
 
 const PaymentSuccessView = styled.div`
   position: relative;
-
-  .top-btn {
-    position: fixed;
-    bottom: 160px;
-    right: 40px;
-    height: 50px;
-    width: 50px;
-    border: 1px solid ${({theme}) => theme.boxBgColor};
-    border-radius: 50%;
-    background-color: ${({theme}) => theme.boxBgColor};
-    color: ${({theme}) => theme.textColor};;
-    text-align: center;
-    z-index: 99;
-    cursor: pointer;
-
-    .icon-custom {
-      position: relative;
-      top: 12px;
-      font-size: 25px;
-    }
-  }
 
   .lp-sub {
     height: 100%;
@@ -90,7 +68,7 @@ const PaymentSuccessView = styled.div`
 
     .lp-main-content {
       padding: 40px;
-      margin-top: 0;
+      margin-top: 20px;
       border: 1px solid #ddcdc5;
       border-radius: 12px;
 
@@ -260,25 +238,19 @@ const PaymentSuccess = () => {
 
     const {isSuccess, setIsSuccess} = useLecturePaymentStoreData();
     const [lectureInfo, setLectureInfo] = useState<{
-        lectureNo:number;
-        lectureTitle:string;
-        lectureDivision:string;
-        lectureTeacher:string;
-        lectureTime:string;
-        lecturePeriod:string;
-        lectureFee:number;
-        lectureInstitution:string;
-        lectureStateNo:number;
-        lectureCount:number;
-        lectureEventType:string;
-        lectureThumbnail:string;
-    }>();
+        lectureNo:number; lectureTitle:string; lectureDivision:string; lectureTeacher:string;
+        lectureTime:string; lecturePeriod:string; lectureFee:number; lectureInstitution:string;
+        lectureStateNo:number; lectureCount:number; lectureEventType:string; lectureThumbnail:string;
+    }[]>([{
+        lectureNo: 0, lectureTitle: '', lectureDivision: '', lectureTeacher: '',
+        lectureTime: '', lecturePeriod: '', lectureFee: 0, lectureInstitution: '',
+        lectureStateNo: 0, lectureCount: 0, lectureEventType: '', lectureThumbnail: ''
+    }]);
 
     useEffect(() => {
         const lectureApplicationData:object = {
             paymentKey: paymentKey,
-            orderId: orderId,
-            amount: amount,
+            orderId: orderId
         }
         const paymentSuccess = async ():Promise<void> => {
             await axios({
@@ -287,6 +259,7 @@ const PaymentSuccess = () => {
                 data: JSON.stringify(lectureApplicationData),
                 headers: {'Content-type': 'application/json'}
             }).then((res):void => {
+                console.log(res.data.data)
                 setLectureInfo(res.data.data);
                 setIsSuccess(true);
             }).catch((err):void => {
@@ -299,10 +272,6 @@ const PaymentSuccess = () => {
     return (
         <PaymentSuccessView>
             <HeaderNavigation />
-
-            <div className="top-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-                <FontAwesomeIcon icon={topIcon} className="icon-custom" />
-            </div>
 
             <div className="lp-sub">
                 <div className="lp-sub-view">
@@ -319,75 +288,78 @@ const PaymentSuccess = () => {
                 <div className="lp-main-title">
                     수강신청 내역
                 </div>
-                <div className="lp-main-content">
-                    <div className="lp-content-top">
-                        <div className="lp-top-left">
-                            <div className="lp-institution">
-                                {lectureInfo?.lectureInstitution}
+                {lectureInfo.map((item, idx) => (
+                    <div key={idx} className="lp-main-content">
+                        <div className="lp-content-top">
+                            <div className="lp-top-left">
+                                <div className="lp-institution">
+                                    {item.lectureInstitution}
+                                </div>
+                                <div className="lp-title">
+                                    {item.lectureTitle}
+                                </div>
                             </div>
-                            <div className="lp-title">
-                                {lectureInfo?.lectureTitle}
+                            <div className="lp-top-right">
+                                <div className="lp-teacher">
+                                    <div className="section-title">
+                                        강사명
+                                    </div>
+                                    {item.lectureTeacher}
+                                </div>
+                                <div className="lp-period">
+                                    <div className="section-title">
+                                        강좌기간
+                                    </div>
+                                    {item.lecturePeriod}
+                                </div>
+                                <div className="lp-time">
+                                    <div className="section-title">
+                                        강좌시간 / 횟수
+                                    </div>
+                                    {item.lectureTime.substring(0, 12)}
+                                    {
+                                        item.lectureTime.substring(13, 14) === '1' ? '(월)' :
+                                            item.lectureTime.substring(13, 14) === '2' ? '(화)' :
+                                                item.lectureTime.substring(13, 14) === '3' ? '(수)' :
+                                                    item.lectureTime.substring(13, 14) === '4' ? '(목)' :
+                                                        item.lectureTime.substring(13, 14) === '5' ? '(금)' :
+                                                            item.lectureTime.substring(13, 14) === '6' ? '(토)' : '(일)'
+                                    }
+                                    <span>/</span>
+                                    {item.lectureCount}회
+                                </div>
+                                <div className="lp-fee">
+                                    <div className="section-title">
+                                        강좌료
+                                    </div>
+                                    {item.lectureFee.toLocaleString()}원
+                                </div>
                             </div>
                         </div>
-                        <div className="lp-top-right">
-                            <div className="lp-teacher">
-                                <div className="section-title">
-                                    강사명
+                        <div className="lp-content-bot">
+                            <div className="lp-bot-left">
+                                <div className="lp-member">
+                                    김성재(본인)
                                 </div>
-                                {lectureInfo?.lectureTeacher}
                             </div>
-                            <div className="lp-period">
-                                <div className="section-title">
-                                    강좌기간
+                            <div className="lp-bot-right">
+                                <div className="lp-paymentFee">
+                                    <div className="section-title">
+                                        주문금액
+                                    </div>
+                                    {item.lectureFee.toLocaleString()}원
                                 </div>
-                                {lectureInfo?.lecturePeriod}
-                            </div>
-                            <div className="lp-time">
-                                <div className="section-title">
-                                    강좌시간 / 횟수
-                                </div>
-                                {lectureInfo?.lectureTime.substring(0, 12)}
-                                {
-                                    lectureInfo?.lectureTime.substring(13, 14) === '1' ? '(월)' :
-                                        lectureInfo?.lectureTime.substring(13, 14) === '2' ? '(화)' :
-                                            lectureInfo?.lectureTime.substring(13, 14) === '3' ? '(수)' :
-                                                lectureInfo?.lectureTime.substring(13, 14) === '4' ? '(목)' :
-                                                    lectureInfo?.lectureTime.substring(13, 14) === '5' ? '(금)' :
-                                                        lectureInfo?.lectureTime.substring(13, 14) === '6' ? '(토)' : '(일)'
-                                }
-                                <span>/</span>
-                                {lectureInfo?.lectureCount}회
-                            </div>
-                            <div className="lp-fee">
-                                <div className="section-title">
-                                    강좌료
-                                </div>
-                                {lectureInfo?.lectureFee.toLocaleString()}원
                             </div>
                         </div>
                     </div>
-                    <div className="lp-content-bot">
-                        <div className="lp-bot-left">
-                            <div className="lp-member">
-                                김성재(본인)
-                            </div>
-                        </div>
-                        <div className="lp-bot-right">
-                            <div className="lp-paymentFee">
-                                <div className="section-title">
-                                    주문금액
-                                </div>
-                                {lectureInfo?.lectureFee.toLocaleString()}원
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                ))}
 
                 <div className="lp-button-section">
                     <button onClick={() => navigate("/")} className="btn-lp-home">홈으로</button>
                     <button onClick={() => navigate("/lectureHistory")} className="btn-lp-history">수강내역 조회</button>
                 </div>
             </div>
+            <TopButtonNavigation type={""} />
 
             <FooterNavigation />
         </PaymentSuccessView>
