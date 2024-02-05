@@ -33,7 +33,7 @@ const LecturePayment = () => {
                 </div>
             </div>
 
-            <PaymentInfo lectureInfo={location.state} isModal={isPaymentModal} setIsModal={setIsPaymentModal}/>
+            <PaymentInfo paymentInfo={location.state} isModal={isPaymentModal} setIsModal={setIsPaymentModal}/>
 
             {isPaymentModal ?
                 <div className="lp-modal">
