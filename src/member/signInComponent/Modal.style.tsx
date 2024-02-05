@@ -37,52 +37,136 @@ export const ModalFindView = styled.div`
   display: flex;
   flex-direction: column;
   
-  .findIdView-box {
+  .findView-title {
+    border-bottom: 1px solid ${({theme}) => theme.textColor};
+    background: rgba(216,201,201,0.5);
+    
+    p:nth-child(1) {
+      font-size: 35px;
+      font-weight: bold;
+    }
+    
+    p {
+      width: fit-content;
+      margin: 30px auto;
+    }
+  }
+  
+  .findView-box {
     height: 170px;
     width: fit-content;
     margin: auto;
 
-    .input-password {
+    .input-section {
       position: relative;
+      height: 90px;
+      margin-top: 20px;
+      
+      .section-title {
+        
+      }
 
-      .icon-see {
-        position: absolute;
-        top: 15px;
-        right: 12px;
-        font-size: 19px;
-        color: ${({theme}) => theme.textColor};
-        z-index: 3;
-        cursor: pointer;
+      .section-password {
+        position: relative;
 
-        &:hover {
-          opacity: 0.5;
+        .icon-see {
+          position: absolute;
+          top: 15px;
+          right: 12px;
+          font-size: 19px;
+          color: ${({theme}) => theme.textColor};
+          z-index: 3;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.5;
+          }
         }
+      }
+    }
+    
+    .button-section {
+      width: fit-content;
+      margin: 30px auto 0;
+    }
+  }
+  
+  .capsLock-section {
+    position: absolute;
+    top: 45px;
+    right: -70px;
+
+    @media screen and (max-width: 800px) {
+      top: 2px;
+      right: -62px;
+      width: 60px;
+    }
+  }
+  
+  .findId-failedView {
+    display: flex;
+    align-items: center;
+    height: 475px;
+    width: 100%;
+    background: rgba(216,201,201,0.5);
+
+    .findView-text {
+      width: fit-content;
+      margin: auto;
+      font-size: 26px;
+      text-align: center;
+
+      button {
+        display: block;
+        min-height: 40px;
+        min-width: 90px;
+        padding: 12px 10px 13px;
+        margin: 30px auto 0;
+        border: 2px solid ${({theme}) => theme.rgbaMedium};
+        border-radius: 8px;
+        background-color: ${({theme}) => theme.bgColor};
+        color: ${({theme}) => theme.textColor};
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        transition: all .4s ease;
+        cursor: pointer;
       }
     }
   }
 
-  .findIdView-text {
-    font-size: 14px;
-    margin: 10px 0 0 20px;
-  }
-  
-  div:nth-child(3) {
-
-    div:nth-child(3) {
-      display: flex;
-      justify-content: space-between;
-      margin: 35px auto;
+  .findId-successView {
+    
+    .findView-box {
+      width: 300px;
     }
-  }
-  
-  span {
-    display: block;
-    border-top: 1px solid ${({theme}) => theme.textColor};
-  }
-  
-  p:nth-child(1) {
-    margin: 30px 0;
-    font-size: 35px;
+    
+    .findView-text {
+      margin-top: 10px;
+      font-size: 17px;
+
+      button {
+        display: block;
+        min-height: 40px;
+        min-width: 90px;
+        padding: 12px 10px 13px;
+        margin: 30px auto 0;
+        border: 2px solid ${({theme}) => theme.rgbaMedium};
+        border-radius: 8px;
+        background-color: ${({theme}) => theme.bgColor};
+        color: ${({theme}) => theme.textColor};
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        transition: all .4s ease;
+        cursor: pointer;
+      }
+    }
+    
+    .findView-result {
+      width: fit-content;
+      margin: 20px auto 0;
+    }
   }
 `;
 
@@ -94,10 +178,11 @@ export const ModalInput = styled.input`
   border: ${({theme}) => theme.borderColor};
   border-radius: 10px;
   padding: 8px 10px 5px 10px;
-  margin: 10px auto;
+  margin: 5px auto;
   font-size: 18px;
   color: ${({theme}) => theme.textColor};
   background-color: ${({theme}) => theme.inputBgColor};
+  outline: none;
 `;
 
 export const ModalButton = styled.button`
@@ -106,6 +191,7 @@ export const ModalButton = styled.button`
   border: none;
   border-radius: 10px;
   padding: 5px 10px 5px 10px;
+  margin: 0 5px;
   font-size: 20px;
   color: ${({theme}) => theme.headerTextColor};
   background-color: ${({theme}) => theme.reverseBgColor};
