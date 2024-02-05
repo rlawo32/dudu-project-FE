@@ -27,6 +27,8 @@ const EnterInfo = ():any => {
     const [memberGenderMessage, setMemberGenderMessage] = useState<string>("");
     const [memberBirthMessage, setMemberBirthMessage] = useState<string>("");
     const [memberPhoneMessage, setMemberPhoneMessage] = useState<string>("");
+    const [capsLockMessage, setCapsLockMessage] = useState<string>("");
+    const [chkCapsLockMessage, setChkCapsLockMessage] = useState<string>("");
 
     // 유효성 검사
     const [isMemberIdEffect, setIsMemberIdEffect] = useState<boolean>(true);
@@ -36,6 +38,8 @@ const EnterInfo = ():any => {
     const [isMemberGenderEffect, setIsMemberGenderEffect] = useState<boolean>(true);
     const [isMemberBirthEffect, setIsMemberBirthEffect] = useState<boolean>(true);
     const [isMemberPhoneEffect, setIsMemberPhoneEffect] = useState<boolean>(true);
+    const [isCapsLockEffect, setIsCapsLockEffect] = useState<boolean>(true);
+    const [isChkCapsLockEffect, setIsChkCapsLockEffect] = useState<boolean>(true);
 
     // 데이터 검사
     const [isMemberIdConfirm, setIsMemberIdConfirm] = useState<boolean>(false);
@@ -203,6 +207,26 @@ const EnterInfo = ():any => {
         }
     }
 
+    const activeCapsLock = (e:any, type:string):void => {
+        if(type === 'chk') {
+            if(e.getModifierState("CapsLock")) {
+                setChkCapsLockMessage('CapsLock 켜짐');
+                setIsChkCapsLockEffect(false);
+            } else {
+                setChkCapsLockMessage('');
+                setIsChkCapsLockEffect(true);
+            }
+        } else {
+            if(e.getModifierState("CapsLock")) {
+                setCapsLockMessage('CapsLock 켜짐');
+                setIsCapsLockEffect(false);
+            } else {
+                setCapsLockMessage('');
+                setIsCapsLockEffect(true);
+            }
+        }
+    }
+
     const signUpHandler = ():void => {
 
         const signUpData:object = {
@@ -269,7 +293,7 @@ const EnterInfo = ():any => {
                     <div className="input-text">
                         <Styled.EnterInfoInput type="text" onChange={(data) => memberIdRegex(data.target.value)} placeholder="아이디"
                                                style={ isMemberIdEffect ? {} : {border: '3px solid red'} } onBlur={memberIdDuplicationHandler} />
-                        <div style={  isMemberIdEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
+                        <div style={ isMemberIdEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
                             {memberIdMessage}
                         </div>
                     </div>
@@ -279,7 +303,7 @@ const EnterInfo = ():any => {
                     <div className="input-text">
                         <Styled.EnterInfoInput type="text" onChange={(data) => memberNameRegex(data.target.value)} placeholder="이름"
                                                style={ isMemberNameEffect ? {} : {border: '3px solid red'} } />
-                        <div style={  isMemberNameEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
+                        <div style={ isMemberNameEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
                             {memberNameMessage}
                         </div>
                     </div>
@@ -288,8 +312,9 @@ const EnterInfo = ():any => {
                     <span className="input-title">비밀번호</span>
                     <div className="input-text">
                         <div className="input-password">
-                            <Styled.EnterInfoInput type="password" onChange={(e) => memberPwRegex(e.target.value)} placeholder="비밀번호"
-                                                   style={ isMemberPwEffect ? {} : {border: '3px solid red'} } ref={passwordRef}/>
+                            <Styled.EnterInfoInput type="password" style={ isMemberPwEffect ? {} : {border: '3px solid red'} } ref={passwordRef}
+                                                   onChange={(e) => memberPwRegex(e.target.value)} placeholder="비밀번호"
+                                                   onKeyPress={(e) => activeCapsLock(e, "")}/>
                             <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
                                              onClick={() => passwordSeeHandler("")}/>
                         </div>
@@ -297,19 +322,28 @@ const EnterInfo = ():any => {
                             {memberPwMessage}
                         </div>
                     </div>
+                    <div style={ isCapsLockEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'10px', marginLeft:'5px'} }
+                         className="capsLock-section">
+                        {capsLockMessage}
+                    </div>
                 </div>
                 <div className="input-box">
                     <span className="input-title">비밀번호 확인</span>
                     <div className="input-text">
                         <div className="input-password">
-                            <Styled.EnterInfoInput type="password" onChange={(e) => memberPwChkRegex(e.target.value)} placeholder="비밀번호 확인"
-                                                   style={ isMemberPwChkEffect ? {} : {border: '3px solid red'} } ref={passwordChkRef}/>
+                            <Styled.EnterInfoInput type="password" style={ isMemberPwChkEffect ? {} : {border: '3px solid red'} } ref={passwordChkRef}
+                                                   onChange={(e) => memberPwChkRegex(e.target.value)} placeholder="비밀번호 확인"
+                                                   onKeyPress={(e) => activeCapsLock(e, "chk")}/>
                             <FontAwesomeIcon icon={passwordSeeIcon} className="icon-see"
                                              onClick={() => passwordSeeHandler("chk")}/>
                         </div>
-                        <div style={  isMemberPwChkEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'11px', marginLeft:'5px'} }>
+                        <div style={ isMemberPwChkEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'11px', marginLeft:'5px'} }>
                             {memberPwChkMessage}
                         </div>
+                    </div>
+                    <div style={ isChkCapsLockEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'10px', marginLeft:'5px'} }
+                         className="capsLock-section">
+                        {chkCapsLockMessage}
                     </div>
                 </div>
                 <div className="input-box">
@@ -317,15 +351,15 @@ const EnterInfo = ():any => {
                     <div className="input-text">
                         <div style={ isMemberGenderEffect ? {} : {border: '2px solid red'} } className="input-gender">
                             <Styled.EnterInfoButtonM onClick={() => memberGenderRegex("M")}
-                                                    style={isMemberGenderM ? {backgroundColor: 'deepskyblue', fontWeight: 'bold'} : {}}>
+                                                     style={isMemberGenderM ? {backgroundColor: 'deepskyblue', fontWeight: 'bold'} : {}}>
                                 남자
                             </Styled.EnterInfoButtonM>
                             <Styled.EnterInfoButtonF onClick={() => memberGenderRegex("F")}
-                                                    style={isMemberGenderF ? {backgroundColor: 'deepskyblue', fontWeight: 'bold'} : {}}>
+                                                     style={isMemberGenderF ? {backgroundColor: 'deepskyblue', fontWeight: 'bold'} : {}}>
                                 여자
                             </Styled.EnterInfoButtonF>
                         </div>
-                        <div style={  isMemberGenderEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
+                        <div style={ isMemberGenderEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
                             {memberGenderMessage}
                         </div>
                     </div>
@@ -338,7 +372,7 @@ const EnterInfo = ():any => {
                                                    setMemberBirth(memberBirth.substring(0, 4) + "." + memberBirth.substring(4, 6) + "." + memberBirth.substring(6))
                                                    : setMemberBirth(memberBirth)}} value={memberBirth}
                                                style={ isMemberBirthEffect ? {} : {border: '3px solid red'} } />
-                        <div style={  isMemberBirthEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
+                        <div style={ isMemberBirthEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
                             {memberBirthMessage}
                         </div>
                     </div>
@@ -348,7 +382,7 @@ const EnterInfo = ():any => {
                     <div className="input-text">
                         <Styled.EnterInfoInput type="text" onChange={(e) => memberPhoneRegex(e.target.value)} placeholder="- 없이 입력해주세요."
                                                style={ isMemberPhoneEffect ? {} : {border: '3px solid red'} } />
-                        <div style={  isMemberPhoneEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
+                        <div style={ isMemberPhoneEffect ? {display:'none'} : {display:'block', color:'red', fontSize:'13px', marginLeft:'5px'} }>
                             {memberPhoneMessage}
                         </div>
                     </div>
