@@ -64,10 +64,17 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
           display: flex;
           padding-bottom: 40px;
           border-bottom: 1px solid ${({theme}) => theme.textColor};
+          @media screen and (max-width: 1024px) {
+            flex-direction: column;
+            padding-bottom: 10px;
+          }
           
           .lp-top-left {
             width: calc(50% - 60px);
             margin-right: 60px;
+            @media screen and (max-width: 1024px) {
+              width: 100%;
+            }
             
             .lp-institution {
               width: fit-content;
@@ -96,12 +103,28 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
             font-size: 16px;
             line-height: 26px;
             letter-spacing: -.4px;
+            @media screen and (max-width: 1024px) {
+              width: 100%;
+              padding: 0;
+              border: none;
+            }
 
+            .responsive-title {
+              @media screen and (max-width: 1024px) {
+                display: none;
+              }
+            }
+            
             .section-title {
               width: 120px;
               margin-right: 20px;
               font-size: 13px;
               line-height: 32px;
+              @media screen and (max-width: 1024px) {
+                width: fit-content;
+                line-height: 24px;
+                margin-right: 10px;
+              }
             }
             
             .lp-teacher {
@@ -110,6 +133,10 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
               font-size: 13px;
               line-height: 32px;
               word-break: break-all;
+              @media screen and (max-width: 1024px) {
+                margin-top: 15px;
+                line-height: 24px;
+              }
             }
             
             .lp-period {
@@ -118,7 +145,23 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
               font-size: 13px;
               line-height: 32px;
               word-break: break-all;
+              @media screen and (max-width: 1024px) {
+                width: 100%;
+                line-height: 24px;
+              }
               
+              .responsive-period {
+                display: none;
+                @media screen and (max-width: 1024px) {
+                  display: inline-block;
+                  margin-left: 4px;
+                  
+                  div {
+                    display: inline-block;
+                    margin-left: 4px;
+                  }
+                }
+              }
             }
             
             .lp-time {
@@ -127,6 +170,9 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
               font-size: 13px;
               line-height: 32px;
               word-break: break-all;
+              @media screen and (max-width: 1024px) {
+                display: none;
+              }
               
               span {
                 margin: 0 4px;
@@ -139,6 +185,9 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
               font-size: 13px;
               line-height: 32px;
               word-break: break-all;
+              @media screen and (max-width: 1024px) {
+                line-height: 24px;
+              }
               
             }
           }
@@ -148,20 +197,34 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
           position: relative;
           display: flex;
           padding: 32px 0 0;
+          @media screen and (max-width: 1024px) {
+            flex-direction: column;
+            padding: 0;
+          }
           
           .lp-bot-left {
             width: 50%;
             font-weight: bold;
+            @media screen and (max-width: 1024px) {
+              width: 100%;
+            }
             
             .lp-member {
               margin-bottom: 12px;
               font-size: 18px;
+              @media screen and (max-width: 1024px) {
+                margin: 20px 0;
+              }
             }
           }
 
           .lp-bot-right {
             width: 50%;
             padding-left: 20px;
+            @media screen and (max-width: 1024px) {
+              width: 100%;
+              padding: 0;
+            }
 
             .lp-paymentFee {
               display: flex;
@@ -171,6 +234,7 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
               font-weight: bold;
               
               .section-title {
+
               }
             }
           }
@@ -194,6 +258,9 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
         
         ul {
           padding-left: 20px;
+          @media screen and (max-width: 1024px) {
+            font-size: 12px;
+          }
           
           li {
             line-height: 32px;
@@ -212,6 +279,9 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
     padding: 24px 0;
     border-top: 2px solid ${({theme}) => theme.textColor};
     background-color: ${({theme}) =>theme.bgColor};
+    @media screen and (max-width: 1024px) {
+      padding: 12px 0;
+    }
     
     .section-button {
       display: flex;
@@ -220,15 +290,32 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
       width: 1160px;
       margin: 0 auto;
       opacity: ${({$isModal}) => $isModal ? 0.5 : 1};
+      @media screen and (max-width: 1280px) {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0 32px;
+      }
+      @media screen and (max-width: 1024px) {
+        flex-direction: column;
+      }
       
       .button-fee {
+        @media screen and (max-width: 1024px) {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          margin-bottom: 20px;
+        }
         
-        span {
+        .fee-text {
+          display: inline-block;
+          font-size: 18px;
           line-height: 35px;
           opacity: 0.5;
         }
         
-        div {
+        .fee-amount {
           display: inline-block;
           margin: 0 2px 0 20px;
           font-size: 32px;
@@ -237,37 +324,56 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
         }
       }
       
-      .btn-back {
-        display: inline-block;
-        min-height: 60px;
-        min-width: 90px;
-        padding: 16px 10px 17px;
-        border: 2px solid ${({theme}) => theme.rgbaMedium};
-        border-radius: 8px;
-        background-color: ${({theme}) => theme.bgColor};
-        color: ${({theme}) => theme.textColor};
-        font-size: 18px;
-        font-weight: bold;
+      .button-active {
+        width: 100%;
         text-align: center;
-        transition: all .4s ease;
-        cursor: pointer;
-      }
-      
-      .btn-payment {
-        display: inline-block;
-        min-height: 60px;
-        min-width: 250px;
-        padding: 16px 10px 17px;
-        margin-left: 10px;
-        border: 1px solid ${({theme}) => theme.rgbaLight};
-        border-radius: 8px;
-        background-color: ${({theme}) => theme.reverseBgColor};
-        color: ${({theme}) => theme.reverseTextColor};
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-        transition: all .4s ease;
-        cursor: pointer;
+
+        .btn-back {
+          display: inline-block;
+          min-height: 60px;
+          min-width: 90px;
+          padding: 16px 10px 17px;
+          border: 2px solid ${({theme}) => theme.rgbaMedium};
+          border-radius: 8px;
+          background-color: ${({theme}) => theme.bgColor};
+          color: ${({theme}) => theme.textColor};
+          font-size: 18px;
+          font-weight: bold;
+          text-align: center;
+          transition: all .4s ease;
+          cursor: pointer;
+          @media screen and (max-width: 1024px) {
+            min-height: 25px;
+            width: 45%;
+            min-width: 150px;
+            padding: 7px 50px 8px;
+            font-size: 14px;
+          }
+        }
+
+        .btn-payment {
+          display: inline-block;
+          min-height: 60px;
+          min-width: 250px;
+          padding: 16px 10px 17px;
+          margin-left: 10px;
+          border: 1px solid ${({theme}) => theme.rgbaLight};
+          border-radius: 8px;
+          background-color: ${({theme}) => theme.reverseBgColor};
+          color: ${({theme}) => theme.reverseTextColor};
+          font-size: 18px;
+          font-weight: bold;
+          text-align: center;
+          transition: all .4s ease;
+          cursor: pointer;
+          @media screen and (max-width: 1024px) {
+            min-height: 25px;
+            width: 45%;
+            min-width: 150px;
+            padding: 7px 50px 8px;
+            font-size: 14px;
+          }
+        }
       }
     }
   }
