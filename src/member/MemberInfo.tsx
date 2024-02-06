@@ -153,7 +153,6 @@ const MemberInfo = () => {
                         :
                         <div className="mi-button-section" />
                     }
-
                 </div>
 
                 <div className="mi-move-view">
