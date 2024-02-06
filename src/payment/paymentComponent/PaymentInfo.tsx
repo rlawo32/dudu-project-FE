@@ -78,19 +78,34 @@ const PaymentInfo = (props:Props) => {
                                 </div>
                                 <div className="lp-top-right">
                                     <div className="lp-teacher">
-                                        <div className="section-title">
+                                        <div className="responsive-title section-title">
                                             강사명
                                         </div>
                                         {item.lectureTeacher}
                                     </div>
                                     <div className="lp-period">
-                                        <div className="section-title">
+                                        <div className="responsive-title section-title">
                                             강좌기간
                                         </div>
                                         {item.lecturePeriod}
+                                        <div className="responsive-period">
+                                            {
+                                                item.lectureTime.substring(13, 14) === '1' ? '(월)' :
+                                                    item.lectureTime.substring(13, 14) === '2' ? '(화)' :
+                                                        item.lectureTime.substring(13, 14) === '3' ? '(수)' :
+                                                            item.lectureTime.substring(13, 14) === '4' ? '(목)' :
+                                                                item.lectureTime.substring(13, 14) === '5' ? '(금)' :
+                                                                    item.lectureTime.substring(13, 14) === '6' ? '(토)' : '(일)'
+                                            }
+                                            <div>
+                                                {item.lectureTime.substring(0, 12)}
+                                            </div>
+                                            <span> / </span>
+                                            {item.lectureCount}회
+                                        </div>
                                     </div>
                                     <div className="lp-time">
-                                        <div className="section-title">
+                                        <div className="responsive-title section-title">
                                             강좌시간 / 횟수
                                         </div>
                                         {item.lectureTime.substring(0, 12)}
@@ -147,13 +162,13 @@ const PaymentInfo = (props:Props) => {
             <div className="lp-button">
                 <div className="section-button">
                     <div className="button-fee">
-                        <span>총 결제예정금액</span>
-                        <div>
+                        <div className="fee-text">총 결제예정금액</div>
+                        <div className="fee-amount">
                             {totalPaymentFee.toLocaleString()}
+                            <div className="fee-text">원</div>
                         </div>
-                        <span>원</span>
                     </div>
-                    <div>
+                    <div className="button-active">
                         <button className="btn-back"
                                 onClick={() => navigate(-1)}>이전</button>
                         <button className="btn-payment"

@@ -70,7 +70,6 @@ const PaymentWidget = (props: Props) => {
     });
 
     const location = useLocation();
-    console.log(location.state)
     const clientKey:string|undefined = process.env.REACT_APP_TOSS_CLIENT_KEY;
 
     useEffect(() => {
@@ -95,10 +94,6 @@ const PaymentWidget = (props: Props) => {
                 orderId += "_" + paymentInfo[i].lectureNo;
                 paymentFee += paymentInfo[i].lectureFee;
             }
-
-            console.log(orderId)
-            console.log(orderName)
-            console.log(paymentFee)
 
             script.addEventListener("load", ():void => {
                 const button:HTMLElement|null = document.getElementById("payment-button");
