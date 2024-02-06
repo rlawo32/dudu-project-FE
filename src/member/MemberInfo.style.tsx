@@ -32,6 +32,11 @@ export const MemberInfoView = styled.div`
   .mi-main {
     width: 1160px;
     margin: 60px auto 70px;
+    @media screen and (max-width: 1280px) {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0 30px;
+    }
     
     .mi-info-view {
       margin-top: 40px;
@@ -48,15 +53,16 @@ export const MemberInfoView = styled.div`
         display: flex;
         padding-bottom: 30px;
         border-bottom: 1px solid ${({theme}) => theme.rgbaMedium};
+        @media screen and (max-width: 850px) {
+          flex-direction: column;
+        }
         
         .content-left {
           width: 100%;
-          
         }
         
         .content-right {
           width: 100%;
-          
         }
         
         .content-item {
@@ -112,6 +118,11 @@ export const MemberInfoView = styled.div`
           letter-spacing: -.75px;
           transition: all .4s ease;
           cursor: pointer;
+          @media screen and (max-width: 850px) {
+            display: block;
+            min-width: 100%;
+            margin-top: 10px;
+          }
         }
       }
     }
@@ -121,6 +132,10 @@ export const MemberInfoView = styled.div`
       justify-content: space-around;
       align-items: center;
       margin: 140px auto 0;
+      @media screen and (max-width: 850px) {
+        flex-wrap: wrap;
+        margin: 70px auto 0;
+      }
       
       .move-item {
         display: flex;
@@ -136,6 +151,10 @@ export const MemberInfoView = styled.div`
         font-weight: bold;
         transition: all .4s ease;
         cursor: pointer;
+        @media screen and (max-width: 850px) {
+          width: calc((100% - 120px) / 2);
+          margin: 15px 10px 0;
+        }
         
         .icon-custom {
           display: block;
