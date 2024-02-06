@@ -32,6 +32,11 @@ export const MemberLogView = styled.div`
   .ml-main {
     width: 1160px;
     margin: 30px auto 120px;
+    @media screen and (max-width: 1280px) {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0 30px;
+    }
     
     .ml-main-list {
       
@@ -194,6 +199,9 @@ export const MemberLogView = styled.div`
             .item-date {
               font-size: 16px;
               opacity: 0.7;
+              @media screen and (max-width: 1024px) {
+                margin-top: 5px;
+              }
             }
           }
         }
