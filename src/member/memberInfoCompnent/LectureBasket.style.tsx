@@ -32,6 +32,11 @@ export const LectureBasketView = styled.div`
   .lb-main {
     width: 1160px;
     margin: 30px auto 120px;
+    @media screen and (max-width: 1280px) {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0 30px;
+    }
 
     .lb-list-view {
 
@@ -96,75 +101,152 @@ export const LectureBasketView = styled.div`
           border-radius: 12px;
           background-color: ${({theme}) => theme.cardBgColor};
           color: ${({theme}) => theme.textColor};
+          @media screen and (max-width: 1024px) {
+            padding: 40px 40px 20px 40px;
+          }
           
           .item-checkbox {
             margin-right: 10px;
           }
           
-          .item-left {
-            width: 40%;
-            margin-right: 40px;
-            
-            .left-top{
-              display: flex;
-              
-              .item-state {
-                padding: 3px 7px 3px 7px;
-                margin-right: 6px;
-                border: none;
-                border-radius: 10px;
-                background-color: greenyellow;
-                font-size: 11px;
-                font-weight: bold;
-              }
-              
-              .item-institution {
-                padding: 3px 7px 3px 7px;
-                border: none;
-                border-radius: 10px;
-                background-color: lightgray;
-                color: black;
-                font-size: 11px;
-                font-weight: bold;
-              }
+          .item-content {
+            display: flex;
+            width: 100%;
+            @media screen and (max-width: 1024px) {
+              flex-direction: column;
+              padding-bottom: 10px;
             }
             
-            .left-bot {
-              margin-top: 7px;
-              
-              .item-title {
-                font-size: 24px;
-                font-weight: bold;
-                line-height: 32px;
-                letter-spacing: -.6px;
-                word-break: keep-all;
-                overflow-wrap: break-word;
-                cursor: pointer;
+            .item-left {
+              width: 40%;
+              margin-right: 40px;
+              @media screen and (max-width: 1024px) {
+                width: 100%;
+                padding-bottom: 10px;
+              }
+
+              .left-top{
+                display: flex;
+
+                .item-state {
+                  padding: 3px 7px 3px 7px;
+                  margin-right: 6px;
+                  border: none;
+                  border-radius: 10px;
+                  background-color: greenyellow;
+                  font-size: 11px;
+                  font-weight: bold;
+                }
+
+                .item-institution {
+                  padding: 3px 7px 3px 7px;
+                  border: none;
+                  border-radius: 10px;
+                  background-color: lightgray;
+                  color: black;
+                  font-size: 11px;
+                  font-weight: bold;
+                }
+              }
+
+              .left-bot {
+                margin-top: 7px;
+
+                .item-title {
+                  font-size: 24px;
+                  font-weight: bold;
+                  line-height: 32px;
+                  letter-spacing: -.6px;
+                  word-break: keep-all;
+                  overflow-wrap: break-word;
+                  cursor: pointer;
+                }
               }
             }
-          }
-          
-          .item-right {
-            width: 50%;
-            padding: 0 30px 0 20px;
-            border-left: 1px solid ${({theme}) => theme.rgbaLight};
-            
-            .item-info {
-              display: flex;
-              align-items: center;
-              margin-top: 8px;
-              font-size: 13px;
-              line-height: 22px;
-              letter-spacing: -.3px;
-              
-              .info-title {
-                width: 120px;
-                margin-right: 20px;
+
+            .item-right {
+              width: 50%;
+              padding: 0 30px 0 20px;
+              border-left: 1px solid ${({theme}) => theme.rgbaLight};
+              @media screen and (max-width: 1024px) {
+                width: 100%;
+                padding: 0;
+                border: none;
+              }
+
+              .item-info {
+                display: flex;
+                align-items: center;
+                margin-top: 8px;
+                font-size: 13px;
+                line-height: 22px;
+                letter-spacing: -.3px;
+
+                .responsive-title {
+                  @media screen and (max-width: 1024px) {
+                    display: none;
+                  }
+                }
+                
+                .info-title {
+                  width: 120px;
+                  margin-right: 20px;
+                }
+                
+                .item-teacher {
+                  
+                  @media screen and (max-width: 1024px) {
+                    margin-top: 4px;
+                    line-height: 16px;
+                  }
+                }
+                
+                .item-period {
+                  
+                  @media screen and (max-width: 1024px) {
+                    margin-top: 4px;
+                    line-height: 16px;
+                  }
+                  .responsive-period {
+                    display: none;
+                    @media screen and (max-width: 1024px) {
+                      display: inline-block;
+                      margin-left: 4px;
+
+                      div {
+                        display: inline-block;
+                        margin-left: 4px;
+                      }
+                    }
+                  }
+                }
+                
+                .item-time {
+
+                  @media screen and (max-width: 1024px) {
+                    display: none;
+                  }
+                }
+                
+                .item-total {
+                  font-size: 15px;
+                  font-weight: bold;
+                }
               }
               
-              .item-total {
-                font-size: 15px;
-                font-weight: bold;
+              .item-amount {
+                padding-top: 10px;
+                margin-top: 15px;
+                border-top: 1px solid ${({theme}) => theme.rgbaLight};
+
+                .item-info {
+                  
+                  @media screen and (max-width: 1024px) {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 12px;
+                  }
+                }
               }
             }
           }
@@ -211,53 +293,6 @@ export const LectureBasketView = styled.div`
       position: sticky;
       bottom: 0;
       left: 0;
-      width: 100%;
-      padding: 24px 0;
-      border-top: 2px solid ${({theme}) => theme.textColor};
-      background-color: ${({theme}) =>theme.bgColor};
-    
-      .button-fee {
-        display: flex;
-      
-        .fee-count {
-          
-        }
-        
-        .fee-text {
-          
-        }
-        
-        .fee-amount {
-          
-        }
-        
-        .fee-unit {
-          
-        }
-      }
-      
-      .btn-payment {
-        display: inline-block;
-        min-height: 60px;
-        min-width: 250px;
-        padding: 16px 10px 17px;
-        margin-left: 10px;
-        border: 1px solid ${({theme}) => theme.rgbaLight};
-        border-radius: 8px;
-        background-color: ${({theme}) => theme.reverseBgColor};
-        color: ${({theme}) => theme.reverseTextColor};
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-        transition: all .4s ease;
-        cursor: pointer;
-      }
-    }
-  
-    .lb-button {
-      position: sticky;
-      bottom: 0;
-      left: 0;
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -265,23 +300,36 @@ export const LectureBasketView = styled.div`
       padding: 24px 0;
       border-top: 2px solid ${({theme}) => theme.textColor};
       background-color: ${({theme}) =>theme.bgColor};
+      @media screen and (max-width: 1024px) {
+        box-sizing: border-box;
+        justify-content: space-between;
+        padding: 24px;
+      }
     
       .button-fee {
         display: flex;
         align-items: baseline;
         line-height: 35px;
-      
-        .fee-count {
-          margin-right: 2px;
-          font-weight: bold;
+        @media screen and (max-width: 1024px) {
+          flex-direction: column;
         }
         
         .fee-text {
-          opacity: 0.7;
+
+          .fee-count {
+            display: inline-block;
+            margin-right: 2px;
+            font-weight: bold;
+          }
+          
+          .text-light {
+            display: inline-block;
+            opacity: 0.7;
+          }
         }
         
         .fee-payment {
-          max-width: 80%;
+          max-width: 90%;
           margin-left: 20px;
 
           .fee-amount {
@@ -314,6 +362,12 @@ export const LectureBasketView = styled.div`
         text-align: center;
         transition: all .4s ease;
         cursor: pointer;
+        @media screen and (max-width: 1024px) {
+          min-height: 40px;
+          min-width: 200px;
+          padding: 13px 10px 14px;
+          font-size: 16px;
+        }
       }
     }
 `;
