@@ -249,54 +249,70 @@ const LectureBasket = () => {
                                                 </Styled.CheckBoxText>
                                             </Styled.CheckBoxLabel>
                                         </div>
-                                        <div className="item-left">
-                                            <div className="left-top">
-                                                <div className="item-state" style={
-                                                    item.lectureStateNo === 1 ? {backgroundColor: "slategray", color: 'white'} :
-                                                        item.lectureStateNo === 2 ? {backgroundColor: "greenyellow", color: 'black'} :
-                                                            item.lectureStateNo === 3 ? {backgroundColor: "slategray", color: 'black'} :
-                                                                item.lectureStateNo === 4 ? {backgroundColor: "black", color: 'white'} :
-                                                                    item.lectureStateNo === 5 || 6 ? {backgroundColor: "red", color: 'black'} : {}}>
-                                                    {
-                                                        item.lectureStateNo === 1 ? '접수예정' :
-                                                            item.lectureStateNo === 2 ? '접수중' :
-                                                                item.lectureStateNo === 3 ? '대기접수' :
-                                                                    item.lectureStateNo === 4 ? '접수마감' :
-                                                                        item.lectureStateNo === 5 ? '접수불가' : '강의종료'
-                                                    }
+                                        <div className="item-content">
+                                            <div className="item-left">
+                                                <div className="left-top">
+                                                    <div className="item-state" style={
+                                                        item.lectureStateNo === 1 ? {backgroundColor: "slategray", color: 'white'} :
+                                                            item.lectureStateNo === 2 ? {backgroundColor: "greenyellow", color: 'black'} :
+                                                                item.lectureStateNo === 3 ? {backgroundColor: "slategray", color: 'black'} :
+                                                                    item.lectureStateNo === 4 ? {backgroundColor: "black", color: 'white'} :
+                                                                        item.lectureStateNo === 5 || 6 ? {backgroundColor: "red", color: 'black'} : {}}>
+                                                        {
+                                                            item.lectureStateNo === 1 ? '접수예정' :
+                                                                item.lectureStateNo === 2 ? '접수중' :
+                                                                    item.lectureStateNo === 3 ? '대기접수' :
+                                                                        item.lectureStateNo === 4 ? '접수마감' :
+                                                                            item.lectureStateNo === 5 ? '접수불가' : '강의종료'
+                                                        }
+                                                    </div>
+                                                    <div className="item-institution">
+                                                        {item.lectureInstitutionName}
+                                                    </div>
                                                 </div>
-                                                <div className="item-institution">
-                                                    {item.lectureInstitutionName}
-                                                </div>
-                                            </div>
-                                            <div className="left-bot">
-                                                <div className="item-title"
-                                                     onClick={() => navigate("/lectureDetail/" + item.lectureNo,
-                                                    { state: {lectureNo: item.lectureNo}})}>
-                                                    {item.lectureTitle}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="item-right">
-                                            <div className="item-info">
-                                                <div className="info-title">강사명</div>
-                                                <div className="item-teacher">
-                                                    {item.lectureTeacher}
+                                                <div className="left-bot">
+                                                    <div className="item-title"
+                                                         onClick={() => navigate("/lectureDetail/" + item.lectureNo,
+                                                             { state: {lectureNo: item.lectureNo}})}>
+                                                        {item.lectureTitle}
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="item-info">
-                                                <div className="info-title">강좌기간</div>
-                                                <div className="item-period">
-                                                    {item.lecturePeriod}
+                                            <div className="item-right">
+                                                <div className="item-info">
+                                                    <div className="responsive-title info-title">강사명</div>
+                                                    <div className="item-teacher">
+                                                        {item.lectureTeacher}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="item-info">
-                                                <div className="info-title">강좌시간/횟수</div>
-                                                <div className="item-time">
+                                                <div className="item-info">
+                                                    <div className="responsive-title info-title">강좌기간</div>
+                                                    <div className="item-period">
+                                                        {item.lecturePeriod}
+                                                        <div className="responsive-period">
+                                                            {
+                                                                item.lectureTime.substring(13, 14) === '1' ? '(월)' :
+                                                                    item.lectureTime.substring(13, 14) === '2' ? '(화)' :
+                                                                        item.lectureTime.substring(13, 14) === '3' ? '(수)' :
+                                                                            item.lectureTime.substring(13, 14) === '4' ? '(목)' :
+                                                                                item.lectureTime.substring(13, 14) === '5' ? '(금)' :
+                                                                                    item.lectureTime.substring(13, 14) === '6' ? '(토)' : '(일)'
+                                                            }
+                                                            <div>
+                                                                {item.lectureTime.substring(0, 12)}
+                                                            </div>
+                                                            <span> / </span>
+                                                            {item.lectureCount}회
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="item-info">
+                                                    <div className="responsive-title info-title">강좌시간/횟수</div>
+                                                    <div className="item-time">
                                                     <span>
                                                         {item.lectureTime.substring(0, 11)}
                                                     </span>
-                                                    <span>
+                                                        <span>
                                                         {
                                                             item.lectureTime.substring(13, 14) === '1' ? ' (월)' :
                                                                 item.lectureTime.substring(13, 14) === '2' ? ' (화)' :
@@ -306,19 +322,22 @@ const LectureBasket = () => {
                                                                                 item.lectureTime.substring(13, 14) === '6' ? ' (토)' : ' (일)'
                                                         }
                                                     </span>
-                                                    <span> / 총 {item.lectureCount}회</span>
+                                                        <span> / 총 {item.lectureCount}회</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="item-info">
-                                                <div className="info-title">강좌료</div>
-                                                <div className="item-fee">
-                                                    {item.lectureFee.toLocaleString()}원
-                                                </div>
-                                            </div>
-                                            <div className="item-info">
-                                                <div className="info-title item-total">총금액</div>
-                                                <div className="item-total">
-                                                    {item.lectureFee.toLocaleString()}원
+                                                <div className="item-amount">
+                                                    <div className="item-info">
+                                                        <div className="info-title">강좌료</div>
+                                                        <div className="item-fee">
+                                                            {item.lectureFee.toLocaleString()}원
+                                                        </div>
+                                                    </div>
+                                                    <div className="item-info">
+                                                        <div className="info-title item-total">총금액</div>
+                                                        <div className="item-total">
+                                                            {item.lectureFee.toLocaleString()}원
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -351,8 +370,10 @@ const LectureBasket = () => {
 
             <div className="lb-button">
                 <div className="button-fee">
-                    <div className="fee-count">{checkItems.length}건</div>
-                    <div className="fee-text">결제 예정 금액</div>
+                    <div className="fee-text">
+                        <div className="fee-count">{checkItems.length}건</div>
+                        <div className="text-light">결제 예정 금액</div>
+                    </div>
                     <div className="fee-payment">
                         <div className="fee-amount">
                             {checkFees.toLocaleString()}
