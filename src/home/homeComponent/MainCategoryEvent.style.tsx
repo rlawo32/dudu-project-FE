@@ -2,17 +2,23 @@ import styled from "styled-components";
 
 export const MainCategoryEventView = styled.div`
   margin: 500px auto;
+  @media screen and (max-width: 1024px) {
+    box-sizing: border-box;
+    width: calc(100% - 30px);
+    padding: 40px 10px 20px;
+    margin: 400px 15px;
+    border-radius: 10px;
+    background: ${({theme}) => theme.boxBgColor};
+  }
 
   .el-title {
     width: 1440px;
+    padding-left: 60px;
     margin: 80px auto;
-    @media screen and (max-width: 1440px) {
-      width: 1024px;
-      margin: 300px auto;
-    }
     @media screen and (max-width: 1024px) {
-      width: fit-content;
-      margin: 10% 0 5% 5%;
+      width: 100%;
+      padding: 0;
+      margin: 0 20px 70px;
     }
     word-break: keep-all;
     overflow-wrap: break-word;
@@ -44,6 +50,7 @@ export const MainCategoryEventView = styled.div`
   
   .el-wrapper {
     display: flex;
+    min-height: 650px;
     @media screen and (max-width: 1024px) {
       display: block;
       padding-bottom: 50px;
@@ -55,7 +62,6 @@ export const MainCategoryEventView = styled.div`
       position: relative;
       display: inline-block;
       height: 100vh;
-      min-height: 700px;
       width: 70%;
       border-radius: 0 12px 12px 0;
       @media screen and (max-width: 1440px) {
