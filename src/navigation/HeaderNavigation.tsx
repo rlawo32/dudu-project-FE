@@ -117,10 +117,11 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
       display: flex;
       align-items: center;
       flex-direction: column;
-      padding-bottom: 150px;
+      padding-bottom: 100px;
     }
 
     .image-section {
+      padding-top: 160px;
       
     }
     
