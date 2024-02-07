@@ -300,9 +300,6 @@ const LectureEventMain = () => {
         }
         setTimeout(() => {mainEventList().then();}, 300);
     }, [mainCategoryNo, subCategoryNo]);
-
-    console.log(eventRecommendSelectArr)
-
     return (
         <div className="ew-sub-view">
             <div className="em-view">
