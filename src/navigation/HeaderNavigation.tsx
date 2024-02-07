@@ -10,10 +10,11 @@ import {faArrowRightToBracket as loginIcon, faArrowRightFromBracket as logoutIco
     faUser as myPageIcon} from "@fortawesome/free-solid-svg-icons";
 
 const StyledLink:any = styled(Link)`
+  margin: 10px 0;
   color: ${({theme}) => theme.textColor};
   text-decoration: none;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 35px;
+  font-weight: normal;
   
   .icon-custom {
     font-size: 32px;
@@ -60,13 +61,13 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
       display: flex;
       align-items: center;
       height: 100%;
-      width: ${({$getRole}) => $getRole === "" ? 0 : "173px"};
-      margin-left: 50px;
+      width: fit-content;
+      margin-left: 20px;
 
       img {
         margin-top: 5px;
         height: 80px;
-        width: 200px;
+        width: 190px;
         object-fit: cover;
       }
     }
@@ -89,24 +90,53 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
   }
   
   .header-child {
+    box-sizing: border-box;
     position: fixed;
     top: 70px;
     left: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     height: 0;
     width: 100%;
+    padding-left: 220px;
     background: ${({theme}) => theme.noticeBgColor};
     font-size: 16px;
     overflow: hidden;
     z-index: 99;
-    transition: height 0.3s ease-in;
+    transition: height 0.2s ease-in;
     cursor: default;
+    @media screen and (max-width: 1180px) {
+      padding-left: 80px;
+    }
+    @media screen and (max-width: 1080px) {
+      padding-left: 60px;
+    }
+    
+    .button-section {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      padding-bottom: 150px;
+    }
+
+    .image-section {
+      
+    }
+    
+    img {
+      object-fit: cover;
+      transition: transform .4s ease;
+    }
   }
 
   .header-child.active {
-    height: 70px;
+    height: 350px;
+    
+    img {
+      transform: scale(1.1);
+      transition: transform 1.5s ease;
+    }
   }
 `;
 
@@ -160,15 +190,23 @@ const HeaderNavigation = ():any => {
                         </StyledLink>
                     </div>
                     <div className="header-center">
-                        <StyledLink to="/lectureList" style={{marginLeft: '30px'}}>
+                        <LinkBox style={{marginLeft: '30px'}}>
                             <div className="parent-lectureSub"
                                  onMouseOver={() => setIsLectureSubHovering(true)}>
                                 수강신청
                             </div>
-                            {/*<div className={isLectureSubHovering ? "header-child active" : "header-child"}*/}
-                            {/*     onMouseOver={() => setIsLectureSubHovering(true)}>*/}
-                            {/*</div>*/}
-                        </StyledLink>
+                            <div className={isLectureSubHovering ? "header-child active" : "header-child"}
+                                 onMouseOver={() => setIsLectureSubHovering(true)}>
+                                <div className="button-section">
+                                    <StyledLink to="/lectureList" style={{marginLeft: '30px'}}>
+                                        수강신청
+                                    </StyledLink>
+                                </div>
+                                <div className="image-section">
+                                    <img src={"https://react-project-bucket.s3.ap-northeast-2.amazonaws.com/defaultImage/headerimg0.jpg"} alt={"header-image1"}/>
+                                </div>
+                            </div>
+                        </LinkBox>
                         <LinkBox style={{marginLeft: '30px'}}>
                             <div className="parent-informationUse"
                                  onMouseOver={() => setIsInformationUseHovering(true)}>
@@ -176,12 +214,17 @@ const HeaderNavigation = ():any => {
                             </div>
                             <div className={isInformationUseHovering ? "header-child active" : "header-child"}
                                  onMouseOver={() => setIsInformationUseHovering(true)}>
-                                <StyledLink to="/branchInfoList" style={{marginLeft: '30px'}}>
-                                    지점안내
-                                </StyledLink>
-                                <StyledLink to="/faqList" style={{marginLeft: '30px'}}>
-                                    자주하는 문의
-                                </StyledLink>
+                                <div className="button-section">
+                                    <StyledLink to="/branchInfoList" style={{marginLeft: '30px'}}>
+                                        지점안내
+                                    </StyledLink>
+                                    <StyledLink to="/faqList" style={{marginLeft: '30px'}}>
+                                        자주하는 문의
+                                    </StyledLink>
+                                </div>
+                                <div className="image-section">
+                                    <img src={"https://react-project-bucket.s3.ap-northeast-2.amazonaws.com/defaultImage/headerimg1.jpg"} alt={"header-image1"}/>
+                                </div>
                             </div>
                         </LinkBox>
                         <LinkBox style={{marginLeft: '30px'}}>
@@ -191,14 +234,19 @@ const HeaderNavigation = ():any => {
                             </div>
                             <div className={isCommunityHovering ? "header-child active" : "header-child"}
                                  onMouseOver={() => setIsCommunityHovering(true)}>
-                                <StyledLink to="/boardList" style={{marginLeft: '30px'}}>
-                                    공지사항/이벤트
-                                </StyledLink>
-                                <StyledLink to="/" style={{marginLeft: '30px'}}>
-                                    <div onClick={() => alert('개발중..')}>
-                                        수강후기
-                                    </div>
-                                </StyledLink>
+                                <div className="button-section">
+                                    <StyledLink to="/boardList" style={{marginLeft: '30px'}}>
+                                        공지사항/이벤트
+                                    </StyledLink>
+                                    <StyledLink to="/" style={{marginLeft: '30px'}}>
+                                        <div onClick={() => alert('개발중..')}>
+                                            수강후기
+                                        </div>
+                                    </StyledLink>
+                                </div>
+                                <div className="image-section">
+                                    <img src={"https://react-project-bucket.s3.ap-northeast-2.amazonaws.com/defaultImage/headerimg2.jpg"} alt={"header-image2"}/>
+                                </div>
                             </div>
                         </LinkBox>
                         {
@@ -210,21 +258,26 @@ const HeaderNavigation = ():any => {
                                     </div>
                                     <div className={isAdminPageHovering ? "header-child active" : "header-child"}
                                          onMouseOver={() => setIsAdminPageHovering(true)}>
-                                        <StyledLink to="/lectureWrite" style={{marginLeft: '30px'}}>
-                                            강좌개설
-                                        </StyledLink>
-                                        <StyledLink to="/lectureEventWrite" style={{marginLeft: '30px'}}>
-                                            강좌관리
-                                        </StyledLink>
-                                        <StyledLink to="/boardWrite" style={{marginLeft: '30px'}}>
-                                            게시글작성
-                                        </StyledLink>
-                                        <StyledLink to="/faqWrite" style={{marginLeft: '30px'}}>
-                                            FAQ 작성
-                                        </StyledLink>
-                                        <StyledLink to="/branchInfoWrite" style={{marginLeft: '30px'}}>
-                                            지점 등록
-                                        </StyledLink>
+                                        <div className="button-section">
+                                            <StyledLink to="/lectureWrite" style={{marginLeft: '30px'}}>
+                                                강좌개설
+                                            </StyledLink>
+                                            <StyledLink to="/lectureEventWrite" style={{marginLeft: '30px'}}>
+                                                강좌관리
+                                            </StyledLink>
+                                            <StyledLink to="/boardWrite" style={{marginLeft: '30px'}}>
+                                                게시글작성
+                                            </StyledLink>
+                                            <StyledLink to="/faqWrite" style={{marginLeft: '30px'}}>
+                                                FAQ 작성
+                                            </StyledLink>
+                                            <StyledLink to="/branchInfoWrite" style={{marginLeft: '30px'}}>
+                                                지점 등록
+                                            </StyledLink>
+                                        </div>
+                                        <div className="image-section">
+
+                                        </div>
                                     </div>
                                 </LinkBox>: <></>
                         }
