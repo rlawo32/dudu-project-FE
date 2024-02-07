@@ -61,6 +61,7 @@ const LectureDetail = () => {
     const [isMaterialsBoxShow, setIsMaterialsBoxShow] = useState<boolean>(false);
     const [isNoticeBoxShow, setIsNoticeBoxShow] = useState<boolean>(false);
     const [isRemoteSelect, setIsRemoteSelect] = useState<boolean>(false);
+    const [width, setWidth] = useState<number>(window.innerWidth);
 
     const onActiveArrangement = (result:any):void => {
         setLectureScheduleArr(result.lectureSchedule.split("^*"));
@@ -103,6 +104,9 @@ const LectureDetail = () => {
     }
 
     useEffect(() => {
+    }, []);
+
+    useEffect(() => {
         const lectureDetail = async () => {
             await axios({
                 method: "GET",
@@ -132,6 +136,16 @@ const LectureDetail = () => {
         remoteBox.current.forEach((ref: any) => {
             scrollObserver.observe(ref);
         });
+
+        const handleResize = () => {
+            setWidth(window.innerWidth);
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => {
+            // cleanup
+            window.removeEventListener("resize", handleResize);
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -378,7 +392,7 @@ const LectureDetail = () => {
                 </div>
             </div>
 
-            <TopButtonNavigation type={""} />
+            {width >= 1280 ? <TopButtonNavigation type={""} /> : <TopButtonNavigation type={"D"} />}
 
             <div className="footer-navigation">
                 <FooterNavigation />
