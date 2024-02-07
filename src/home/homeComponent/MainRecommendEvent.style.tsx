@@ -5,12 +5,8 @@ export const MainRecommendEventView = styled.div`
   margin: 200px auto;
   @media screen and (max-width: 1440px) {
     box-sizing: border-box;
-    width: 1024px;
-    padding: 40px 10px 20px;
-    margin: 200px auto 10%;
-  }
-  @media screen and (max-width: 1024px) {
     width: calc(100% - 30px);
+    padding: 40px 15px;
     margin: 200px 15px;
     border-radius: 10px;
     background: ${({theme}) => theme.boxBgColor};
@@ -19,7 +15,7 @@ export const MainRecommendEventView = styled.div`
   .el-title {
     word-break: keep-all;
     overflow-wrap: break-word;
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 1440px) {
       width: 100%;
       margin-left: 20px;
     }
@@ -63,7 +59,7 @@ export const MainRecommendEventView = styled.div`
       box-sizing: border-box;
       height: 100%;
       width: calc((100% - 48px) / 4);
-      margin-right: 32px;
+      margin: 0 16px;
       padding: 5px;
       border-radius: 8px;
       background-color: ${({theme}) => theme.cardBgColor};
