@@ -4,19 +4,24 @@ export const MainRecommendEventView = styled.div`
   width: 1440px;
   margin: 200px auto;
   @media screen and (max-width: 1440px) {
+    box-sizing: border-box;
     width: 1024px;
+    padding: 40px 10px 20px;
     margin: 200px auto 10%;
   }
   @media screen and (max-width: 1024px) {
-    width: fit-content;
+    width: calc(100% - 30px);
+    margin: 200px 15px;
+    border-radius: 10px;
+    background: ${({theme}) => theme.boxBgColor};
   }
 
   .el-title {
     word-break: keep-all;
     overflow-wrap: break-word;
     @media screen and (max-width: 1024px) {
-      width: fit-content;
-      margin: 0 0 0 5%;
+      width: 100%;
+      margin-left: 20px;
     }
 
     .title-top {
