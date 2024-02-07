@@ -13,6 +13,7 @@ declare module "styled-components" {
         noticeBgColor: string;
         inputBgColor: string;
         toggleColor: string;
+        topBtnColor: string;
         headerBgColor: string;
         headerTextColor: string;
         datePickerSelectColor: string;
