@@ -10,9 +10,9 @@ const TopButtonNavigationView = styled.div<{$type:string}>`
   height: 50px;
   width: 50px;
   margin-bottom: 5%;
-  border: 1px solid ${({theme}) => theme.boxBgColor};
+  border: 1px solid ${({theme}) => theme.topBtnColor};
   border-radius: 50%;
-  background-color: ${({theme}) => theme.boxBgColor};
+  background-color: ${({theme}) => theme.topBtnColor};
   color: ${({theme}) => theme.textColor};;
   text-align: center;
   z-index: 99;
