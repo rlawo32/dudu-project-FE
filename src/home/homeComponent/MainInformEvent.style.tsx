@@ -5,8 +5,15 @@ export const MainInformEventView = styled.div`
   width: 1440px;
   margin: 150px auto;
   @media screen and (max-width: 1440px) {
-    width: 100%;
-    margin: 10% auto;
+    box-sizing: border-box;
+    width: calc(100% - 30px);
+    padding: 60px 10px 20px;
+    margin: 250px 15px;
+    border-radius: 10px;
+    background: ${({theme}) => theme.boxBgColor};
+  }
+  @media screen and (max-width: 1024px) {
+    padding: 40px 10px 30px;
   }
   
   .el-title {
@@ -20,8 +27,9 @@ export const MainInformEventView = styled.div`
     @media screen and (max-width: 1024px) {
       display: flex;
       justify-content: space-between;
-      width: calc(100% - 90px);
-      margin: 0 auto 40px;
+      align-items: center;
+      width: calc(100% - 20px);
+      margin: 0 20px 40px 20px;
     }
     @media screen and (min-width: 1024px) {
       display: none;
@@ -51,8 +59,8 @@ export const MainInformEventView = styled.div`
       cursor: pointer;
       @media screen and (max-width: 1024px) {
         min-height: 0;
-        width: calc(100% - 56px);
-        padding: 20px 20px 45px 20px;
+        width: calc(100% - 32px);
+        padding: 20px 5px 45px;
         border-bottom: 1px solid #d8c9c9;
         background: none;
       }
@@ -106,7 +114,7 @@ export const MainInformEventView = styled.div`
         line-height: 22px;
         @media screen and (max-width: 1024px) {
           bottom: 20px;
-          left: 20px;
+          left: 5px;
           line-height: 12px;
           opacity: 0.6;
         }
