@@ -5,7 +5,7 @@ export const MainRecommendEventView = styled.div`
   margin: 200px auto;
   @media screen and (max-width: 1440px) {
     width: 1024px;
-    margin: 20% auto 10%;
+    margin: 200px auto 10%;
   }
   @media screen and (max-width: 1024px) {
     width: fit-content;
