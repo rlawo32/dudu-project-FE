@@ -32,6 +32,11 @@ export const LectureHistoryView = styled.div`
   .lh-main {
     width: 1160px;
     margin: 30px auto 120px;
+    @media screen and (max-width: 1280px) {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0 30px;
+    }
 
     .lh-main-notice {
       position: relative;
@@ -110,6 +115,7 @@ export const LectureHistoryView = styled.div`
       }
       
       .lh-list-view {
+        box-sizing: border-box;
         
         .lh-list-top {
           display: flex;
@@ -238,6 +244,10 @@ export const LectureHistoryView = styled.div`
           align-items: flex-start;
           flex-wrap: wrap;
           margin-top: 20px;
+          @media screen and (max-width: 1024px) {
+            flex-direction: column;
+            padding: 0 10px;
+          }
           
           .lh-list-item {
             width: calc((100% - 225px) / 2);
@@ -246,6 +256,11 @@ export const LectureHistoryView = styled.div`
             border: 1px solid #ddcdc5;
             border-radius: 12px;
             background-color: ${({theme}) => theme.cardBgColor};
+            @media screen and (max-width: 1024px) {
+              box-sizing: border-box;
+              width: 100%;
+              margin: 20px 0;
+            }
             
             .item-head {
               box-sizing: border-box;
