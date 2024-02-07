@@ -5,20 +5,25 @@ export const MainRecentEventView = styled.div`
   width: 1440px;
   margin: 500px auto;
   @media screen and (max-width: 1440px) {
-    width: 1024px;
-    margin: 300px auto;
+    box-sizing: border-box;
+    width: calc(100% - 30px);
+    padding: 40px 20px 20px;
+    margin: 300px 15px;
+    border-radius: 10px;
+    background: ${({theme}) => theme.boxBgColor};
   }
   @media screen and (max-width: 1024px) {
-    width: 100%;
-    border-bottom: 1px solid gray;
+    width: calc(100% - 30px);
+    padding: 40px 10px 20px;
+    margin: 400px 15px;
   }
 
   .els-title {
     word-break: keep-all;
     overflow-wrap: break-word;
     @media screen and (max-width: 1024px) {
-      width: fit-content;
-      margin: 0 0 0 5%;
+      width: 100%;
+      margin-left: 20px;
     }
 
     .title-top {
@@ -57,7 +62,7 @@ export const MainRecentEventView = styled.div`
     z-index: 1;
     transition-property: transform;
     @media screen and (max-width: 1024px) {
-      width: 90%;
+      width: 100%;
       margin: 34px auto;
     }
 
