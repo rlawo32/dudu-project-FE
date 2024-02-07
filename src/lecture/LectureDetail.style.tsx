@@ -19,6 +19,18 @@ export const LectureDetailView = styled.div<Props>`
     }
   }
   
+  .topBtn-navigation {
+    @media screen and (max-width: 1280px) {
+      display: none;
+    }
+  }
+  
+  .topBtn-navigation-responsive {
+    @media screen and (min-width: 1280px) {
+      display: none;
+    }
+  }
+  
   .detail-responsive {
     @media screen and (min-width: 1280px) {
       display: none;
