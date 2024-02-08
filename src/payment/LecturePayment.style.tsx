@@ -272,107 +272,109 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
   }
   
   .lp-button {
+    box-sizing: border-box;
     position: sticky;
     bottom: 0;
     left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    padding: 24px 0;
+    padding: 24px 180px;
+    margin: 0 auto;
     border-top: 2px solid ${({theme}) => theme.textColor};
-    background-color: ${({theme}) =>theme.bgColor};
+    background-color: ${({theme}) => theme.bgColor};
+    opacity: ${({$isModal}) => $isModal ? 0.5 : 1};
+    @media screen and (max-width: 1280px) {
+      width: 100%;
+      padding: 24px 32px;
+    }
     @media screen and (max-width: 1024px) {
+      flex-direction: column;
       padding: 12px 0;
     }
-    
-    .section-button {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 1160px;
-      margin: 0 auto;
-      opacity: ${({$isModal}) => $isModal ? 0.5 : 1};
-      @media screen and (max-width: 1280px) {
+
+    .button-fee {
+      @media screen and (max-width: 1024px) {
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 52px;
+        margin-bottom: 10px;
+      }
+
+      .fee-text {
+        display: inline-block;
+        width: fit-content;
+        font-size: 18px;
+        line-height: 35px;
+        opacity: 0.5;
+      }
+
+      .fee-amount {
+        display: inline-block;
+        width: fit-content;
+        margin: 0 2px 0 20px;
+        font-size: 32px;
+        font-weight: bold;
+        word-break: break-all;
+      }
+    }
+
+    .button-active {
+      @media screen and (max-width: 1024px) {
         box-sizing: border-box;
         width: 100%;
-        padding: 0 32px;
+        padding: 12px 8px;
       }
-      @media screen and (max-width: 1024px) {
-        flex-direction: column;
-      }
-      
-      .button-fee {
-        @media screen and (max-width: 1024px) {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          width: 100%;
-          margin-bottom: 20px;
-        }
-        
-        .fee-text {
-          display: inline-block;
-          font-size: 18px;
-          line-height: 35px;
-          opacity: 0.5;
-        }
-        
-        .fee-amount {
-          display: inline-block;
-          margin: 0 2px 0 20px;
-          font-size: 32px;
-          font-weight: bold;
-          word-break: break-all;
-        }
-      }
-      
-      .button-active {
-        width: 100%;
+      text-align: center;
+
+      .btn-back {
+        display: inline-block;
+        min-height: 60px;
+        min-width: 90px;
+        padding: 16px 10px 17px;
+        border: 2px solid ${({theme}) => theme.rgbaMedium};
+        border-radius: 8px;
+        background-color: ${({theme}) => theme.bgColor};
+        color: ${({theme}) => theme.textColor};
+        font-size: 18px;
+        font-weight: bold;
         text-align: center;
-
-        .btn-back {
-          display: inline-block;
-          min-height: 60px;
-          min-width: 90px;
-          padding: 16px 10px 17px;
-          border: 2px solid ${({theme}) => theme.rgbaMedium};
-          border-radius: 8px;
-          background-color: ${({theme}) => theme.bgColor};
-          color: ${({theme}) => theme.textColor};
-          font-size: 18px;
-          font-weight: bold;
-          text-align: center;
-          transition: all .4s ease;
-          cursor: pointer;
-          @media screen and (max-width: 1024px) {
-            min-height: 25px;
-            width: 45%;
-            min-width: 150px;
-            padding: 7px 50px 8px;
-            font-size: 14px;
-          }
+        transition: all .4s ease;
+        cursor: pointer;
+        @media screen and (max-width: 1024px) {
+          min-height: 25px;
+          width: 45%;
+          min-width: 150px;
+          padding: 7px 50px 8px;
+          font-size: 14px;
         }
+      }
 
-        .btn-payment {
-          display: inline-block;
-          min-height: 60px;
-          min-width: 250px;
-          padding: 16px 10px 17px;
-          margin-left: 10px;
-          border: 1px solid ${({theme}) => theme.rgbaLight};
-          border-radius: 8px;
-          background-color: ${({theme}) => theme.reverseBgColor};
-          color: ${({theme}) => theme.reverseTextColor};
-          font-size: 18px;
-          font-weight: bold;
-          text-align: center;
-          transition: all .4s ease;
-          cursor: pointer;
-          @media screen and (max-width: 1024px) {
-            min-height: 25px;
-            width: 45%;
-            min-width: 150px;
-            padding: 7px 50px 8px;
-            font-size: 14px;
-          }
+      .btn-payment {
+        display: inline-block;
+        min-height: 60px;
+        min-width: 250px;
+        padding: 16px 10px 17px;
+        margin-left: 10px;
+        border: 1px solid ${({theme}) => theme.rgbaLight};
+        border-radius: 8px;
+        background-color: ${({theme}) => theme.reverseBgColor};
+        color: ${({theme}) => theme.reverseTextColor};
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        transition: all .4s ease;
+        cursor: pointer;
+        @media screen and (max-width: 1024px) {
+          min-height: 25px;
+          width: 45%;
+          min-width: 150px;
+          padding: 7px 50px 8px;
+          font-size: 14px;
         }
       }
     }
