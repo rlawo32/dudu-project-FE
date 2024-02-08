@@ -121,7 +121,8 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     }
 
     .image-section {
-      padding-top: 160px;
+      height: 100%;
+      padding: 160px 40px 0 0;
       
     }
     
@@ -135,6 +136,8 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     height: 350px;
     
     img {
+      height: 100%;
+      width: 700px;
       transform: scale(1.1);
       transition: transform 1.5s ease;
     }
