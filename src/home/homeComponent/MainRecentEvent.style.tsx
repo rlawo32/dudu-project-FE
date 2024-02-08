@@ -14,7 +14,7 @@ export const MainRecentEventView = styled.div`
   }
   @media screen and (max-width: 1024px) {
     width: calc(100% - 30px);
-    padding: 40px 10px 20px;
+    padding: 40px 30px 20px;
     margin: 400px 15px;
   }
 
@@ -51,19 +51,49 @@ export const MainRecentEventView = styled.div`
     }
   }
   
+  .els-list-view {
+    box-sizing: border-box;
+    position: relative;
+    padding: 0 60px;
+
+    .swiper-button-prev{
+      position: absolute;
+      top: 200px;
+      left: 0;
+      height: 40px;
+      width: 40px;
+      color: ${({theme}) => theme.textColor};
+    }
+    .swiper-button-next{
+      position: absolute;
+      top: 200px;
+      right: 0;
+      height: 40px;
+      width: 40px;
+      color: ${({theme}) => theme.textColor};
+    }
+  }
+  
   .els-list {
     position: relative;
     display: flex;
     box-sizing: content-box;
     height: 100%;
     width: 100%;
+    padding-bottom: 40px;
     margin: 64px auto 0;
-    padding-bottom: 50px;
     z-index: 1;
     transition-property: transform;
     @media screen and (max-width: 1024px) {
       width: 100%;
       margin: 34px auto;
+    }
+    
+    .swiper-pagination {
+
+      .swiper-pagination-bullet {
+        background-color: ${({theme}) => theme.textColor};
+      }
     }
 
     .els-list-item {
