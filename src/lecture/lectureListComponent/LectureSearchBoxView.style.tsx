@@ -1,19 +1,34 @@
 import styled from "styled-components";
 
 export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
+  box-sizing: border-box;
   position: fixed;
   top: 0;
   right: 0;
   height: 100%;
-  width: ${({$showBox}) => $showBox ? "350px" : 0};
+  width: ${({$showBox}) => $showBox ? "410px" : 0};
   @media screen and (max-width: 1024px) {
-    width: ${({$showBox}) => $showBox ? "200px" : 0};
+    width: ${({$showBox}) => $showBox ? "260px" : 0};
   }
-  padding: ${({$showBox}) => $showBox ? "25px" : 0};
+  padding: ${({$showBox}) => $showBox ? "30px" : 0};
   border-left: 1px solid rgba(0,0,0,0.3);
   background-color: ${({theme}) => theme.boxBgColor};
+  overflow: auto;
   z-index: 99;
   transition: all 0.4s ease-in;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: bisque; /* 스크롤바의 색상 */
+    border-radius: 15px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 1);
+  }
   
   .search-title {
     display: flex;
@@ -60,9 +75,9 @@ export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
   }
 
   .search-body {
+    box-sizing: border-box;
     position: relative;
-    min-height: 650px;
-    max-height: 850px;
+    height: 65%;
     padding-right: 10px;
     overflow: auto;
 
@@ -200,11 +215,10 @@ export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
   
   .search-footer {
     display: flex;
+    justify-content: space-around;
     box-sizing: border-box;
-    position: sticky;
-    top: 50px;
     width: 100%;
-    margin: auto;
+    margin-top: 60px;
     z-index: 5;
     
     button {
