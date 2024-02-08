@@ -1,19 +1,56 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
+import {Swiper as SwiperCore} from "swiper/types";
 import {Autoplay, Navigation, Pagination} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+    faCircleChevronLeft as leftArrowIcon,
+    faCircleChevronRight as rightArrowIcon
+} from "@fortawesome/free-solid-svg-icons";
+
 const LectureEventView = styled.div`
   position: relative;
+
+  .les-list-view {
+    box-sizing: border-box;
+    position: relative;
+    padding: 0 60px;
+
+    .swiper-button-prev{
+      position: absolute;
+      top: 200px;
+      left: 0;
+      height: 40px;
+      width: 40px;
+      color: ${({theme}) => theme.textColor};
+    }
+    .swiper-button-next{
+      position: absolute;
+      top: 200px;
+      right: 0;
+      height: 40px;
+      width: 40px;
+      color: ${({theme}) => theme.textColor};
+    }
+  }
   
   .les-list {
-    padding-bottom: 50px;
+    padding-bottom: 40px;
+
+    .swiper-pagination {
+
+      .swiper-pagination-bullet {
+        background-color: ${({theme}) => theme.textColor};
+      }
+    }
     
     .les-item {
       position: relative;
@@ -69,6 +106,8 @@ const LectureEventView = styled.div`
 
 const LectureEventSwiperView = (props : {institutionNo:number;}) => {
     const navigate = useNavigate();
+    const swiperPrevRef = useRef<SwiperCore>();
+    const swiperNextRef = useRef<SwiperCore>();
 
     const [lectureEventList, setLectureEventList] = useState<{
         lectureEventNo:number;
@@ -126,29 +165,39 @@ const LectureEventSwiperView = (props : {institutionNo:number;}) => {
     return (
         <LectureEventView>
 
-            <Swiper className="les-list"
-                    modules={[Navigation, Pagination, Autoplay]}
-                    speed={1000}
-                    spaceBetween={10}
-                    slidesPerView={2}
-                    navigation
-                    pagination={{ clickable: true }}
-                    autoplay={{
-                        delay: 4000,
-                        disableOnInteraction: false
-                    }}
-                    breakpoints={{
-                        400: {
-                            slidesPerView: 1,
-                            spaceBetween: 10
-                        },
-                        700: {
-                            slidesPerView: 2,
-                            spaceBetween: 10
-                        },
-                    }}>
-                {lectureEventSwiper()}
-            </Swiper>
+            <div className="les-list-view">
+                <Swiper className="les-list"
+                        modules={[Navigation, Pagination, Autoplay]}
+                        speed={1000}
+                        spaceBetween={10}
+                        slidesPerView={2}
+                        slidesPerGroup={1}
+                        onBeforeInit={(swiper:SwiperCore):void => {
+                            swiperNextRef.current = swiper
+                            swiperPrevRef.current = swiper
+                        }}
+                        pagination={{ clickable: true }}
+                        autoplay={{
+                            delay: 4000,
+                            disableOnInteraction: false
+                        }}
+                        breakpoints={{
+                            400: {
+                                slidesPerView: 1,
+                                spaceBetween: 10
+                            },
+                            700: {
+                                slidesPerView: 2,
+                                spaceBetween: 10
+                            },
+                        }}>
+                    {lectureEventSwiper()}
+                </Swiper>
+                <FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"
+                                 onClick={() => swiperPrevRef.current?.slidePrev()} />
+                <FontAwesomeIcon icon={rightArrowIcon} className="swiper-button-next"
+                                 onClick={() => swiperNextRef.current?.slideNext()} />
+            </div>
 
         </LectureEventView>
     )
