@@ -160,20 +160,18 @@ const PaymentInfo = (props:Props) => {
 
             <TopButtonNavigation type={"D"} />
             <div className="lp-button">
-                <div className="section-button">
-                    <div className="button-fee">
-                        <div className="fee-text">총 결제예정금액</div>
-                        <div className="fee-amount">
-                            {totalPaymentFee.toLocaleString()}
-                            <div className="fee-text">원</div>
-                        </div>
+                <div className="button-fee">
+                    <div className="fee-text">총 결제예정금액</div>
+                    <div className="fee-amount">
+                        {totalPaymentFee.toLocaleString()}
+                        <div className="fee-text">원</div>
                     </div>
-                    <div className="button-active">
-                        <button className="btn-back"
-                                onClick={() => navigate(-1)}>이전</button>
-                        <button className="btn-payment"
-                                onClick={() => lectureApplicationDuplicationHandler()}>결제하기</button>
-                    </div>
+                </div>
+                <div className="button-active">
+                    <button className="btn-back"
+                            onClick={() => navigate(-1)}>이전</button>
+                    <button className="btn-payment"
+                            onClick={() => lectureApplicationDuplicationHandler()}>결제하기</button>
                 </div>
             </div>
         </div>
