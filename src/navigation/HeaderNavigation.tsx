@@ -262,22 +262,22 @@ const HeaderNavigation = ():any => {
                                     </div>
                                     <div className={isAdminPageHovering ? "header-child active" : "header-child"}
                                          onMouseOver={() => setIsAdminPageHovering(true)}>
+                                        <StyledLink to="/lectureWrite" style={{marginLeft: '30px'}}>
+                                            강좌개설
+                                        </StyledLink>
+                                        <StyledLink to="/lectureEventWrite" style={{marginLeft: '30px'}}>
+                                            강좌관리
+                                        </StyledLink>
+                                        <StyledLink to="/boardWrite" style={{marginLeft: '30px'}}>
+                                            게시글작성
+                                        </StyledLink>
+                                        <StyledLink to="/faqWrite" style={{marginLeft: '30px'}}>
+                                            FAQ 작성
+                                        </StyledLink>
+                                        <StyledLink to="/branchInfoWrite" style={{marginLeft: '30px'}}>
+                                            지점 등록
+                                        </StyledLink>
                                         <div className="button-section">
-                                            <StyledLink to="/lectureWrite" style={{marginLeft: '30px'}}>
-                                                강좌개설
-                                            </StyledLink>
-                                            <StyledLink to="/lectureEventWrite" style={{marginLeft: '30px'}}>
-                                                강좌관리
-                                            </StyledLink>
-                                            <StyledLink to="/boardWrite" style={{marginLeft: '30px'}}>
-                                                게시글작성
-                                            </StyledLink>
-                                            <StyledLink to="/faqWrite" style={{marginLeft: '30px'}}>
-                                                FAQ 작성
-                                            </StyledLink>
-                                            <StyledLink to="/branchInfoWrite" style={{marginLeft: '30px'}}>
-                                                지점 등록
-                                            </StyledLink>
                                         </div>
                                         <div className="image-section">
 
