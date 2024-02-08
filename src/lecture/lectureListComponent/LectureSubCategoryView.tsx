@@ -2,14 +2,17 @@ import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCheck as check} from "@fortawesome/free-solid-svg-icons";
-
 import { Swiper, SwiperSlide } from 'swiper/react';
+import {Swiper as SwiperCore} from "swiper/types";
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCheck as check, faChevronLeft as leftArrowIcon,
+    faChevronRight as rightArrowIcon
+} from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
     mainCategoryNo:number;
@@ -21,12 +24,42 @@ const TabLectureSubCategory = styled.div`
   height: 100%;
   width: 100%;
   border-bottom: 1px solid darkgray;
+
+  .sc-list-view {
+    box-sizing: border-box;
+    position: relative;
+    padding: 0 60px;
+
+    .swiper-button-prev{
+      position: absolute;
+      top: 100px;
+      left: 0;
+      height: 40px;
+      width: 40px;
+      color: ${({theme}) => theme.textColor};
+    }
+    .swiper-button-next{
+      position: absolute;
+      top: 100px;
+      right: 0;
+      height: 40px;
+      width: 40px;
+      color: ${({theme}) => theme.textColor};
+    }
+  }
   
   .sc-list {
     height: 100%;
     width: 100%;
     margin-bottom: 15px;
     padding: 10px 0 45px 0;
+
+    .swiper-pagination {
+
+      .swiper-pagination-bullet {
+        background-color: ${({theme}) => theme.textColor};
+      }
+    }
       
     .sc-item {
       display: flex;
@@ -101,6 +134,9 @@ const TabLectureSubCategory = styled.div`
 
 const LectureSubCategoryView = (props: Props) => {
     const scBtn:any = useRef<any>([]);
+    const swiperRef  = useRef<any>();
+    const swiperPrevRef = useRef<SwiperCore>();
+    const swiperNextRef = useRef<SwiperCore>();
 
     const [lectureSubCategoryData, setLectureSubCategoryData] = useState<{
         lectureSubCategoryNo:number;
@@ -185,6 +221,7 @@ const LectureSubCategoryView = (props: Props) => {
             props.setSubCategoryNo(0);
             scBtn.current[0].className = scBtn.current[0].className.replace('scBtn-active', '');
             scBtn.current[0].className += 'scBtn-active';
+            swiperRef.current.swiper.slideTo(0, 1000, false);
         } else {
             setLectureSubCategoryData([]);
         }
@@ -193,37 +230,48 @@ const LectureSubCategoryView = (props: Props) => {
     return (
         <TabLectureSubCategory>
 
-            <Swiper className="sc-list"
-                    modules={[Navigation, Pagination]}
-                    speed={1000}
-                    slidesPerView={2}
-                    spaceBetween={10}
-                    navigation
-                    pagination={{ clickable: true }}
-                    breakpoints={{
-                        500: {
-                            slidesPerView: 5,
-                            spaceBetween: 10
-                        },
-                        600: {
-                            slidesPerView: 6,
-                            spaceBetween: 10
-                        },
-                        700: {
-                            slidesPerView: 8,
-                            spaceBetween: 10
-                        },
-                        900: {
-                            slidesPerView: 7,
-                            spaceBetween: 10
-                        },
-                        1250: {
-                            slidesPerView: 9,
-                            spaceBetween: 10
-                        }
-                    }}>
-                {tabSubCategory()}
-            </Swiper>
+            <div className="sc-list-view">
+                <Swiper className="sc-list" ref={swiperRef}
+                        modules={[Navigation, Pagination]}
+                        speed={1000}
+                        spaceBetween={10}
+                        slidesPerView={2}
+                        slidesPerGroup={1}
+                        onBeforeInit={(swiper:SwiperCore):void => {
+                            swiperNextRef.current = swiper
+                            swiperPrevRef.current = swiper
+                        }}
+                        pagination={{ clickable: true }}
+
+                        breakpoints={{
+                            500: {
+                                slidesPerView: 5,
+                                spaceBetween: 10
+                            },
+                            600: {
+                                slidesPerView: 6,
+                                spaceBetween: 10
+                            },
+                            700: {
+                                slidesPerView: 8,
+                                spaceBetween: 10
+                            },
+                            900: {
+                                slidesPerView: 7,
+                                spaceBetween: 10
+                            },
+                            1250: {
+                                slidesPerView: 9,
+                                spaceBetween: 10
+                            }
+                        }}>
+                    {tabSubCategory()}
+                </Swiper>
+                <FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"
+                                 onClick={() => swiperPrevRef.current?.slidePrev()} />
+                <FontAwesomeIcon icon={rightArrowIcon} className="swiper-button-next"
+                                 onClick={() => swiperNextRef.current?.slideNext()} />
+            </div>
 
         </TabLectureSubCategory>
     )
