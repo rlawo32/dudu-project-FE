@@ -135,8 +135,8 @@ const MemberLog = () => {
                                     <div className="item-info">
                                         <div className="item-successYn" style={
                                             item.memberLogSuccessYn === 'Y' ?
-                                                {backgroundColor: "lightgreen"} :
-                                                {backgroundColor: "orangered"}
+                                                {backgroundColor: "lightgreen", color: "black"} :
+                                                {backgroundColor: "orangered", color: "black"}
                                         }>
                                             {item.memberLogSuccessYn === 'Y' ? "성공" : "실패"}
                                         </div>
