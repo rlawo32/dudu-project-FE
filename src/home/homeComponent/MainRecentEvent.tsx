@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
+import {Swiper, SwiperSlide} from 'swiper/react';
+import { Swiper as SwiperCore } from 'swiper/types';
 import {Autoplay, Navigation, Pagination} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -11,9 +12,13 @@ import 'swiper/css/pagination';
 import * as Styled from "./MainRecentEvent.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClock as clockIcon} from "@fortawesome/free-regular-svg-icons";
+import {faCircleChevronLeft as leftArrowIcon,
+faCircleChevronRight as rightArrowIcon} from "@fortawesome/free-solid-svg-icons";
 
 const MainRecentEvent = () => {
     const navigate = useNavigate();
+    const swiperPrevRef = useRef<SwiperCore>();
+    const swiperNextRef = useRef<SwiperCore>();
 
     const [eventList, setEventList] = useState<{
         lectureNo:number;
@@ -134,33 +139,47 @@ const MainRecentEvent = () => {
                     새롭게 개설된 강좌를 <br />지금 확인해보세요
                 </div>
             </div>
-            <Swiper className="els-list"
-                    modules={[Navigation, Pagination, Autoplay]}
-                    speed={1000}
-                    spaceBetween={32}
-                    slidesPerView={4}
-                    navigation
-                    pagination={{ clickable: true }}
-                    autoplay={{
-                        delay: 4000,
-                        disableOnInteraction: false
-                    }}
-                    breakpoints={{
-                        300: {
-                            slidesPerView: 1,
-                            spaceBetween: 10
-                        },
-                        600: {
-                            slidesPerView: 2,
-                            spaceBetween: 10
-                        },
-                        1024: {
-                            slidesPerView: 4,
-                            spaceBetween: 10
-                        },
-                    }}>
-                {recentEventSwiper()}
-            </Swiper>
+            <div className="els-list-view">
+                <Swiper className="els-list"
+                        modules={[Navigation, Pagination, Autoplay]}
+                        speed={1000}
+                        spaceBetween={32}
+                        slidesPerView={4}
+                        slidesPerGroup={1}
+                        onBeforeInit={(swiper:SwiperCore):void => {
+                            swiperNextRef.current = swiper
+                            swiperPrevRef.current = swiper
+                        }}
+                        pagination={{ clickable: true }}
+                        autoplay={{
+                            delay: 4000,
+                            disableOnInteraction: false
+                        }}
+                        breakpoints={{
+                            600: {
+                                slidesPerView: 1,
+                                spaceBetween: 10
+                            },
+                            900: {
+                                slidesPerView: 2,
+                                spaceBetween: 10
+                            },
+                            1024: {
+                                slidesPerView: 3,
+                                spaceBetween: 10
+                            },
+                            1440: {
+                                slidesPerView: 4,
+                                spaceBetween: 10
+                            },
+                        }}>
+                    {recentEventSwiper()}
+                </Swiper>
+                <FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"
+                                 onClick={() => swiperPrevRef.current?.slidePrev()} />
+                <FontAwesomeIcon icon={rightArrowIcon} className="swiper-button-next"
+                                 onClick={() => swiperNextRef.current?.slideNext()} />
+            </div>
         </Styled.MainRecentEventView>
     )
 }
