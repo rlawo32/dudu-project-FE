@@ -152,7 +152,44 @@ export const BranchInfoListView = styled.div`
     .bi-main-image {
       margin-top: 24px;
       
+      .bis-list-view {
+        box-sizing: border-box;
+        position: relative;
+        padding: 0 60px;
+
+        .swiper-button-prev{
+          position: absolute;
+          top: 400px;
+          @media screen and (max-width: 1280px) {
+            top: 300px;
+          }
+          left: 0;
+          height: 40px;
+          width: 40px;
+          color: ${({theme}) => theme.textColor};
+        }
+        .swiper-button-next{
+          position: absolute;
+          top: 400px;
+          @media screen and (max-width: 1280px) {
+            top: 300px;
+          }
+          right: 0;
+          height: 40px;
+          width: 40px;
+          color: ${({theme}) => theme.textColor};
+        }
+      }
+      
       .bis-list {
+        padding-bottom: 40px;
+
+        .swiper-pagination {
+
+          .swiper-pagination-bullet {
+            background-color: ${({theme}) => theme.textColor};
+          }
+        }
         
         .bis-item {
           position: relative;
