@@ -134,11 +134,42 @@ export const FaqListView = styled.div`
     }
     
     .faq-list-head {
+
+
+      .fos-list-view {
+        box-sizing: border-box;
+        position: relative;
+        padding: 0 60px;
+
+        .swiper-button-prev{
+          position: absolute;
+          top: 140px;
+          left: 0;
+          height: 40px;
+          width: 40px;
+          color: ${({theme}) => theme.textColor};
+        }
+        .swiper-button-next{
+          position: absolute;
+          top: 140px;
+          right: 0;
+          height: 40px;
+          width: 40px;
+          color: ${({theme}) => theme.textColor};
+        }
+      }
       
       .fos-list {
         height: auto;
-        padding-bottom: 42px;
+        padding-bottom: 40px;
         margin-top: 32px;
+
+        .swiper-pagination {
+
+          .swiper-pagination-bullet {
+            background-color: ${({theme}) => theme.textColor};
+          }
+        }
         
         .fos-item {
           box-sizing: border-box;

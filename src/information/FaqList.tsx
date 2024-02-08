@@ -5,19 +5,25 @@ import HeaderNavigation from "../navigation/HeaderNavigation";
 import FooterNavigation from "../navigation/FooterNavigation";
 import TopButtonNavigation from "../navigation/TopButtonNavigation";
 
-import * as Styled from "./Faq.style";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChevronDown as arrow, faQ as qIcon, faSearch as searchIcon} from "@fortawesome/free-solid-svg-icons"
-
 import { Swiper, SwiperSlide } from 'swiper/react';
+import {Swiper as SwiperCore} from "swiper/types";
 import {Navigation, Pagination} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+import * as Styled from "./Faq.style";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faChevronDown as arrow, faQ as qIcon,
+    faSearch as searchIcon, faCircleChevronLeft as leftArrowIcon,
+    faCircleChevronRight as rightArrowIcon
+} from "@fortawesome/free-solid-svg-icons"
+
 const FaqList = () => {
     const categoryBtn:any = useRef<any>([]);
     const faqItemBox:any = useRef<any>([]);
+    const swiperPrevRef = useRef<SwiperCore>();
+    const swiperNextRef = useRef<SwiperCore>();
 
     const [pageNo, setPageNo] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(0);
@@ -208,29 +214,39 @@ const FaqList = () => {
                     <div className="section-title">
                         자주 묻는 질문
                     </div>
-                    <Swiper className="fos-list"
-                            modules={[Navigation, Pagination]}
-                            speed={1000}
-                            spaceBetween={25}
-                            slidesPerView={3}
-                            navigation
-                            pagination={{ clickable: true }}
-                            breakpoints={{
-                                480: {
-                                    slidesPerView: 1,
-                                    spaceBetween: 25
-                                },
-                                880: {
-                                    slidesPerView: 2,
-                                    spaceBetween: 25
-                                },
-                                1280: {
-                                    slidesPerView: 3,
-                                    spaceBetween: 25
-                                },
-                            }}>
-                        {customFaqOftenSwiper()}
-                    </Swiper>
+                    <div className="fos-list-view">
+                        <Swiper className="fos-list"
+                                modules={[Navigation, Pagination]}
+                                speed={1000}
+                                spaceBetween={25}
+                                slidesPerView={3}
+                                slidesPerGroup={1}
+                                onBeforeInit={(swiper:SwiperCore):void => {
+                                    swiperNextRef.current = swiper
+                                    swiperPrevRef.current = swiper
+                                }}
+                                pagination={{ clickable: true }}
+                                breakpoints={{
+                                    480: {
+                                        slidesPerView: 1,
+                                        spaceBetween: 25
+                                    },
+                                    880: {
+                                        slidesPerView: 2,
+                                        spaceBetween: 25
+                                    },
+                                    1280: {
+                                        slidesPerView: 3,
+                                        spaceBetween: 25
+                                    },
+                                }}>
+                            {customFaqOftenSwiper()}
+                        </Swiper>
+                        <FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"
+                                         onClick={() => swiperPrevRef.current?.slidePrev()} />
+                        <FontAwesomeIcon icon={rightArrowIcon} className="swiper-button-next"
+                                         onClick={() => swiperNextRef.current?.slideNext()} />
+                    </div>
                 </div>
                 <div className="faq-list-body">
                     <div className="faq-list-category">
