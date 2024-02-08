@@ -165,39 +165,43 @@ const LectureEventSwiperView = (props : {institutionNo:number;}) => {
     return (
         <LectureEventView>
 
-            <div className="les-list-view">
-                <Swiper className="les-list"
-                        modules={[Navigation, Pagination, Autoplay]}
-                        speed={1000}
-                        spaceBetween={10}
-                        slidesPerView={2}
-                        slidesPerGroup={1}
-                        onBeforeInit={(swiper:SwiperCore):void => {
-                            swiperNextRef.current = swiper
-                            swiperPrevRef.current = swiper
-                        }}
-                        pagination={{ clickable: true }}
-                        autoplay={{
-                            delay: 4000,
-                            disableOnInteraction: false
-                        }}
-                        breakpoints={{
-                            400: {
-                                slidesPerView: 1,
-                                spaceBetween: 10
-                            },
-                            700: {
-                                slidesPerView: 2,
-                                spaceBetween: 10
-                            },
-                        }}>
-                    {lectureEventSwiper()}
-                </Swiper>
-                <FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"
-                                 onClick={() => swiperPrevRef.current?.slidePrev()} />
-                <FontAwesomeIcon icon={rightArrowIcon} className="swiper-button-next"
-                                 onClick={() => swiperNextRef.current?.slideNext()} />
-            </div>
+            {lectureEventList.length > 0 ?
+                <div className="les-list-view">
+                    <Swiper className="les-list"
+                            modules={[Navigation, Pagination, Autoplay]}
+                            speed={1000}
+                            spaceBetween={10}
+                            slidesPerView={2}
+                            slidesPerGroup={1}
+                            onBeforeInit={(swiper:SwiperCore):void => {
+                                swiperNextRef.current = swiper
+                                swiperPrevRef.current = swiper
+                            }}
+                            pagination={{ clickable: true }}
+                            autoplay={{
+                                delay: 4000,
+                                disableOnInteraction: false
+                            }}
+                            breakpoints={{
+                                400: {
+                                    slidesPerView: 1,
+                                    spaceBetween: 10
+                                },
+                                700: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 10
+                                },
+                            }}>
+                        {lectureEventSwiper()}
+                    </Swiper>
+                    <FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"
+                                     onClick={() => swiperPrevRef.current?.slidePrev()} />
+                    <FontAwesomeIcon icon={rightArrowIcon} className="swiper-button-next"
+                                     onClick={() => swiperNextRef.current?.slideNext()} />
+                </div>
+                :
+                <div />
+            }
 
         </LectureEventView>
     )
