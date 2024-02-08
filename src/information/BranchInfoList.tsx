@@ -6,19 +6,24 @@ import FooterNavigation from "../navigation/FooterNavigation";
 import TopButtonNavigation from "../navigation/TopButtonNavigation";
 import BranchInfoMap from "./BranchInfoMap";
 
-import * as Styled from "./BranchInfo.style";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faLocationDot as positionIcon, faPhone as contactIcon,
-    faDoorClosed as roomIcon} from "@fortawesome/free-solid-svg-icons";
-
 import { Swiper, SwiperSlide } from 'swiper/react';
+import {Swiper as SwiperCore} from "swiper/types";
 import {Navigation, Pagination} from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+import * as Styled from "./BranchInfo.style";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+    faLocationDot as positionIcon, faPhone as contactIcon,
+    faDoorClosed as roomIcon, faCircleChevronLeft as leftArrowIcon, faCircleChevronRight as rightArrowIcon
+} from "@fortawesome/free-solid-svg-icons";
+
 const BranchInfoList = () => {
     const institutionBtn:any = useRef<any>([]);
+    const swiperPrevRef = useRef<SwiperCore>();
+    const swiperNextRef = useRef<SwiperCore>();
 
     const [institutionList, setInstitutionList] = useState<{
         institutionNo:number;
@@ -135,17 +140,28 @@ const BranchInfoList = () => {
                     {customInstitutionCategorySelectBox()}
                 </div>
                 <div className="bi-main-image">
-                    <Swiper className="bis-list"
-                            modules={[Navigation, Pagination]}
-                            speed={1000}
-                            spaceBetween={25}
-                            slidesPerView={1}
-                            navigation
-                            breakpoints={{
+                    <div className="bis-list-view">
+                        <Swiper className="bis-list"
+                                modules={[Navigation, Pagination]}
+                                speed={1000}
+                                spaceBetween={25}
+                                slidesPerView={1}
+                                slidesPerGroup={1}
+                                onBeforeInit={(swiper:SwiperCore):void => {
+                                    swiperNextRef.current = swiper
+                                    swiperPrevRef.current = swiper
+                                }}
+                                pagination={{ clickable: true }}
+                                breakpoints={{
 
-                            }}>
-                        {customInstitutionImageSwiper()}
-                    </Swiper>
+                                }}>
+                            {customInstitutionImageSwiper()}
+                        </Swiper>
+                        <FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"
+                                         onClick={() => swiperPrevRef.current?.slidePrev()} />
+                        <FontAwesomeIcon icon={rightArrowIcon} className="swiper-button-next"
+                                         onClick={() => swiperNextRef.current?.slideNext()} />
+                    </div>
                 </div>
                 <div className="bi-main-info">
                     <div className="info-item info-position">
