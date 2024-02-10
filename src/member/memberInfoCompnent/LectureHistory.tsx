@@ -167,6 +167,9 @@ const LectureHistory = () => {
                         <li>환불 및 수강 취소시 강의시작일로부터 3일전은 환불액에서 1/3 환급, 2일전은 1/2 환급, 전날부터는 환불이 불가합니다.</li>
                     </ul>
                 </div>
+                <div className="lh-modal-section">
+                    {isCancelModalShow ? <LectureCancelModal setIsModal={setIsCancelModalShow} lectureCancelData={lectureCancelData}/> : <div/>}
+                </div>
                 <div className="lh-main-list">
                     <div className="lh-list-category">
                         <div className="lh-category" onClick={() => (setSearchCategory("N"), setCategorySelect(0))}
@@ -207,9 +210,6 @@ const LectureHistory = () => {
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                        <div className="lh-modal-section">
-                            {isCancelModalShow ? <LectureCancelModal setIsModal={setIsCancelModalShow} lectureCancelData={lectureCancelData}/> : <div/>}
                         </div>
                         {
                             lectureApplicationList.length > 0 ?
