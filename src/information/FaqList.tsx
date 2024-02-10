@@ -54,7 +54,7 @@ const FaqList = () => {
         faqContent:string;
     }[]>([]);
 
-    const customFaqOftenSwiper = ():any[] => {
+    const customOftenFaqSwiper = ():any[] => {
         let result:any[] = [];
 
         for(let i:number=0; i<faqOftenList.length; i++) {
@@ -240,7 +240,7 @@ const FaqList = () => {
                                         spaceBetween: 25
                                     },
                                 }}>
-                            {customFaqOftenSwiper()}
+                            {customOftenFaqSwiper()}
                         </Swiper>
                         <FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"
                                          onClick={() => swiperPrevRef.current?.slidePrev()} />

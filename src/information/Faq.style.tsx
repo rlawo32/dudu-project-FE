@@ -134,8 +134,7 @@ export const FaqListView = styled.div`
     }
     
     .faq-list-head {
-
-
+      
       .fos-list-view {
         box-sizing: border-box;
         position: relative;
