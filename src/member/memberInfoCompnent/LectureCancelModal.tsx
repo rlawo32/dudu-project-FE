@@ -15,14 +15,15 @@ interface Props {
 
 const LectureCancelModalView = styled.div`
   position: absolute;
-  top: 20%;
+  top: 10%;
   left: 50%;
-  transform: translate(-50%, -20%);
+  transform: translate(-50%, -10%);
   height: 570px;
   width: 700px;
   border: 1px solid ${({theme}) => theme.textColor};
   border-radius: 15px;
   background-color: ${({theme}) => theme.bgColor};
+  z-index: 5;
   
   .lh-modal-title {
     box-sizing: border-box;
@@ -306,6 +307,19 @@ const LectureCancelModal = (props:Props) => {
             }
         }
     }, [sortSelect])
+
+    useEffect(()=>{
+        const handleClickOutside = (e:MouseEvent)=> {
+            if(modalRef.current && !modalRef.current.contains(e.target)) {
+                props.setIsModal(false)
+            }
+        }
+        window.addEventListener('mousedown',handleClickOutside)
+
+        return()=>{
+            window.removeEventListener('mousedown',handleClickOutside)
+        }
+    })
 
     return (
         <LectureCancelModalView ref={modalRef}>
