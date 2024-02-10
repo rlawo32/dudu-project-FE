@@ -21,10 +21,13 @@ import LectureList from "./lecture/LectureList";
 import LectureDetailView from "./lecture/LectureDetail";
 import LectureEventWrite from "./lecture/LectureEventWrite";
 import LectureEventListView from "./lecture/lectureListComponent/LectureEventListView";
-// board
+// community
 import BoardWrite from "./community/BoardWrite";
 import BoardList from "./community/BoardList";
 import BoardDetail from "./community/BoardDetail";
+import ReviewWrite from "./community/ReviewWrite";
+import ReviewList from "./community/ReviewList";
+import ReviewDetail from "./community/ReviewDetail";
 // information
 import FaqWrite from "./information/FaqWrite";
 import FaqList from "./information/FaqList";
@@ -80,6 +83,9 @@ function App() {
                 <Route path="/boardWrite" element={<BoardWrite />} />
                 <Route path="/boardList" element={<BoardList />} />
                 <Route path="/boardDetail/:boardNo" element={<BoardDetail />} />
+                <Route path="/reviewWrite" element={<ReviewWrite />} />
+                <Route path="/reviewList" element={<ReviewList />} />
+                <Route path="/reviewDetail/:reviewNo" element={<ReviewDetail />} />
 
                 <Route path="/faqWrite" element={<FaqWrite />} />
                 <Route path="/faqList" element={<FaqList />} />
