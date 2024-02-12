@@ -83,7 +83,6 @@ function App() {
                 <Route path="/boardWrite" element={<BoardWrite />} />
                 <Route path="/boardList" element={<BoardList />} />
                 <Route path="/boardDetail/:boardNo" element={<BoardDetail />} />
-                <Route path="/reviewWrite" element={<ReviewWrite />} />
                 <Route path="/reviewList" element={<ReviewList />} />
                 <Route path="/reviewDetail/:reviewNo" element={<ReviewDetail />} />
 
