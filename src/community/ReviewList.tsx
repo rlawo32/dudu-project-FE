@@ -1,4 +1,5 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
+import axios from "axios";
 
 import HeaderNavigation from "../navigation/HeaderNavigation";
 import TopButtonNavigation from "../navigation/TopButtonNavigation";
@@ -15,7 +16,7 @@ import * as Styled from "./ReviewList.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faChevronDown as arrow, faSearch as searchIcon, faStar as fullStar, faStarHalfStroke as halfStar,
-    faCircleChevronLeft as leftArrowIcon, faCircleChevronRight as rightArrowIcon, faQ as qIcon
+    faCircleChevronLeft as leftArrowIcon, faCircleChevronRight as rightArrowIcon
 } from "@fortawesome/free-solid-svg-icons";
 import {faStar as emptyStar} from "@fortawesome/free-regular-svg-icons";
 
@@ -23,9 +24,30 @@ const ReviewList = () => {
     const swiperPrevRef = useRef<SwiperCore>();
     const swiperNextRef = useRef<SwiperCore>();
 
+    const [pageNo, setPageNo] = useState<number>(1);
+    const [totalPage, setTotalPage] = useState<number>(0);
     const [searchText, setSearchText] = useState<string>("");
     const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
 
+    const [sortType, setSortType] = useState<string>("");
+    const [sortSelect, setSortSelect] = useState<number>(0);
+    const [isSortBoxShow, setIsSortBoxShow] = useState<boolean>(false);
+
+    const [institutionNo, setInstitutionNo] = useState<number>(0);
+    const [institutionSelect, setInstitutionSelect] = useState<number>(0);
+    const [isInstitutionBoxShow, setIsInstitutionBoxShow] = useState<boolean>(false);
+
+    const [institutionList, setInstitutionList] = useState<{
+        institutionNo:number;
+        institutionName:string;
+        institutionContact:string;
+    }[]>([]);
+    const [reviewList, setReviewList] = useState<{
+        reviewNo:number;
+    }[]>([]);
+    const [reviewOftenList, setReviewOftenList] = useState<{
+        reviewNo:number;
+    }[]>([]);
 
     const customReviewRatingArr = () => {
         let result:any[] = [];
@@ -43,7 +65,7 @@ const ReviewList = () => {
         return result;
     }
 
-    const customOftenReviewSwiper = ():any[] => {
+    const customReviewOftenSwiper = ():any[] => {
         let result:any[] = [];
 
         for(let i:number=0; i<4; i++) {
@@ -84,6 +106,52 @@ const ReviewList = () => {
         }
         return result;
     }
+
+    useEffect(() => {
+        const faqListData = async ():Promise<void> => {
+            await axios({
+                method: "GET",
+                url: "/lecture/lectureInstitutionList"
+            }).then((res):void => {
+                setInstitutionList(res.data.data);
+            }).catch((err):void => {
+                console.log(err.message);
+            })
+            await axios({
+                method: "GET",
+                url: "/review/reviewOftenList"
+            }).then((res):void => {
+                setReviewOftenList(res.data.data.faqList);
+            }).catch((err):void => {
+                console.log(err.message);
+            })
+        }
+        setTimeout(() => {faqListData().then();}, 0);
+    }, [institutionNo])
+
+    useEffect(() => {
+        const getListData:object = {
+            pageNo: pageNo,
+            sortType: sortType,
+            institutionNo: institutionNo,
+            searchText: searchText,
+        }
+        const faqList = async () => {
+            await axios({
+                method: "POST",
+                url: '/review/reviewList',
+                data: JSON.stringify(getListData),
+                headers: {'Content-type': 'application/json'}
+            }).then((res):void => {
+                setReviewList(res.data.data.faqList);
+                setTotalPage(res.data.data.totalPage);
+            }).catch((err):void => {
+                console.log(err.message);
+            });
+        }
+        setTimeout(() => {faqList().then();}, 0);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pageNo, sortType, institutionNo, isSearchActive])
 
     return (
         <Styled.ReviewListView>
@@ -130,7 +198,7 @@ const ReviewList = () => {
                                         spaceBetween: 25
                                     },
                                 }}>
-                            {customOftenReviewSwiper()}
+                            {customReviewOftenSwiper()}
                         </Swiper>
                         <FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"
                                          onClick={() => swiperPrevRef.current?.slidePrev()} />
