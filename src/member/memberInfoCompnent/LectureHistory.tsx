@@ -44,6 +44,7 @@ const LectureHistory = () => {
         lectureTime:string;
         lectureCount:number;
         lectureFee:number;
+        lectureStateNo:number;
     }[]>([]);
 
     const sortItem:string[] = ['2024', '2023'];
@@ -237,18 +238,24 @@ const LectureHistory = () => {
                                                 <div className="head-rigth">
                                                     {
                                                         item.lectureApplicationCancelYn === 'N' ?
-                                                            <button className="payment-cancel-btn"
-                                                                    onClick={() => {
-                                                                        window.scrollTo({ top: 50, behavior: "smooth" });
-                                                                        setIsCancelModalShow(true);
-                                                                        setLectureCancelData({
-                                                                            lectureApplicationNo: item.lectureApplicationNo,
-                                                                            lectureApplicationOrderId: item.lectureApplicationOrderId
-                                                                        })}}>
-                                                                취소
-                                                            </button>
-                                                            :
-                                                            <div />
+                                                            item.lectureStateNo !== 6 ?
+                                                                <button className="payment-cancel-btn"
+                                                                        onClick={() => {
+                                                                            window.scrollTo({ top: 50, behavior: "smooth" });
+                                                                            setIsCancelModalShow(true);
+                                                                            setLectureCancelData({
+                                                                                lectureApplicationNo: item.lectureApplicationNo,
+                                                                                lectureApplicationOrderId: item.lectureApplicationOrderId
+                                                                            })}}>
+                                                                    취소
+                                                                </button>
+                                                                :
+                                                                <button className="payment-cancel-btn"
+                                                                        onClick={() => alert('종료된 강의입니다.')}>
+                                                                    취소
+                                                                </button>
+                                                                    :
+                                                                    <div />
                                                     }
                                                 </div>
                                             </div>
@@ -288,7 +295,7 @@ const LectureHistory = () => {
                                                         <span>강좌료 :</span>
                                                         {item.lectureFee.toLocaleString()}원
                                                     </div>
-                                                    <div className="item-mote-btn">
+                                                    <div className="item-more-btn">
                                                         <button onClick={() => {setSearchButton(!searchButton);
                                                             setSearchText(item.lectureTeacher);
                                                             navigate("/lectureList");}}>
