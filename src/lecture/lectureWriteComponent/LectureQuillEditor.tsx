@@ -3,7 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircleXmark as attachDelete} from "@fortawesome/free-solid-svg-icons";
+import {faCircleXmark as attachDelete, faCamera as attachImage} from "@fortawesome/free-solid-svg-icons";
 
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
@@ -26,9 +26,12 @@ interface Props {
     }[]>>;
 }
 
-const CustomQuillEditorView = styled.div`
+const CustomQuillEditorView = styled.div<{$useType:string}>`
   
   #toolBar {
+    box-sizing: border-box;
+    display: ${({$useType}) => $useType === 'R' ? "flex" : "block"};
+    justify-content: ${({$useType}) => $useType === 'R' ? "center" : ""};
     height: 43px;
     width: 100%;
     border: ${({theme}) => theme.borderColor};
@@ -66,8 +69,20 @@ const CustomQuillEditorView = styled.div`
     }
     
     .ql-formats {
+      display: inline-block;
       position: relative;
       top: -10px;
+      margin: ${({$useType}) => $useType === 'R' ? 0 : ""};
+      
+      .image-btn {
+        font-size: 18px;
+        cursor: pointer;
+        
+        .icon-custom {
+          margin-right: 5px;
+          font-size: 24px;
+        }
+      }
     }
   }
   
@@ -78,11 +93,11 @@ const CustomQuillEditorView = styled.div`
     
     .ql-container {
       box-sizing: border-box;
-      height: 650px;
+      height: ${({$useType}) => $useType === 'R' ? "300px" : "650px"};
       width: 100%;
       padding: 5px 10px;
       border: none;
-      font-size: 25px;
+      font-size: ${({$useType}) => $useType === 'R' ? "18px" : "25px"};
       
       .ql-editor {
 
@@ -103,7 +118,7 @@ const CustomQuillEditorView = styled.div`
   }
   
   .write-image-attach {
-    margin-top: 10px;
+    margin: 5px 0;
     padding: 5px 10px 5px 10px;
     border: ${({theme}) => theme.borderColor};
     border-radius: 10px;
@@ -118,8 +133,8 @@ const CustomQuillEditorView = styled.div`
         position: relative;
         
         .write-attach-image {
-          height: 100px;
-          width: 100px;
+          height: 70px;
+          width: 70px;
           margin-right: 3px;
           border: ${({theme}) => theme.borderColor};
           border-radius: 20px;
@@ -127,8 +142,8 @@ const CustomQuillEditorView = styled.div`
         
         .write-attach-delete {
           position: absolute;
-          top: -81px;
-          left: 83px;
+          top: -51px;
+          left: 53px;
           color: orangered;
           cursor: pointer;
         }
@@ -282,51 +297,64 @@ const LectureQuillEditor = (props: Props) => {
     }, [attachImageArr])
 
     return (
-        <CustomQuillEditorView>
-            <div id="toolBar">
-                <span className="ql-formats">
-                    <select className="ql-header" defaultValue="7">
-                        <option value="1">Header 1</option>
-                        <option value="2">Header 2</option>
-                        <option value="3">Header 3</option>
-                        <option value="4">Header 4</option>
-                        <option value="5">Header 5</option>
-                        <option value="6">Header 6</option>
-                        <option value="7">Normal</option>
-                    </select>
-                    <select className="ql-size" defaultValue="medium">
-                        <option value="small">Small</option>
-                        <option value="medium">Medium</option>
-                        <option value="large">Large</option>
-                        <option value="huge">Huge</option>
-                    </select>
-                    <select className="ql-font" defaultValue="sans-serif" />
-                </span>
-                <span className="ql-formats">
-                    <button className="ql-bold" />
-                    <button className="ql-italic" />
-                    <button className="ql-underline" />
-                    <button className="ql-strike" />
-                    <button className="ql-blockquote" />
-                </span>
+        <CustomQuillEditorView $useType={props.useType}>
+            {
+                props.useType === 'R' ?
+                    <div id="toolBar">
+                        <div className="ql-formats">
+                            <label htmlFor={"image-btn"} className="image-btn">
+                                <button className="ql-image" id={"image-btn"} style={{display: 'none'}}/>
+                                <FontAwesomeIcon icon={attachImage} className="icon-custom" />
+                                사진 추가
+                            </label>
+                        </div>
+                    </div>
+                    :
+                    <div id="toolBar">
+                        <div className="ql-formats">
+                            <select className="ql-header" defaultValue="7">
+                                <option value="1">Header 1</option>
+                                <option value="2">Header 2</option>
+                                <option value="3">Header 3</option>
+                                <option value="4">Header 4</option>
+                                <option value="5">Header 5</option>
+                                <option value="6">Header 6</option>
+                                <option value="7">Normal</option>
+                            </select>
+                            <select className="ql-size" defaultValue="medium">
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                                <option value="huge">Huge</option>
+                            </select>
+                            <select className="ql-font" defaultValue="sans-serif" />
+                        </div>
+                        <div className="ql-formats">
+                            <button className="ql-bold" />
+                            <button className="ql-italic" />
+                            <button className="ql-underline" />
+                            <button className="ql-strike" />
+                            <button className="ql-blockquote" />
+                        </div>
 
-                <span className="ql-formats">
-                    <button className="ql-list" value="ordered" />
-                    <button className="ql-list" value="bullet" />
-                    <button className="ql-indent" value="-1" />
-                    <button className="ql-indent" value="+1" />
-                </span>
-                <span className="ql-formats">
-                    <select className="ql-color" />
-                    <select className="ql-background" />
-                    <select className="ql-align" />
-                </span>
-                <span className="ql-formats">
-                    <button className="ql-code-block" />
-                    <button className="ql-link" />
-                    <button className="ql-image" />
-                </span>
-            </div>
+                        <div className="ql-formats">
+                            <button className="ql-list" value="ordered" />
+                            <button className="ql-list" value="bullet" />
+                            <button className="ql-indent" value="-1" />
+                            <button className="ql-indent" value="+1" />
+                        </div>
+                        <div className="ql-formats">
+                            <select className="ql-color" />
+                            <select className="ql-background" />
+                            <select className="ql-align" />
+                        </div>
+                        <div className="ql-formats">
+                            <button className="ql-code-block" />
+                            <button className="ql-link" />
+                            <button className="ql-image" />
+                        </div>
+                    </div>
+            }
 
             <ReactQuill
                 id="quillContent"
