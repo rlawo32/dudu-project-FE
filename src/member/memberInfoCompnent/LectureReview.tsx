@@ -3,15 +3,14 @@ import axios from "axios";
 
 import HeaderNavigation from "../../navigation/HeaderNavigation";
 import FooterNavigation from "../../navigation/FooterNavigation";
+import TopButtonNavigation from "../../navigation/TopButtonNavigation";
+import LectureCancelModal from "./LectureCancelModal";
 
 import * as Styled from "./LectureReview.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-    faChevronDown as arrow,
-    faExclamation as emptyIcon, faQuoteLeft as quoteLeft, faQuoteRight as quoteRight,
-    faSearch as searchIcon
-} from "@fortawesome/free-solid-svg-icons";
+import {faChevronDown as arrow, faExclamation as emptyIcon} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
+import ReviewWrite from "../../community/ReviewWrite";
 
 const LectureReview = () => {
     const navigate = useNavigate();
@@ -22,11 +21,13 @@ const LectureReview = () => {
 
     const [pageNo, setPageNo] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(0);
+    const [lectureNo, setLectureNo] = useState<number>(0);
 
     const sortItem:string[] = ['2024', '2023'];
     const [sortType, setSortType] = useState<string>("");
     const [sortSelect, setSortSelect] = useState<number>(0);
     const [isSortBoxShow, setIsSortBoxShow] = useState<boolean>(false);
+    const [isReviewModalShow, setIsReviewModalShow] = useState<boolean>(false);
 
     const [lectureReviewList, setLectureReviewList] = useState<{
         lectureApplicationNo:number;
@@ -131,13 +132,15 @@ const LectureReview = () => {
             </div>
 
             <div className="lr-main">
+                <div className="lr-modal-section">
+                    {isReviewModalShow ? <ReviewWrite setIsModal={setIsReviewModalShow} lectureNo={lectureNo}/> : <div/>}
+                </div>
                 <div className="lr-main-list">
                     <div className="lr-list-view">
                         <div className="lr-list-top">
                             <div className="list-top-left">
                                 <span>전체</span> {totalPage}개
                             </div>
-
                             <div className="list-top-right">
                                 <button onClick={() => setIsSortBoxShow(!isSortBoxShow)}>
                                     {
@@ -226,7 +229,10 @@ const LectureReview = () => {
                                                 </div>
                                             </div>
                                             <div className="item-foot">
-                                                <button onClick={() => navigate("/reviewWrite")}>
+                                                <button onClick={() => {
+                                                    window.scrollTo({ top: 0, behavior: "smooth" });
+                                                    setLectureNo(item.lectureNo);
+                                                    setIsReviewModalShow(true);}}>
                                                     후기 작성하기
                                                 </button>
                                             </div>
@@ -254,6 +260,8 @@ const LectureReview = () => {
                     </div>
                 </div>
             </div>
+
+            <TopButtonNavigation type={""} />
 
             <FooterNavigation />
         </Styled.LectureReviewView>
