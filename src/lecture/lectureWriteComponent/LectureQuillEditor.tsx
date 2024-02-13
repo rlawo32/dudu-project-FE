@@ -26,7 +26,7 @@ interface Props {
     }[]>>;
 }
 
-const CustomQuillEditorView = styled.div<{$useType:string}>`
+const CustomQuillEditorView = styled.div<{$useType:string; $ImgArr:string[]}>`
   
   #toolBar {
     box-sizing: border-box;
@@ -93,7 +93,7 @@ const CustomQuillEditorView = styled.div<{$useType:string}>`
     
     .ql-container {
       box-sizing: border-box;
-      height: ${({$useType}) => $useType === 'R' ? "300px" : "650px"};
+      height: ${({$useType, $ImgArr}) => $useType === 'R' ? $ImgArr.length > 0 ? "280px" : "421px" : "650px"};
       width: 100%;
       padding: 5px 10px;
       border: none;
@@ -297,7 +297,7 @@ const LectureQuillEditor = (props: Props) => {
     }, [attachImageArr])
 
     return (
-        <CustomQuillEditorView $useType={props.useType}>
+        <CustomQuillEditorView $useType={props.useType} $ImgArr={previewWriteImgUrlArr}>
             {
                 props.useType === 'R' ?
                     <div id="toolBar">
