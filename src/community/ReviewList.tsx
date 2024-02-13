@@ -15,8 +15,12 @@ import 'swiper/css/pagination';
 import * as Styled from "./ReviewList.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faSearch as searchIcon, faStar as fullStar,
-    faCircleChevronLeft as leftArrowIcon, faCircleChevronRight as rightArrowIcon
+    faSearch as searchIcon,
+    faStar as fullStar,
+    faCircleChevronLeft as leftArrowIcon,
+    faCircleChevronRight as rightArrowIcon,
+    faExclamation as emptyIcon,
+    faQuoteLeft as quoteLeft, faQuoteRight as quoteRight, faChevronDown as arrow
 } from "@fortawesome/free-solid-svg-icons";
 import {faStar as emptyStar} from "@fortawesome/free-regular-svg-icons";
 import {useNavigate} from "react-router-dom";
@@ -71,6 +75,12 @@ const ReviewList = () => {
         lectureThumbnail:string;
     }[]>([]);
 
+    const activeEnter = (e:any):void => {
+        if(e.key === "Enter") {
+            setIsSearchActive(!isSearchActive);
+        }
+    }
+
     const customReviewRatingArr = (score:number) => {
         let result:any[] = [];
         for (let i:number=0; i<5; i++) {
@@ -90,18 +100,18 @@ const ReviewList = () => {
     const customReviewOftenSwiper = ():any[] => {
         let result:any[] = [];
 
-        for(let i:number=0; i<4; i++) {
+        for(let i:number=0; i<reviewOftenList.length; i++) {
             result.push(<SwiperSlide key={i} className="rls-item">
                 <div className="rls-item-image">
                     <div className="rls-image-label">
                         <div className="label-text">HOT</div>
                     </div>
-                    <img src={"https://culture.lotteshopping.com/files/CUL_ONL/OLD/COMMON/IMAGES/LECT_IMG/81/3910/20210721150157.jpg"} alt="강좌 이미지" />
+                    <img src={reviewOftenList[i].lectureThumbnail} alt="강좌 이미지" />
                 </div>
                 <div className="rls-item-info">
                     <div className="rls-info-head">
                         <div className="rls-lec-institution">
-                            DuDu 문화센터
+                            {reviewOftenList[i].institutionName}
                         </div>
                         <div className="rls-rev-score">
                             {customReviewRatingArr(1)}
@@ -109,18 +119,18 @@ const ReviewList = () => {
                     </div>
                     <div className="rls-info-body">
                         <div className="rls-rev-title">
-                            마수진선생님과 함께하는 수업 최고예요!
+                            {reviewOftenList[i].reviewTitle}
                         </div>
                         <div className="rls-lec-title">
-                            [특강]토요 리틀잼 놀이잼 오감놀이터[13~19개월]
+                            {reviewOftenList[i].lectureTitle}
                         </div>
                     </div>
                     <div className="rls-info-foot">
                         <div className="rls-rev-name">
-                            김*재
+                            {reviewOftenList[i].reviewAuthor}
                         </div>
                         <div className="rls-rev-date">
-                            2024.02.09
+                            {reviewOftenList[i].reviewCreatedDate.substring(0, 10)}
                         </div>
                     </div>
                 </div>
@@ -186,6 +196,7 @@ const ReviewList = () => {
                     </div>
                     <div className="rl-sub-input">
                         <input type="text" value={searchText} placeholder={"제목과 내용으로 검색하세요"}
+                               onKeyDown={(e) => activeEnter(e)}
                                onChange={(e) => setSearchText(e.target.value)}/>
                         <FontAwesomeIcon icon={searchIcon} className="icon-custom"
                                          onClick={() => setIsSearchActive(!isSearchActive)}/>
@@ -194,39 +205,44 @@ const ReviewList = () => {
             </div>
             <div className="rl-main-view">
                 <div className="rl-main">
-                    <div className="rl-main-head">
-                        <Swiper className="rls-list"
-                                modules={[Navigation, Pagination]}
-                                speed={1000}
-                                spaceBetween={10}
-                                slidesPerView={4}
-                                slidesPerGroup={1}
-                                onBeforeInit={(swiper:SwiperCore):void => {
-                                    swiperNextRef.current = swiper
-                                    swiperPrevRef.current = swiper
-                                }}
-                                pagination={{ clickable: true }}
-                                breakpoints={{
-                                    480: {
-                                        slidesPerView: 1,
-                                        spaceBetween: 25
-                                    },
-                                    880: {
-                                        slidesPerView: 3,
-                                        spaceBetween: 25
-                                    },
-                                    1280: {
-                                        slidesPerView: 4,
-                                        spaceBetween: 25
-                                    },
-                                }}>
-                            {customReviewOftenSwiper()}
-                        </Swiper>
-                        <FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"
-                                         onClick={() => swiperPrevRef.current?.slidePrev()} />
-                        <FontAwesomeIcon icon={rightArrowIcon} className="swiper-button-next"
-                                         onClick={() => swiperNextRef.current?.slideNext()} />
-                    </div>
+                    {
+                        reviewOftenList.length > 0 ?
+                            <div className="rl-main-head">
+                                <Swiper className="rls-list"
+                                        modules={[Navigation, Pagination]}
+                                        speed={1000}
+                                        spaceBetween={10}
+                                        slidesPerView={4}
+                                        slidesPerGroup={1}
+                                        onBeforeInit={(swiper:SwiperCore):void => {
+                                            swiperNextRef.current = swiper
+                                            swiperPrevRef.current = swiper
+                                        }}
+                                        pagination={{ clickable: true }}
+                                        breakpoints={{
+                                            480: {
+                                                slidesPerView: 1,
+                                                spaceBetween: 25
+                                            },
+                                            880: {
+                                                slidesPerView: 3,
+                                                spaceBetween: 25
+                                            },
+                                            1280: {
+                                                slidesPerView: 4,
+                                                spaceBetween: 25
+                                            },
+                                        }}>
+                                    {customReviewOftenSwiper()}
+                                </Swiper>
+                                <FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"
+                                                 onClick={() => swiperPrevRef.current?.slidePrev()} />
+                                <FontAwesomeIcon icon={rightArrowIcon} className="swiper-button-next"
+                                                 onClick={() => swiperNextRef.current?.slideNext()} />
+                            </div>
+                            :
+                            <div />
+                    }
                     <div className="rl-main-body">
                         <div className="rl-list">
                             <div className="rl-list-head">
@@ -253,43 +269,80 @@ const ReviewList = () => {
                                     {/*</div>*/}
                                 </div>
                             </div>
-                            <div className="rl-list-body">
-                                {reviewList.map((item, idx) => (
-                                    <div key={idx} className="rl-list-item"
-                                         onClick={() => navigate("/reviewDetail/" + item.reviewNo,
-                                        { state: {reviewNo: item.reviewNo}})}>
-                                        <div className="rl-item-image">
-                                            <img src={item.lectureThumbnail} alt="강좌 이미지" />
-                                        </div>
-                                        <div className="rl-item-info">
-                                            <div className="rl-item-left">
-                                                <div className="rl-lec-institution">
-                                                    {item.institutionName}
+                            {
+                                totalPage > 0 ?
+                                    <div className="rl-list-body">
+                                        {reviewList.map((item, idx) => (
+                                            <div key={idx} className="rl-list-item"
+                                                 onClick={() => navigate("/reviewDetail/" + item.reviewNo,
+                                                     { state: {reviewNo: item.reviewNo}})}>
+                                                <div className="rl-item-image">
+                                                    <img src={item.lectureThumbnail} alt="강좌 이미지" />
                                                 </div>
-                                                <div className="rl-rev-title">
-                                                    {item.reviewTitle}
-                                                </div>
-                                                <div className="rl-lec-title">
-                                                    {item.lectureTitle}
+                                                <div className="rl-item-info">
+                                                    <div className="rl-item-left">
+                                                        <div className="rl-lec-institution">
+                                                            {item.institutionName}
+                                                        </div>
+                                                        <div className="rl-rev-title">
+                                                            {item.reviewTitle}
+                                                        </div>
+                                                        <div className="rl-lec-title">
+                                                            {item.lectureTitle}
+                                                        </div>
+                                                    </div>
+                                                    <div className="rl-item-right">
+                                                        <div className="rl-rev-score">
+                                                            {customReviewRatingArr(item.reviewScore)}
+                                                        </div>
+                                                        <div className="rl-sub-info">
+                                                            <div className="rl-rev-name">
+                                                                {item.reviewAuthor}
+                                                            </div>
+                                                            <div className="rl-rev-date">
+                                                                {item.reviewCreatedDate.substring(0, 10 )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="rl-item-right">
-                                                <div className="rl-rev-score">
-                                                    {customReviewRatingArr(item.reviewScore)}
-                                                </div>
-                                                <div className="rl-sub-info">
-                                                    <div className="rl-rev-name">
-                                                        {item.reviewAuthor}
+                                        ))}
+                                    </div>
+                                    :
+                                    <div className="rl-list-empty">
+                                        <div>
+                                            <FontAwesomeIcon icon={emptyIcon} className="icon-custom" />
+                                            {
+                                                searchText.length > 0 ?
+                                                    <div className="empty-text">
+                                                        <FontAwesomeIcon icon={quoteLeft} className="icon-custom" />
+                                                        <span className="search-text">
+                                                        {searchText}
+                                                    </span>
+                                                        <FontAwesomeIcon icon={quoteRight} className="icon-custom" />
+                                                        <span className="default-text">
+                                                        에 대한
+                                                    </span>
+                                                        <div className="default-text">
+                                                            검색결과가 없어요.
+                                                        </div>
                                                     </div>
-                                                    <div className="rl-rev-date">
-                                                        {item.reviewCreatedDate.substring(0, 10 )}
+                                                    :
+                                                    <div className="default-text">
+                                                        게시글이 없습니다.
                                                     </div>
-                                                </div>
-                                            </div>
+                                            }
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                            }
+                            {
+                                totalPage > reviewList.length ?
+                                    <div className="rl-more-btn" onClick={() => setPageNo(pageNo + 1)}>
+                                        더보기 <FontAwesomeIcon icon={arrow} />
+                                    </div>
+                                    :
+                                    <div />
+                            }
                         </div>
                     </div>
                 </div>

@@ -523,7 +523,7 @@ export const ReviewListView = styled.div`
             }
           }
           
-          .db-more-btn {
+          .rl-more-btn {
             width: 25%;
             margin: 40px auto 0;
             padding: 10px 15px 10px 15px;
