@@ -66,6 +66,13 @@ const LectureSearchBoxView = (props : { isShow: boolean; setIsShow: React.Dispat
         removeLtFeeArr, removeAllLtFeeArr
     } = useLectureSearchDataStore();
 
+    const activeEnter = (e:any):void => {
+        if(e.key === "Enter") {
+            props.setIsShow(false);
+            setSearchButton(!searchButton);
+        }
+    }
+
     const onClickSearchReset = ():void => {
         setSearchText("");
         removeAllLtDivisionArr();
@@ -272,6 +279,7 @@ const LectureSearchBoxView = (props : { isShow: boolean; setIsShow: React.Dispat
                 <div className="search-text">
                     <input type="text" value={searchText}
                            onChange={(e) => setSearchText(e.target.value)}
+                           onKeyDown={(e) => activeEnter(e)}
                            placeholder="강좌명 or 강사명으로 검색" />
                     <FontAwesomeIcon icon={searchIcon} className="icon-custom"
                                      onClick={() => (props.setIsShow(false), setSearchButton(!searchButton))}/>

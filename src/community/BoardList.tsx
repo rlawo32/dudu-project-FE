@@ -41,6 +41,12 @@ const BoardList = () => {
         boardCreatedDate:string;
     }[]>([]);
 
+    const activeEnter = (e:any):void => {
+        if(e.key === "Enter") {
+            setIsSearchActive(!isSearchActive);
+        }
+    }
+
     const sortItemList = ():any[] => {
         let result:any[] = [];
         for(let i:number=0; i<=institutionList.length; i++) {
@@ -147,6 +153,7 @@ const BoardList = () => {
                     </div>
                     <div className="bl-sub-input">
                         <input type="text" value={searchText} placeholder={"검색어를 입력해주세요"}
+                               onKeyDown={(e) => activeEnter(e)}
                                onChange={(e) => setSearchText(e.target.value)}/>
                         <FontAwesomeIcon icon={searchIcon} className="icon-custom"
                                          onClick={() => setIsSearchActive(!isSearchActive)}/>
