@@ -513,6 +513,7 @@ export const ReviewListView = styled.div`
                 margin-left: 20px;
                 @media screen and (max-width: 1024px) {
                   display: block;
+                  width: calc(100% - 170px);
                 }
                 
                 .rl-item-left {
@@ -653,5 +654,4 @@ export const ReviewListView = styled.div`
       }
     }
   }
-
 `;
