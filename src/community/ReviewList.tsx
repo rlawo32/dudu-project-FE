@@ -201,6 +201,17 @@ const ReviewList = () => {
     //         }
     //     }
     // }
+    const onClickReviewViewsUp = (reviewNo:number):void => {
+        axios({
+            method: "PUT",
+            url: "/review/reviewViewsUp",
+            params: {reviewNo: reviewNo}
+        }).then((res):void => {
+
+        }).catch((err):void => {
+            console.log(err.message);
+        })
+    }
 
     useEffect(() => {
         const faqListData = async ():Promise<void> => {
@@ -395,8 +406,9 @@ const ReviewList = () => {
                                     <div className="rl-list-body">
                                         {reviewList.map((item, idx) => (
                                             <div key={idx} className="rl-list-item"
-                                                 onClick={() => navigate("/reviewDetail/" + item.reviewNo,
-                                                     { state: {reviewNo: item.reviewNo}})}>
+                                                 onClick={() => {onClickReviewViewsUp(item.reviewNo);
+                                                     navigate("/reviewDetail/" + item.reviewNo,
+                                                     { state: {reviewNo: item.reviewNo}})}}>
                                                 <div className="rl-item-image">
                                                     <img src={item.lectureThumbnail} alt="강좌 이미지" />
                                                 </div>
