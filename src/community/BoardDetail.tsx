@@ -24,7 +24,7 @@ const BoardDetail = () => {
     }>();
 
     useEffect(() => {
-        const boardDetail = async () => {
+        const boardDetailData = async () => {
             await axios({
                 method: "GET",
                 url: '/board/boardDetail',
@@ -35,10 +35,8 @@ const BoardDetail = () => {
                 console.log(err.message);
             });
         }
-        setTimeout(() => {boardDetail().then();}, 100);
+        setTimeout(() => {boardDetailData().then();}, 100);
     }, [])
-
-    console.log(boardDetail)
 
     return (
         <Styled.BoardDetailView>

@@ -56,35 +56,17 @@ const ReviewList = () => {
     const [isInstitutionBoxShow, setIsInstitutionBoxShow] = useState<boolean>(false);
 
     const [institutionList, setInstitutionList] = useState<{
-        institutionNo:number;
-        institutionName:string;
-        institutionContact:string;
+        institutionNo:number; institutionName:string; institutionContact:string;
     }[]>([]);
     const [reviewList, setReviewList] = useState<{
-        reviewNo:number;
-        reviewTitle:string;
-        reviewContent:string;
-        reviewAuthor:string;
-        reviewScore:number;
-        institutionNo:number;
-        institutionName:string;
-        reviewCreatedDate:string;
-        lectureNo:number;
-        lectureTitle:string;
-        lectureThumbnail:string;
+        reviewNo:number; reviewTitle:string; reviewContent:string; reviewAuthor:string;
+        reviewScore:number; institutionNo:number; institutionName:string; reviewCreatedDate:string;
+        lectureNo:number; lectureTitle:string; lectureThumbnail:string;
     }[]>([]);
     const [reviewOftenList, setReviewOftenList] = useState<{
-        reviewNo:number;
-        reviewTitle:string;
-        reviewContent:string;
-        reviewAuthor:string;
-        reviewScore:number;
-        institutionNo:number;
-        institutionName:string;
-        reviewCreatedDate:string;
-        lectureNo:number;
-        lectureTitle:string;
-        lectureThumbnail:string;
+        reviewNo:number; reviewTitle:string; reviewContent:string; reviewAuthor:string;
+        reviewScore:number; institutionNo:number; institutionName:string; reviewCreatedDate:string;
+        lectureNo:number; lectureTitle:string; lectureThumbnail:string;
     }[]>([]);
 
     const activeEnter = (e:any):void => {
@@ -97,7 +79,7 @@ const ReviewList = () => {
         let result:any[] = [];
         for (let i:number=0; i<5; i++) {
             result.push(
-                <span key={i+1} className="rating">
+                <span key={i+1} className="score">
                         {
                             i+1 <= score ?
                                 <FontAwesomeIcon icon={fullStar} />
