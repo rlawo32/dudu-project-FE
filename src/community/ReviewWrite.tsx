@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
@@ -12,10 +12,11 @@ import {faStar as emptyStar} from "@fortawesome/free-regular-svg-icons";
 interface Props {
     setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
     lectureNo:number;
+    lectureApplicationNo:number;
 }
 
 const ReviewWrite = (props:Props) => {
-    const navigate = useNavigate();
+    const modalRef:any = useRef<any>();
 
     const [reviewTitle, setReviewTitle] = useState<string>("");
     const [reviewContent, setReviewContent] = useState<string>("");
@@ -46,6 +47,7 @@ const ReviewWrite = (props:Props) => {
     const reviewWriteHandler = ():boolean => {
         const reviewData:object = {
             lectureNo: props.lectureNo,
+            lectureApplicationNo: props.lectureApplicationNo,
             reviewTitle: reviewTitle,
             reviewContent: reviewContent,
             reviewScore: reviewScore,
@@ -62,18 +64,18 @@ const ReviewWrite = (props:Props) => {
             return false;
         } else {
             if(window.confirm("작성하시겠습니까?") == true) {
-                // axios({
-                //     method: "POST",
-                //     url: "/review/reviewWrite",
-                //     data: JSON.stringify(reviewData),
-                //     headers: {'Content-type': 'application/json'}
-                // }).then((res):void => {
-                //     alert("작성이 완료되었습니다.");
-                //     navigate("/");
-                // }).catch((err):void => {
-                //     console.log(err.message);
-                // })
-                console.log(reviewData)
+                axios({
+                    method: "POST",
+                    url: "/review/reviewWrite",
+                    data: JSON.stringify(reviewData),
+                    headers: {'Content-type': 'application/json'}
+                }).then((res):void => {
+                    alert("작성이 완료되었습니다.");
+                    // props.setIsModal(false);
+                    window.location.reload();
+                }).catch((err):void => {
+                    console.log(err.message);
+                })
                 return true;
             } else {
                 return false;
@@ -81,8 +83,21 @@ const ReviewWrite = (props:Props) => {
         }
     }
 
+    useEffect(()=>{
+        const handleClickOutside = (e:MouseEvent)=> {
+            if(modalRef.current && !modalRef.current.contains(e.target)) {
+                props.setIsModal(false);
+            }
+        }
+        window.addEventListener('mousedown', handleClickOutside);
+
+        return()=>{
+            window.removeEventListener('mousedown', handleClickOutside);
+        }
+    })
+
     return (
-        <Styled.ReviewWriteView>
+        <Styled.ReviewWriteView ref={modalRef}>
             <div className="rw-view">
                 <div className="rw-view-top">
                     <div className="rw-title">
@@ -103,7 +118,8 @@ const ReviewWrite = (props:Props) => {
                                         Image={reviewImageArr} setImage={setReviewImageArr}/>
                 </div>
                 <div className="rw-button">
-                    <button onClick={() => reviewWriteHandler()}>작성하기</button>
+                    <button onClick={() => props.setIsModal(false)} className="btn-cancel">취소</button>
+                    <button onClick={() => reviewWriteHandler()} className="btn-submit">작성하기</button>
                 </div>
             </div>
         </Styled.ReviewWriteView>
