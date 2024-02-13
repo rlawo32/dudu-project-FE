@@ -77,7 +77,7 @@ export const MemberLogView = styled.div`
               top: 105%;
               right: 0;
               height: 0;
-              width: 0;
+              width: 70px;
               padding: 0;
               margin: 5px auto 0;
               border: none;
@@ -90,7 +90,7 @@ export const MemberLogView = styled.div`
 
             ul.sort-list {
               height: 0;
-              width: 0;
+              width: 60px;
               padding: 0;
               margin: 5px auto 0;
               border: none;
