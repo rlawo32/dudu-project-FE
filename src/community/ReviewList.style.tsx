@@ -266,108 +266,204 @@ export const ReviewListView = styled.div`
             margin-top: 40px;
 
             .rl-total {
-              font-size: 16px;
-              @media screen and (max-width: 1024px) {
-                font-size: 13px;
+              font-weight: bold;
+
+              span {
+                font-weight: normal;
+                opacity: 0.7;
               }
             }
 
             .rl-sort {
-              position: relative;
+              display: flex;
+              align-items: center;
+              
+              .sort-sortType {
+                position: relative;
+                margin-right: 10px;
 
-              button {
-                border: none;
-                background: none;
-                color: ${({theme}) => theme.textColor};
-                font-size: 16px;
-                @media screen and (max-width: 1024px) {
-                  font-size: 13px;
+                .icon-custom {
+                  margin-right: 5px;
+                  rotate: 90deg;
                 }
-                font-weight: bold;
-                cursor: pointer;
-              }
-
-              .sort-box {
-                position: absolute;
-                top: 105%;
-                right: 0;
-                height: 0;
-                width: 0;
-                padding: 0;
-                margin: 5px auto 0;
-                border: none;
-                border-radius: 5px;
-                background: ${({theme}) => theme.boxBgColor};
-                text-align: center;
-                z-index: 2;
-                transition: all 0.3s ease-in;
-              }
-
-              ul.sort-list {
-                height: 0;
-                width: 0;
-                padding: 0;
-                margin: 5px auto 0;
-                border: none;
-                overflow: auto;
-                background: ${({theme}) => theme.boxBgColor};
-                color: ${({theme}) => theme.textColor};
-                text-align: center;
-                cursor: pointer;
-                z-index: 3;
-                user-select: none;
-                list-style:none;
-                transition: all 0.3s ease-in;
-
-                &::-webkit-scrollbar {
-                  width: 5px;
+                
+                button {
+                  border: none;
+                  background: none;
+                  color: ${({theme}) => theme.textColor};
+                  font-size: 14px;
+                  font-weight: bold;
+                  cursor: pointer;
                 }
 
-                &::-webkit-scrollbar-thumb {
-                  background: gray; /* 스크롤바의 색상 */
-                  border-radius: 15px;
+                .sort-box {
+                  position: absolute;
+                  top: 105%;
+                  right: 0;
+                  height: 0;
+                  width: 85px;
+                  padding: 0;
+                  margin: 5px auto 0;
+                  border: none;
+                  border-radius: 5px;
+                  background: ${({theme}) => theme.boxBgColor};
+                  text-align: center;
+                  z-index: 2;
+                  transition: all 0.3s ease-in;
                 }
 
-                &::-webkit-scrollbar-track {
-                  background: rgba(200, 200, 200, .1);
+                ul.sort-list {
+                  height: 0;
+                  width: 75px;
+                  padding: 0;
+                  margin: 5px auto 0;
+                  border: none;
+                  overflow: auto;
+                  background: ${({theme}) => theme.boxBgColor};
+                  color: ${({theme}) => theme.textColor};
+                  text-align: center;
+                  cursor: pointer;
+                  z-index: 3;
+                  user-select: none;
+                  list-style:none;
+                  transition: all 0.3s ease-in;
+
+                  &::-webkit-scrollbar {
+                    width: 5px;
+                  }
+
+                  &::-webkit-scrollbar-thumb {
+                    background: gray; /* 스크롤바의 색상 */
+                    border-radius: 15px;
+                  }
+
+                  &::-webkit-scrollbar-track {
+                    background: rgba(200, 200, 200, .1);
+                  }
+                }
+
+                ul.sort-list li {
+                  padding: 5px;
+                  font-size: 12px;
+                  line-height: 1.4em;
+                  opacity: 0.7;
+                  transition: all 0.3s ease-in;
+                }
+
+                .sort-box.show-list {
+                  border: 1px solid gray;
+                  padding: 5px;
+                  height: 130px;
+                  width: 85px;
+                }
+
+                .sort-list.show-list {
+                  border: none;
+                  padding: 5px;
+                  height: 115px;
+                  width: 75px;
+                }
+
+                ul.sort-list li.sort-active {
+                  opacity: 1;
+                  font-weight: bold;
                 }
               }
+              
+              .sort-institution {
+                position: relative;
+                
+                button {
+                  border: none;
+                  background: none;
+                  color: ${({theme}) => theme.textColor};
+                  font-size: 14px;
+                  font-weight: bold;
+                  cursor: pointer;
+                }
 
-              ul.sort-list li {
-                padding: 5px;
-                font-size: 12px;
-                line-height: 1.4em;
-                opacity: 0.7;
-                transition: all 0.3s ease-in;
-              }
+                .sort-box {
+                  position: absolute;
+                  top: 105%;
+                  right: 0;
+                  height: 0;
+                  width: 130px;
+                  padding: 0;
+                  margin: 5px auto 0;
+                  border: none;
+                  border-radius: 5px;
+                  background: ${({theme}) => theme.boxBgColor};
+                  text-align: center;
+                  z-index: 2;
+                  transition: all 0.3s ease-in;
+                }
 
-              .select-arrow {
-                display: inline-block;
-                margin-left: 7px;
-                transition: all .4s linear;
-              }
+                ul.sort-list {
+                  height: 0;
+                  width: 120px;
+                  padding: 0;
+                  margin: 5px auto 0;
+                  border: none;
+                  overflow: auto;
+                  background: ${({theme}) => theme.boxBgColor};
+                  color: ${({theme}) => theme.textColor};
+                  text-align: center;
+                  cursor: pointer;
+                  z-index: 3;
+                  user-select: none;
+                  list-style:none;
+                  transition: all 0.3s ease-in;
 
-              .sort-box.show-list {
-                border: 1px solid gray;
-                padding: 5px;
-                height: 150px;
-                width: 130px;
-              }
+                  &::-webkit-scrollbar {
+                    width: 5px;
+                  }
 
-              .sort-list.show-list {
-                border: none;
-                padding: 5px;
-                height: 135px;
-                width: 120px;
-              }
+                  &::-webkit-scrollbar-thumb {
+                    background: gray; /* 스크롤바의 색상 */
+                    border-radius: 15px;
+                  }
 
-              ul.sort-list li.sort-active {
-                opacity: 1;
-                font-weight: bold;
-              }
+                  &::-webkit-scrollbar-track {
+                    background: rgba(200, 200, 200, .1);
+                  }
+                }
 
-              .select-arrow.show-list {
-                transform: rotate(180deg);
+                ul.sort-list li {
+                  padding: 5px;
+                  font-size: 12px;
+                  line-height: 1.4em;
+                  opacity: 0.7;
+                  transition: all 0.3s ease-in;
+                }
+
+                .select-arrow {
+                  display: inline-block;
+                  margin-left: 7px;
+                  transition: all .4s linear;
+                }
+
+                .sort-box.show-list {
+                  border: 1px solid gray;
+                  padding: 5px;
+                  height: 130px;
+                  width: 130px;
+                }
+
+                .sort-list.show-list {
+                  border: none;
+                  padding: 5px;
+                  height: 115px;
+                  width: 120px;
+                }
+
+                ul.sort-list li.sort-active {
+                  opacity: 1;
+                  font-weight: bold;
+                }
+
+                .select-arrow.show-list {
+                  transform: rotate(180deg);
+                }
               }
             }
           }
@@ -384,7 +480,6 @@ export const ReviewListView = styled.div`
               transition: border .3s ease;
               cursor: pointer;
               @media screen and (max-width: 1024px) {
-                display: block;
                 padding: 16px 0;
               }
 
@@ -398,6 +493,10 @@ export const ReviewListView = styled.div`
                 width: 100px;
                 border-radius: 0 4px 0 0;
                 overflow: hidden;
+                @media screen and (max-width: 1024px) {
+                  height: 150px;
+                  width: 150px;
+                }
                 
                 img {
                   height: 100%;
@@ -412,9 +511,15 @@ export const ReviewListView = styled.div`
                 align-items: center;
                 width: calc(100% - 110px);
                 margin-left: 20px;
+                @media screen and (max-width: 1024px) {
+                  display: block;
+                }
                 
                 .rl-item-left {
                   width: 75%;
+                  @media screen and (max-width: 1024px) {
+                    width: 100%;
+                  }
 
                   .rl-lec-institution {
                     width: fit-content;
@@ -448,6 +553,10 @@ export const ReviewListView = styled.div`
                 
                 .rl-item-right {
                   width: 25%;
+                  @media screen and (max-width: 1024px) {
+                    width: 100%;
+                    margin-top: 10px;
+                  }
 
                   .rl-rev-score {
                     display: flex;
@@ -455,7 +564,9 @@ export const ReviewListView = styled.div`
                     visibility: visible;
                     padding-right: 8px;
                     margin-right: 8px;
-
+                    @media screen and (max-width: 1024px) {
+                      justify-content: flex-start;
+                    }
                   }
 
                   .rl-sub-info {
@@ -465,6 +576,10 @@ export const ReviewListView = styled.div`
                     font-size: 13px;
                     line-height: 19px;
                     opacity: 0.5;
+                    @media screen and (max-width: 1024px) {
+                      justify-content: flex-start;
+                      margin-top: 4px;
+                    }
 
                     .rl-rev-name {
                       position: relative;

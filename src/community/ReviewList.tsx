@@ -15,11 +15,9 @@ import 'swiper/css/pagination';
 import * as Styled from "./ReviewList.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faSearch as searchIcon,
-    faStar as fullStar,
-    faCircleChevronLeft as leftArrowIcon,
-    faCircleChevronRight as rightArrowIcon,
-    faExclamation as emptyIcon,
+    faSearch as searchIcon, faStar as fullStar,
+    faCircleChevronLeft as leftArrowIcon, faCircleChevronRight as rightArrowIcon,
+    faExclamation as emptyIcon, faArrowRightArrowLeft as sortIcon,
     faQuoteLeft as quoteLeft, faQuoteRight as quoteRight, faChevronDown as arrow
 } from "@fortawesome/free-solid-svg-icons";
 import {faStar as emptyStar} from "@fortawesome/free-regular-svg-icons";
@@ -30,6 +28,14 @@ const ReviewList = () => {
     const swiperPrevRef = useRef<SwiperCore>();
     const swiperNextRef = useRef<SwiperCore>();
 
+    const institutionSortBox:any = useRef<any>();
+    const institutionSortList:any = useRef<any>();
+    const institutionSortBtn:any = useRef<any>([]);
+    const sortTypeBox:any = useRef<any>();
+    const sortTypeList:any = useRef<any>();
+    const sortTypeBtn:any = useRef<any>([]);
+    const selectArrow:any = useRef<any>();
+
     const [pageNo, setPageNo] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(0);
     const [searchText, setSearchText] = useState<string>("");
@@ -38,6 +44,12 @@ const ReviewList = () => {
     const [sortType, setSortType] = useState<string>("");
     const [sortSelect, setSortSelect] = useState<number>(0);
     const [isSortBoxShow, setIsSortBoxShow] = useState<boolean>(false);
+    const sortArr:any[] = [
+        {key:'1', value:'최신순'},
+        {key:'2', value:'오래된순'},
+        {key:'3', value:'평점높은순'},
+        {key:'4', value:'평점낮은순'},
+    ];
 
     const [institutionNo, setInstitutionNo] = useState<number>(0);
     const [institutionSelect, setInstitutionSelect] = useState<number>(0);
@@ -139,6 +151,47 @@ const ReviewList = () => {
         return result;
     }
 
+    const institutionSortItemList = ():any[] => {
+        let result:any[] = [];
+
+        for(let i:number=0; i<=institutionList.length; i++) {
+            if(i === 0) {
+                result.push(<li key={i} ref={btn => (institutionSortBtn.current[i] = btn)}
+                                onClick={() => onClickInstitutionSortSelectBox(i, 0)}>
+                    전체지점</li>)
+            } else {
+                result.push(<li key={i} ref={btn => (institutionSortBtn.current[i] = btn)}
+                                onClick={() => onClickInstitutionSortSelectBox(i, institutionList[i-1].institutionNo)}>
+                    {institutionList[i-1].institutionName}</li>)
+            }
+        }
+        return result;
+    }
+
+    const onClickInstitutionSortSelectBox = (idx:number, type:number):void => {
+        setIsInstitutionBoxShow(false);
+        setInstitutionSelect(idx);
+        setInstitutionNo(type);
+    }
+
+    const sortTypeItemList = ():any[] => {
+        let result:any[] = [];
+
+        for(let i:number=0; i<sortArr.length; i++) {
+            result.push(<li key={sortArr[i].key}
+                            ref={btn => (sortTypeBtn.current[i] = btn)}
+                            onClick={() => onClickSortTypeSelectBox(i, sortArr[i].key)}>
+                {sortArr[i].value}</li>)
+        }
+        return result;
+    }
+
+    const onClickSortTypeSelectBox = (idx:number, type:string):void => {
+        setIsSortBoxShow(false);
+        setSortSelect(idx);
+        setSortType(type);
+    }
+
     useEffect(() => {
         const faqListData = async ():Promise<void> => {
             await axios({
@@ -184,6 +237,52 @@ const ReviewList = () => {
         setTimeout(() => {faqList().then();}, 0);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageNo, sortType, institutionNo, isSearchActive])
+
+    useEffect(() => {
+        if(isSortBoxShow) {
+            setIsInstitutionBoxShow(false);
+            sortTypeBox.current.className += " show-list";
+            sortTypeList.current.className += " show-list";
+        } else {
+            sortTypeBox.current.className = sortTypeBox.current.className.replace(' show-list', '');
+            sortTypeList.current.className = sortTypeList.current.className.replace(' show-list', '');
+        }
+    }, [isSortBoxShow])
+
+    useEffect(() => {
+        sortTypeBtn.current[sortSelect].className = sortTypeBtn.current[sortSelect].className.replace('sort-active', '');
+        sortTypeBtn.current[sortSelect].className += 'sort-active';
+
+        for(let i:number=0; i<sortTypeBtn.current.length; i++) {
+            if(i !== sortSelect) {
+                sortTypeBtn.current[i].className = sortTypeBtn.current[i].className.replace('sort-active', '');
+            }
+        }
+    }, [sortSelect])
+
+    useEffect(() => {
+        if(isInstitutionBoxShow) {
+            setIsSortBoxShow(false);
+            institutionSortBox.current.className += " show-list";
+            institutionSortList.current.className += " show-list";
+            selectArrow.current.className += " show-list";
+        } else {
+            institutionSortBox.current.className = institutionSortBox.current.className.replace(' show-list', '');
+            institutionSortList.current.className = institutionSortList.current.className.replace(' show-list', '');
+            selectArrow.current.className = selectArrow.current.className.replace(' show-list', '');
+        }
+    }, [isInstitutionBoxShow])
+
+    useEffect(() => {
+        institutionSortBtn.current[institutionSelect].className = institutionSortBtn.current[institutionSelect].className.replace('sort-active', '');
+        institutionSortBtn.current[institutionSelect].className += 'sort-active';
+
+        for(let i:number=0; i<institutionSortBtn.current.length; i++) {
+            if(i !== institutionSelect) {
+                institutionSortBtn.current[i].className = institutionSortBtn.current[i].className.replace('sort-active', '');
+            }
+        }
+    }, [institutionSelect])
 
     return (
         <Styled.ReviewListView>
@@ -247,26 +346,38 @@ const ReviewList = () => {
                         <div className="rl-list">
                             <div className="rl-list-head">
                                 <div className="rl-total">
-                                    <span style={{opacity: 0.5, marginRight: "5px"}}>전체</span>
-                                    <span style={{fontWeight: "bold"}}>1개</span>
+                                    <span>전체</span> {totalPage}개
                                 </div>
                                 <div className="rl-sort">
-                                    {/*<button onClick={() => setIsSortBoxShow(!isSortBoxShow)}>*/}
-                                    {/*    {*/}
-                                    {/*        sortSelect === 0 ?*/}
-                                    {/*            "전체"*/}
-                                    {/*            :*/}
-                                    {/*            institutionList[sortSelect-1].institutionName*/}
-                                    {/*    }*/}
-                                    {/*    <div className="select-arrow" ref={selectArrow}>*/}
-                                    {/*        <FontAwesomeIcon icon={arrow} />*/}
-                                    {/*    </div>*/}
-                                    {/*</button>*/}
-                                    {/*<div className="sort-box" ref={sortBox}>*/}
-                                    {/*    <ul className="sort-list" ref={sortList}>*/}
-                                    {/*        {sortItemList()}*/}
-                                    {/*    </ul>*/}
-                                    {/*</div>*/}
+                                    <div className="sort-sortType">
+                                        <button onClick={() => setIsSortBoxShow(!isSortBoxShow)}>
+                                            <FontAwesomeIcon icon={sortIcon} className="icon-custom" />
+                                            {sortArr[sortSelect].value}
+                                        </button>
+                                        <div className="sort-box" ref={sortTypeBox}>
+                                            <ul className="sort-list" ref={sortTypeList}>
+                                                {sortTypeItemList()}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="sort-institution">
+                                        <button onClick={() => setIsInstitutionBoxShow(!isInstitutionBoxShow)}>
+                                            {
+                                                institutionSelect === 0 ?
+                                                    "전체지점"
+                                                    :
+                                                    institutionList[institutionSelect-1].institutionName
+                                            }
+                                            <div className="select-arrow" ref={selectArrow}>
+                                                <FontAwesomeIcon icon={arrow} />
+                                            </div>
+                                        </button>
+                                        <div className="sort-box" ref={institutionSortBox}>
+                                            <ul className="sort-list" ref={institutionSortList}>
+                                                {institutionSortItemList()}
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             {
@@ -329,7 +440,7 @@ const ReviewList = () => {
                                                     </div>
                                                     :
                                                     <div className="default-text">
-                                                        게시글이 없습니다.
+                                                        수강후기가 없습니다.
                                                     </div>
                                             }
                                         </div>
