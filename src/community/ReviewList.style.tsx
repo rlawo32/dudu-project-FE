@@ -165,7 +165,7 @@ export const ReviewListView = styled.div`
             }
             
             .rls-item-info {
-              padding: 10px;
+              padding: 10px 5px;
               
               .rls-info-head {
                 display: flex;
@@ -175,7 +175,7 @@ export const ReviewListView = styled.div`
                   padding: 0 6px;
                   margin: 2px 2px 2px 0;
                   border: 1px solid ${({theme}) => theme.rgbaLight};
-                  border-radius: 9px;
+                  border-radius: 7px;
                   background: ${({theme}) => theme.boxBgColor};
                   font-size: 11px;
                   line-height: 16px;

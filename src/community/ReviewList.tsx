@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 import HeaderNavigation from "../navigation/HeaderNavigation";
@@ -21,7 +22,6 @@ import {
     faQuoteLeft as quoteLeft, faQuoteRight as quoteRight, faChevronDown as arrow
 } from "@fortawesome/free-solid-svg-icons";
 import {faStar as emptyStar} from "@fortawesome/free-regular-svg-icons";
-import {useNavigate} from "react-router-dom";
 
 const ReviewList = () => {
     const navigate = useNavigate();
@@ -61,12 +61,12 @@ const ReviewList = () => {
     const [reviewList, setReviewList] = useState<{
         reviewNo:number; reviewTitle:string; reviewContent:string; reviewAuthor:string;
         reviewScore:number; institutionNo:number; institutionName:string; reviewCreatedDate:string;
-        lectureNo:number; lectureTitle:string; lectureThumbnail:string;
+        lectureNo:number; lectureTitle:string; lectureDivision:string; lectureThumbnail:string;
     }[]>([]);
     const [reviewOftenList, setReviewOftenList] = useState<{
         reviewNo:number; reviewTitle:string; reviewContent:string; reviewAuthor:string;
         reviewScore:number; institutionNo:number; institutionName:string; reviewCreatedDate:string;
-        lectureNo:number; lectureTitle:string; lectureThumbnail:string;
+        lectureNo:number; lectureTitle:string; lectureDivision:string; lectureThumbnail:string;
     }[]>([]);
 
     const activeEnter = (e:any):void => {
@@ -91,6 +91,21 @@ const ReviewList = () => {
         return result;
     }
 
+    const customNameMasking = (data:string):string => {
+        if (data.length > 2) {
+            const originName:string[] = data.split('');
+            originName.forEach((name:string, i:number):void => {
+                if (i === 0 || i === originName.length - 1) return;
+                originName[i] = '*';
+            });
+            const joinName:string = originName.join();
+            return joinName.replace(/,/g, '');
+        } else {
+            const pattern:RegExp = /.$/; // 정규식
+            return data.replace(pattern, '*');
+        }
+    }
+
     const customReviewOftenSwiper = ():any[] => {
         let result:any[] = [];
 
@@ -108,7 +123,7 @@ const ReviewList = () => {
                             {reviewOftenList[i].institutionName}
                         </div>
                         <div className="rls-rev-score">
-                            {customReviewRatingArr(1)}
+                            {customReviewRatingArr(reviewOftenList[i].reviewScore)}
                         </div>
                     </div>
                     <div className="rls-info-body">
@@ -121,7 +136,7 @@ const ReviewList = () => {
                     </div>
                     <div className="rls-info-foot">
                         <div className="rls-rev-name">
-                            {reviewOftenList[i].reviewAuthor}
+                            {customNameMasking(reviewOftenList[i].reviewAuthor)}
                         </div>
                         <div className="rls-rev-date">
                             {reviewOftenList[i].reviewCreatedDate.substring(0, 10)}
@@ -174,6 +189,19 @@ const ReviewList = () => {
         setSortType(type);
     }
 
+    // pagination 에 따른 swiper 버튼 활성화 로직 (width 감지)
+    // window.onresize = ():void => {
+    //     const swiperDetect1:Element|null = document.getElementsByClassName("swiper-pagination").item(0);
+    //     if(swiperDetect1 !== null) {
+    //         const swiperDetect2:boolean = swiperDetect1.className.includes("swiper-pagination-lock");
+    //         if(swiperDetect2) {
+    //             console.log("true")
+    //         } else {
+    //             console.log("false")
+    //         }
+    //     }
+    // }
+
     useEffect(() => {
         const faqListData = async ():Promise<void> => {
             await axios({
@@ -188,13 +216,13 @@ const ReviewList = () => {
                 method: "GET",
                 url: "/review/reviewOftenList"
             }).then((res):void => {
-                setReviewOftenList(res.data.data.faqList);
+                setReviewOftenList(res.data.data.reviewList);
             }).catch((err):void => {
                 console.log(err.message);
             })
         }
         setTimeout(() => {faqListData().then();}, 0);
-    }, [institutionNo])
+    }, [])
 
     useEffect(() => {
         const getListData:object = {
@@ -316,10 +344,10 @@ const ReviewList = () => {
                                         }}>
                                     {customReviewOftenSwiper()}
                                 </Swiper>
-                                <FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"
-                                                 onClick={() => swiperPrevRef.current?.slidePrev()} />
-                                <FontAwesomeIcon icon={rightArrowIcon} className="swiper-button-next"
-                                                 onClick={() => swiperNextRef.current?.slideNext()} />
+                                {/*<FontAwesomeIcon icon={leftArrowIcon} className="swiper-button-prev"*/}
+                                {/*                 onClick={() => swiperPrevRef.current?.slidePrev()} />*/}
+                                {/*<FontAwesomeIcon icon={rightArrowIcon} className="swiper-button-next"*/}
+                                {/*                 onClick={() => swiperNextRef.current?.slideNext()} />*/}
                             </div>
                             :
                             <div />
@@ -381,6 +409,7 @@ const ReviewList = () => {
                                                             {item.reviewTitle}
                                                         </div>
                                                         <div className="rl-lec-title">
+                                                            [{item.lectureDivision}]
                                                             {item.lectureTitle}
                                                         </div>
                                                     </div>
@@ -390,10 +419,10 @@ const ReviewList = () => {
                                                         </div>
                                                         <div className="rl-sub-info">
                                                             <div className="rl-rev-name">
-                                                                {item.reviewAuthor}
+                                                                {customNameMasking(item.reviewAuthor)}
                                                             </div>
                                                             <div className="rl-rev-date">
-                                                                {item.reviewCreatedDate.substring(0, 10 )}
+                                                                {item.reviewCreatedDate.substring(0, 10)}
                                                             </div>
                                                         </div>
                                                     </div>
