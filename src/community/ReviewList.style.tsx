@@ -654,4 +654,33 @@ export const ReviewListView = styled.div`
       }
     }
   }
+
+  .my-review-btn {
+    display: inline-block;
+    position: sticky;
+    bottom: 50px;
+    left: 86%;
+    @media screen and (max-width: 1280px) {
+      display: block;
+      bottom: 120px;
+      left: 90%;
+      margin-bottom: 1%;
+    }
+    height: 50px;
+    width: 50px;
+    margin-bottom: 5%;
+    border: 1px solid ${({theme}) => theme.boxBgColor};
+    border-radius: 50%;
+    background-color: ${({theme}) => theme.boxBgColor};
+    color: ${({theme}) => theme.textColor};;
+    text-align: center;
+    z-index: 99;
+    cursor: pointer;
+
+    .icon-custom {
+      position: relative;
+      top: 12px;
+      font-size: 25px;
+    }
+  }
 `;

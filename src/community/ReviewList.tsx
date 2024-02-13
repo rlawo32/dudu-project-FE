@@ -15,7 +15,7 @@ import 'swiper/css/pagination';
 import * as Styled from "./ReviewList.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faSearch as searchIcon, faStar as fullStar,
+    faSearch as searchIcon, faStar as fullStar, faPenToSquare as reviewWriteIcon,
     faCircleChevronLeft as leftArrowIcon, faCircleChevronRight as rightArrowIcon,
     faExclamation as emptyIcon, faArrowRightArrowLeft as sortIcon,
     faQuoteLeft as quoteLeft, faQuoteRight as quoteRight, faChevronDown as arrow
@@ -441,6 +441,9 @@ const ReviewList = () => {
                 </div>
             </div>
 
+            <div className="my-review-btn" onClick={() => navigate("/lectureReview")}>
+                <FontAwesomeIcon icon={reviewWriteIcon} className="icon-custom" />
+            </div>
             <TopButtonNavigation type={""} />
 
             <FooterNavigation />
