@@ -12,7 +12,7 @@ export const BoardDetailView = styled.div`
       width: 100%;
       padding: 20px;
     }
-    padding: 60px 0 200px;
+    padding: 60px 0;
     margin: 0 auto;
     
     .bd-head {
@@ -32,6 +32,9 @@ export const BoardDetailView = styled.div`
           padding-right: 8px;
           margin-right: 8px;
           word-break: break-all;
+        }
+        
+        .bd-category {
           
           &:after {
             display: block;
@@ -40,17 +43,23 @@ export const BoardDetailView = styled.div`
             top: 5px;
             right: 0;
             width: 1px;
-            height: 10px;
+            height: 11px;
             background-color: #dfd9d5;
           }
         }
         
-        .bd-category {
-          
-        }
-        
         .bd-institution {
           
+          &:after {
+            display: block;
+            content: '';
+            position: absolute;
+            top: 5px;
+            right: 0;
+            width: 1px;
+            height: 11px;
+            background-color: #dfd9d5;
+          }
         }
         
         .bd-date {
@@ -81,13 +90,14 @@ export const BoardDetailView = styled.div`
     .bd-foot {
       display: flex;
       justify-content: center;
-      margin: 40px 0;
+      margin: 60px 0;
 
       button {
         display: inline-block;
         padding: 16px 10px 17px;
         min-height: 60px;
         min-width: 160px;
+        border: none;
         border-radius: 8px;
         background-color: ${({theme}) => theme.reverseBgColor};
         color: ${({theme}) => theme.reverseTextColor};
