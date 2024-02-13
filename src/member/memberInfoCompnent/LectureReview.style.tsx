@@ -33,6 +33,11 @@ export const LectureReviewView = styled.div<{$isModal:boolean}>`
   .lr-main {
     width: 1160px;
     margin: 70px auto 120px;
+    @media screen and (max-width: 1280px) {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0 30px;
+    }
     
     .lr-modal-section {
       pointer-events: ${({$isModal}) => $isModal ? "auto" : "none"};
