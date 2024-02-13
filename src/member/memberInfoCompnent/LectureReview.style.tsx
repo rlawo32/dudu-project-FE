@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
-export const LectureReviewView = styled.div`
+export const LectureReviewView = styled.div<{$isModal:boolean}>`
   position: relative;
+  pointer-events: ${({$isModal}) => $isModal ? "none" : "auto"};
 
   .lr-sub {
     height: 100%;
@@ -32,6 +33,10 @@ export const LectureReviewView = styled.div`
   .lr-main {
     width: 1160px;
     margin: 70px auto 120px;
+    
+    .lr-modal-section {
+      pointer-events: ${({$isModal}) => $isModal ? "auto" : "none"};
+    }
 
     .lr-main-list {
 
@@ -280,8 +285,25 @@ export const LectureReviewView = styled.div`
             }
             
             .item-foot {
+              
+              .review-detail-btn {
+                height: 44px;
+                width: 100%;
+                padding: 2px 8px 4px;
+                margin-top: 20px;
+                border: 1px solid ${({theme}) => theme.rgbaMedium};
+                border-radius: 8px;
+                background-color: #777777;
+                color: white;
+                text-align: center;
+                font-size: 14px;
+                font-weight: bold;
+                line-height: 38px;
+                letter-spacing: -.75px;
+                cursor: pointer;
+              }
 
-              button {
+              .review-write-btn {
                 height: 44px;
                 width: 100%;
                 padding: 2px 8px 4px;
@@ -297,6 +319,7 @@ export const LectureReviewView = styled.div`
                 letter-spacing: -.75px;
                 cursor: pointer;
               }
+
             }
           }
         }
