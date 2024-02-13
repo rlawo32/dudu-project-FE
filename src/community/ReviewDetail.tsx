@@ -88,7 +88,7 @@ const ReviewDetail = () => {
                 <div className="ld-body">
                     <div className="ld-content"
                          dangerouslySetInnerHTML={{ __html : sanitizer(`${reviewDetail?.reviewContent}`) }} />
-                    <div className="ld-lt-Info">
+                    <div className="ld-lt-info">
                         <div className="info-head">수강 정보</div>
                         <div className="info-body"
                              onClick={() => navigate("/lectureDetail/" + reviewDetail?.lectureNo,
