@@ -15,7 +15,6 @@ const StyledLink:any = styled(Link)`
   text-decoration: none;
   font-size: 35px;
   font-weight: normal;
-  opacity: 0.5;
   
   .icon-custom {
     font-size: 32px;
@@ -27,12 +26,12 @@ const StyledLink:any = styled(Link)`
     height: 60px;
   }
   
-  img {
-    opacity: 1;
-  }
-  
-  &:hover {
-    opacity: 1;
+  .child-btn {
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 `;
 
@@ -198,9 +197,9 @@ const HeaderNavigation = ():any => {
             <StyledHeaderNavigation $getRole={memberRole}>
                 <div className="header-parent">
                     <div className="header-left">
-                        <Link to="/">
+                        <StyledLink to="/">
                             <img src={"https://react-project-bucket.s3.ap-northeast-2.amazonaws.com/defaultImage/mainlog01.png"} alt={"메인로고"}/>
-                        </Link>
+                        </StyledLink>
                     </div>
                     <div className="header-center">
                         <LinkBox style={{marginLeft: '30px'}}>
@@ -212,7 +211,9 @@ const HeaderNavigation = ():any => {
                                  onMouseOver={() => setIsLectureSubHovering(true)}>
                                 <div className="button-section">
                                     <StyledLink to="/lectureList" style={{marginLeft: '30px'}}>
-                                        수강신청
+                                        <div className="child-btn">
+                                            수강신청
+                                        </div>
                                     </StyledLink>
                                 </div>
                                 <div className="image-section">
@@ -229,10 +230,14 @@ const HeaderNavigation = ():any => {
                                  onMouseOver={() => setIsInformationUseHovering(true)}>
                                 <div className="button-section">
                                     <StyledLink to="/branchInfoList" style={{marginLeft: '30px'}}>
-                                        지점안내
+                                        <div className="child-btn">
+                                            지점안내
+                                        </div>
                                     </StyledLink>
                                     <StyledLink to="/faqList" style={{marginLeft: '30px'}}>
-                                        자주하는 문의
+                                        <div className="child-btn">
+                                            자주하는 문의
+                                        </div>
                                     </StyledLink>
                                 </div>
                                 <div className="image-section">
@@ -249,10 +254,14 @@ const HeaderNavigation = ():any => {
                                  onMouseOver={() => setIsCommunityHovering(true)}>
                                 <div className="button-section">
                                     <StyledLink to="/boardList" style={{marginLeft: '30px'}}>
-                                        공지사항/이벤트
+                                        <div className="child-btn">
+                                            공지사항/이벤트
+                                        </div>
                                     </StyledLink>
                                     <StyledLink to="/reviewList" style={{marginLeft: '30px'}}>
-                                        수강후기
+                                        <div className="child-btn">
+                                            수강후기
+                                        </div>
                                     </StyledLink>
                                 </div>
                                 <div className="image-section">
