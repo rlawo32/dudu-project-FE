@@ -27,6 +27,10 @@ const StyledLink:any = styled(Link)`
     height: 60px;
   }
   
+  img {
+    opacity: 1;
+  }
+  
   &:hover {
     opacity: 1;
   }
@@ -194,9 +198,9 @@ const HeaderNavigation = ():any => {
             <StyledHeaderNavigation $getRole={memberRole}>
                 <div className="header-parent">
                     <div className="header-left">
-                        <StyledLink to="/">
+                        <Link to="/">
                             <img src={"https://react-project-bucket.s3.ap-northeast-2.amazonaws.com/defaultImage/mainlog01.png"} alt={"메인로고"}/>
-                        </StyledLink>
+                        </Link>
                     </div>
                     <div className="header-center">
                         <LinkBox style={{marginLeft: '30px'}}>
