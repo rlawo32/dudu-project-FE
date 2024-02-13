@@ -21,6 +21,7 @@ export const LectureListMain = styled.div<{
       flex-direction: row;
       width: 100%;
       border-bottom: 1px solid gray;
+      border-radius: 0;
     }
     margin: 30px 3px 0 0;
     padding: 5px;
@@ -32,8 +33,8 @@ export const LectureListMain = styled.div<{
     .lt-list-image {
       height: 250px;
       @media screen and (max-width: 1024px) {
-        height: 200px;
-        width: 35%;
+        height: 180px;
+        width: 30%;
       }
       border-radius: 10px;
       overflow: hidden;
@@ -55,7 +56,7 @@ export const LectureListMain = styled.div<{
         height: 100%;
         width: calc(65% - 16px);
         margin-left: 16px;
-        padding: 0 0 25px;
+        padding: 0 0 15px;
       }
       padding: 0 5px 5px;
 
@@ -123,27 +124,26 @@ export const LectureListMain = styled.div<{
           margin-right: 4px;
         }
       }
+      
+      .lt-list-fee {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 20px;
+        margin-top: 8px;
+        font-size: 14px;
+        font-weight: bold;
+
+        .icon-custom {
+          font-size: 20px;
+          z-index: 10;
+        }
+      }
     }
 
     &:hover img {
       transform: scale(1.1);
       transition: transform .4s ease;
-    }
-  }
-
-  .lt-list-fee {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 20px;
-    padding: 2px 10px;
-    margin-top: 3px;
-    font-size: 14px;
-    font-weight: bold;
-
-    .icon-custom {
-      font-size: 20px;
-      z-index: 10;
     }
   }
   

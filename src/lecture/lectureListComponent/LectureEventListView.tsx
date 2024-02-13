@@ -43,7 +43,7 @@ const LectureEventList = styled.div`
           height: 400px;
         }
         @media screen and (max-width: 1024px) {
-          height: 170px;
+          height: 180px;
           width: 30%;
         }
       }
@@ -58,7 +58,7 @@ const LectureEventMainView = styled.div<{ $url:string }>`
   @media screen and (max-width: 1024px) {
     height: 350px;
   }
-  width: 100vw;
+  width: 100%;
   overflow: hidden;
   
   .le-header-bg {
