@@ -14,9 +14,15 @@ import 'swiper/css/pagination';
 
 import * as Styled from "./Faq.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faChevronDown as arrow, faQ as qIcon,
-    faSearch as searchIcon, faCircleChevronLeft as leftArrowIcon,
-    faCircleChevronRight as rightArrowIcon
+import {
+    faChevronDown as arrow,
+    faQ as qIcon,
+    faSearch as searchIcon,
+    faCircleChevronLeft as leftArrowIcon,
+    faCircleChevronRight as rightArrowIcon,
+    faExclamation as emptyIcon,
+    faQuoteLeft as quoteLeft,
+    faQuoteRight as quoteRight
 } from "@fortawesome/free-solid-svg-icons"
 
 const FaqList = () => {
@@ -53,6 +59,12 @@ const FaqList = () => {
         faqTitle:string;
         faqContent:string;
     }[]>([]);
+
+    const activeEnter = (e:any):void => {
+        if(e.key === "Enter") {
+            setIsSearchActive(!isSearchActive);
+        }
+    }
 
     const customFaqOftenSwiper = ():any[] => {
         let result:any[] = [];
@@ -203,6 +215,7 @@ const FaqList = () => {
                     </div>
                     <div className="faq-sub-input">
                         <input type="text" value={searchText} placeholder={"검색어를 입력해주세요"}
+                               onKeyDown={(e) => activeEnter(e)}
                                onChange={(e) => setSearchText(e.target.value)}/>
                         <FontAwesomeIcon icon={searchIcon} className="icon-custom"
                                          onClick={() => setIsSearchActive(!isSearchActive)}/>
@@ -252,21 +265,50 @@ const FaqList = () => {
                     <div className="faq-list-category">
                         {customFaqCategorySelectBox()}
                     </div>
-                    <div className="faq-list-view">
-                        {faqList.map((item, idx) => (
-                            <div key={idx} className="faq-list-item">
-                                <div className="faq-item-title"
-                                     onClick={() => onClickFaqListItem(idx, item.faqNo)}>
-                                    <FontAwesomeIcon icon={qIcon} className="icon-custom" />
-                                    {item.faqTitle}
-                                </div>
-                                <div className="faq-item-content"
-                                     ref={items => (faqItemBox.current[idx] = items)}>
-                                    {item.faqContent}
+                    {
+                        totalPage > 0 ?
+                            <div className="faq-list-view">
+                                {faqList.map((item, idx) => (
+                                    <div key={idx} className="faq-list-item">
+                                        <div className="faq-item-title"
+                                             onClick={() => onClickFaqListItem(idx, item.faqNo)}>
+                                            <FontAwesomeIcon icon={qIcon} className="icon-custom" />
+                                            {item.faqTitle}
+                                        </div>
+                                        <div className="faq-item-content"
+                                             ref={items => (faqItemBox.current[idx] = items)}>
+                                            {item.faqContent}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            :
+                            <div className="faq-list-empty">
+                                <div>
+                                    <FontAwesomeIcon icon={emptyIcon} className="icon-custom" />
+                                    {
+                                        searchText.length > 0 ?
+                                            <div className="empty-text">
+                                                <FontAwesomeIcon icon={quoteLeft} className="icon-custom" />
+                                                <span className="search-text">
+                                                        {searchText}
+                                                    </span>
+                                                <FontAwesomeIcon icon={quoteRight} className="icon-custom" />
+                                                <span className="default-text">
+                                                        에 대한
+                                                    </span>
+                                                <div className="default-text">
+                                                    검색결과가 없어요.
+                                                </div>
+                                            </div>
+                                            :
+                                            <div className="default-text">
+                                                문의 정보가 없습니다.
+                                            </div>
+                                    }
                                 </div>
                             </div>
-                        ))}
-                    </div>
+                    }
                     {
                         totalPage > faqList.length ?
                             <div className="faq-more-btn" onClick={() => setPageNo(pageNo + 1)}>

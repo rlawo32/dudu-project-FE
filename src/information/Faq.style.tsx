@@ -315,5 +315,31 @@ export const FaqListView = styled.div`
         }
       }
     }
+
+    .faq-list-empty {
+      margin: 60px auto;
+      text-align: center;
+      color: grey;
+      font-size: 25px;
+
+      .icon-custom {
+        margin: 15px 0 15px 0;
+        font-size: 70px;
+      }
+
+      .empty-text {
+
+        .search-text {
+          color: ${({theme}) => theme.textColor};
+          font-weight: bold;
+        }
+
+        .icon-custom {
+          margin: 8px 3px 8px 3px;
+          color: ${({theme}) => theme.textColor};
+          font-size: 20px;
+        }
+      }
+    }
   }
 `;
