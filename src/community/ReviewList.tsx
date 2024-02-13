@@ -15,12 +15,14 @@ import 'swiper/css/pagination';
 import * as Styled from "./ReviewList.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faChevronDown as arrow, faSearch as searchIcon, faStar as fullStar, faStarHalfStroke as halfStar,
+    faSearch as searchIcon, faStar as fullStar,
     faCircleChevronLeft as leftArrowIcon, faCircleChevronRight as rightArrowIcon
 } from "@fortawesome/free-solid-svg-icons";
 import {faStar as emptyStar} from "@fortawesome/free-regular-svg-icons";
+import {useNavigate} from "react-router-dom";
 
 const ReviewList = () => {
+    const navigate = useNavigate();
     const swiperPrevRef = useRef<SwiperCore>();
     const swiperNextRef = useRef<SwiperCore>();
 
@@ -44,18 +46,38 @@ const ReviewList = () => {
     }[]>([]);
     const [reviewList, setReviewList] = useState<{
         reviewNo:number;
+        reviewTitle:string;
+        reviewContent:string;
+        reviewAuthor:string;
+        reviewScore:number;
+        institutionNo:number;
+        institutionName:string;
+        reviewCreatedDate:string;
+        lectureNo:number;
+        lectureTitle:string;
+        lectureThumbnail:string;
     }[]>([]);
     const [reviewOftenList, setReviewOftenList] = useState<{
         reviewNo:number;
+        reviewTitle:string;
+        reviewContent:string;
+        reviewAuthor:string;
+        reviewScore:number;
+        institutionNo:number;
+        institutionName:string;
+        reviewCreatedDate:string;
+        lectureNo:number;
+        lectureTitle:string;
+        lectureThumbnail:string;
     }[]>([]);
 
-    const customReviewRatingArr = () => {
+    const customReviewRatingArr = (score:number) => {
         let result:any[] = [];
         for (let i:number=0; i<5; i++) {
             result.push(
                 <span key={i+1} className="rating">
                         {
-                            i+1 <= 4 ?
+                            i+1 <= score ?
                                 <FontAwesomeIcon icon={fullStar} />
                                 :
                                 <FontAwesomeIcon icon={emptyStar} />
@@ -82,7 +104,7 @@ const ReviewList = () => {
                             DuDu 문화센터
                         </div>
                         <div className="rls-rev-score">
-                            {customReviewRatingArr()}
+                            {customReviewRatingArr(1)}
                         </div>
                     </div>
                     <div className="rls-info-body">
@@ -143,7 +165,7 @@ const ReviewList = () => {
                 data: JSON.stringify(getListData),
                 headers: {'Content-type': 'application/json'}
             }).then((res):void => {
-                setReviewList(res.data.data.faqList);
+                setReviewList(res.data.data.reviewList);
                 setTotalPage(res.data.data.totalPage);
             }).catch((err):void => {
                 console.log(err.message);
@@ -232,37 +254,41 @@ const ReviewList = () => {
                                 </div>
                             </div>
                             <div className="rl-list-body">
-                                <div className="rl-list-item">
-                                    <div className="rl-item-image">
-                                        <img src={"https://culture.lotteshopping.com/files/CUL_ONL/OLD/COMMON/IMAGES/LECT_IMG/81/3910/20210721150157.jpg"} alt="강좌 이미지" />
-                                    </div>
-                                    <div className="rl-item-info">
-                                        <div className="rl-item-left">
-                                            <div className="rl-lec-institution">
-                                                DuDu 문화센터
-                                            </div>
-                                            <div className="rl-rev-title">
-                                                선생님이 너무너무 좋아요
-                                            </div>
-                                            <div className="rl-lec-title">
-                                                [특강]파파룰라 오감 and 자연놀이 [6~12개월 B]
-                                            </div>
+                                {reviewList.map((item, idx) => (
+                                    <div key={idx} className="rl-list-item"
+                                         onClick={() => navigate("/reviewDetail/" + item.reviewNo,
+                                        { state: {reviewNo: item.reviewNo}})}>
+                                        <div className="rl-item-image">
+                                            <img src={item.lectureThumbnail} alt="강좌 이미지" />
                                         </div>
-                                        <div className="rl-item-right">
-                                            <div className="rl-rev-score">
-                                                {customReviewRatingArr()}
-                                            </div>
-                                            <div className="rl-sub-info">
-                                                <div className="rl-rev-name">
-                                                    김*재
+                                        <div className="rl-item-info">
+                                            <div className="rl-item-left">
+                                                <div className="rl-lec-institution">
+                                                    {item.institutionName}
                                                 </div>
-                                                <div className="rl-rev-date">
-                                                    2024.02.08
+                                                <div className="rl-rev-title">
+                                                    {item.reviewTitle}
+                                                </div>
+                                                <div className="rl-lec-title">
+                                                    {item.lectureTitle}
                                                 </div>
                                             </div>
+                                            <div className="rl-item-right">
+                                                <div className="rl-rev-score">
+                                                    {customReviewRatingArr(item.reviewScore)}
+                                                </div>
+                                                <div className="rl-sub-info">
+                                                    <div className="rl-rev-name">
+                                                        {item.reviewAuthor}
+                                                    </div>
+                                                    <div className="rl-rev-date">
+                                                        {item.reviewCreatedDate.substring(0, 10 )}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                ))}
                             </div>
                         </div>
                     </div>
