@@ -47,6 +47,25 @@ const ReviewDetail = () => {
         return result;
     }
 
+    const customNameMasking = (data:undefined|string):string => {
+        if(data !== undefined) {
+            if (data.length > 2) {
+                const originName:string[] = data.split('');
+                originName.forEach((name:string, i:number):void => {
+                    if (i === 0 || i === originName.length - 1) return;
+                    originName[i] = '*';
+                });
+                const joinName:string = originName.join();
+                return joinName.replace(/,/g, '');
+            } else {
+                const pattern:RegExp = /.$/; // 정규식
+                return data.replace(pattern, '*');
+            }
+        } else {
+            return "";
+        }
+    }
+
     useEffect(() => {
         const reviewDetailData = async () => {
             await axios({
@@ -70,7 +89,7 @@ const ReviewDetail = () => {
                 <div className="ld-head">
                     <div className="head-top">
                         <div className="head-item ld-author">
-                            {reviewDetail?.reviewAuthor}
+                            {customNameMasking(reviewDetail?.reviewAuthor)}
                         </div>
                         <div className="head-item ld-date">
                             {reviewDetail?.reviewCreatedDate.substring(0, 10)}
@@ -132,6 +151,8 @@ const ReviewDetail = () => {
                                         {reviewDetail?.lectureTeacher}
                                     </div>
                                     <div className="ld-lt-period">
+                                        {reviewDetail?.lectureDivision}
+                                        &nbsp;
                                         {reviewDetail?.lecturePeriod}
                                     </div>
                                 </div>
