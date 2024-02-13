@@ -22,6 +22,7 @@ const LectureReview = () => {
     const [pageNo, setPageNo] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(0);
     const [lectureNo, setLectureNo] = useState<number>(0);
+    const [lectureApplicationNo, setLectureApplicationNo] = useState<number>(0);
 
     const sortItem:string[] = ['2024', '2023'];
     const [sortType, setSortType] = useState<string>("");
@@ -46,6 +47,10 @@ const LectureReview = () => {
         lectureCount:number;
         lectureFee:number;
         lectureStateNo:number;
+        reviewNo:number;
+    }[]>([]);
+    const [ReviewCheckList, setReviewCheckList] = useState<{
+        lectureNo:number;
     }[]>([]);
 
     const sortItemList = ():any[] => {
@@ -119,8 +124,18 @@ const LectureReview = () => {
         }
     }, [sortSelect])
 
+    useEffect(() => {
+        if(isReviewModalShow) {
+            document.body.style.overflow = 'hidden';
+            document.body.style.width = '1903px';
+        } else {
+            document.body.style.overflow = 'auto';
+            document.body.style.width = '100%';
+        }
+    }, [isReviewModalShow])
+
     return (
-        <Styled.LectureReviewView>
+        <Styled.LectureReviewView $isModal={isReviewModalShow}>
             <HeaderNavigation />
 
             <div className="lr-sub">
@@ -133,7 +148,8 @@ const LectureReview = () => {
 
             <div className="lr-main">
                 <div className="lr-modal-section">
-                    {isReviewModalShow ? <ReviewWrite setIsModal={setIsReviewModalShow} lectureNo={lectureNo}/> : <div/>}
+                    {isReviewModalShow ? <ReviewWrite setIsModal={setIsReviewModalShow} lectureNo={lectureNo}
+                                                      lectureApplicationNo={lectureApplicationNo}/> : <div/>}
                 </div>
                 <div className="lr-main-list">
                     <div className="lr-list-view">
@@ -229,12 +245,23 @@ const LectureReview = () => {
                                                 </div>
                                             </div>
                                             <div className="item-foot">
-                                                <button onClick={() => {
-                                                    window.scrollTo({ top: 0, behavior: "smooth" });
-                                                    setLectureNo(item.lectureNo);
-                                                    setIsReviewModalShow(true);}}>
-                                                    후기 작성하기
-                                                </button>
+                                                {
+                                                    item.lectureApplicationCancelYn === 'R' ?
+                                                        <button onClick={() => navigate("/reviewDetail/" + item.reviewNo,
+                                                                    { state: {reviewNo: item.reviewNo}})}
+                                                                className="review-detail-btn">
+                                                            후기 작성완료
+                                                        </button>
+                                                        :
+                                                        <button onClick={() => {
+                                                            window.scrollTo({ top: 0, behavior: "smooth" });
+                                                            setLectureNo(item.lectureNo);
+                                                            setLectureApplicationNo(item.lectureApplicationNo);
+                                                            setIsReviewModalShow(true);}}
+                                                            className="review-write-btn">
+                                                            후기 작성하기
+                                                        </button>
+                                                }
                                             </div>
                                         </div>
                                     ))}
