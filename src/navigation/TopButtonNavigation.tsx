@@ -4,6 +4,7 @@ import {faArrowUpLong as topIcon} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 
 const TopButtonNavigationView = styled.div<{$type:string}>`
+  display: inline-block;
   position: sticky;
   bottom: ${({$type}) => $type === 'D' ? "150px" : "50px"};
   left: 90%;
