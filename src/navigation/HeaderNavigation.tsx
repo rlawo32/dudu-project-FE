@@ -15,6 +15,7 @@ const StyledLink:any = styled(Link)`
   text-decoration: none;
   font-size: 35px;
   font-weight: normal;
+  opacity: 0.5;
   
   .icon-custom {
     font-size: 32px;
@@ -24,6 +25,10 @@ const StyledLink:any = styled(Link)`
     display: flex;
     align-items: center;
     height: 60px;
+  }
+  
+  &:hover {
+    opacity: 1;
   }
 `;
 
@@ -104,7 +109,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     font-size: 16px;
     overflow: hidden;
     z-index: 99;
-    transition: height 0.2s ease-in;
+    transition: height .5s ease, left .6s ease;
     cursor: default;
     @media screen and (max-width: 1180px) {
       padding-left: 80px;
