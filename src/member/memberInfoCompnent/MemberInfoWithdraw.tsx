@@ -96,7 +96,7 @@ const MemberInfoWithdraw = (props:Props) => {
     useEffect(()=>{
         const handleClickOutside = (e:MouseEvent)=> {
             if(modalRef.current && !modalRef.current.contains(e.target)) {
-                props.setIsModal(false)
+                props.setIsModal(false);
             }
         }
         window.addEventListener('mousedown',handleClickOutside)

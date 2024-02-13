@@ -62,8 +62,20 @@ const MemberInfo = () => {
         setTimeout(() => {memberInfoData().then();}, 200);
     }, [])
 
+    useEffect(() => {
+        if(isInfoUpdateModal || isInfoPwUpdateModal || isInfoWithdrawModal) {
+            document.body.style.overflow = 'hidden';
+            document.body.style.width = '1903px';
+        } else {
+            document.body.style.overflow = 'auto';
+            document.body.style.width = '100%';
+        }
+    }, [isInfoUpdateModal, isInfoPwUpdateModal, isInfoWithdrawModal])
+
     return (
-        <Styled.MemberInfoView>
+        <Styled.MemberInfoView $isUpdateModal={isInfoUpdateModal}
+                               $isPwUpdateModal={isInfoPwUpdateModal}
+                               $isWithdrawModal={isInfoWithdrawModal}>
             <HeaderNavigation />
 
             <div className="mi-sub">

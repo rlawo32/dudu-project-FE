@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
-export const MemberInfoView = styled.div`
+export const MemberInfoView = styled.div<{
+    $isUpdateModal:boolean;
+    $isPwUpdateModal:boolean;
+    $isWithdrawModal:boolean;}>`
   position: relative;
+  pointer-events: ${({$isUpdateModal, $isPwUpdateModal, $isWithdrawModal}) =>
+          $isUpdateModal ? "none" : $isPwUpdateModal ? "none" : $isWithdrawModal ? "none" : "auto"};
   
   .mi-sub {
     height: 100%;
@@ -93,6 +98,8 @@ export const MemberInfoView = styled.div`
       top: 25%;
       left: 50%;
       transform: translate(-50%, -25%);
+      pointer-events: ${({$isUpdateModal, $isPwUpdateModal, $isWithdrawModal}) =>
+              $isUpdateModal ? "auto" : $isPwUpdateModal ? "auto" : $isWithdrawModal ? "auto" : "none"};
     }
     
     .mi-info-update {
