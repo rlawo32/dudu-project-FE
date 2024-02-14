@@ -21,6 +21,16 @@ const LecturePayment = () => {
         setIsSuccess(false);
     }, [])
 
+    useEffect(() => {
+        if(isPaymentModal) {
+            document.body.style.overflow = 'hidden';
+            document.body.style.width = '1903px';
+        } else {
+            document.body.style.overflow = 'auto';
+            document.body.style.width = '100%';
+        }
+    }, [isPaymentModal])
+
     return (
         <Styled.LecturePaymentView $isModal={isPaymentModal}>
             <HeaderNavigation />

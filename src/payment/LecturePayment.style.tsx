@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const LecturePaymentView = styled.div<{$isModal:boolean}>`
   position: relative;
+  pointer-events: ${({$isModal}) => $isModal ? "none" : "auto"};
 
   .lp-sub {
     height: 100%;
@@ -284,7 +285,7 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
     margin: 0 auto;
     border-top: 2px solid ${({theme}) => theme.textColor};
     background-color: ${({theme}) => theme.bgColor};
-    opacity: ${({$isModal}) => $isModal ? 0.5 : 1};
+    opacity: 1;
     @media screen and (max-width: 1280px) {
       width: 100%;
       padding: 24px 32px;
@@ -385,5 +386,6 @@ export const LecturePaymentView = styled.div<{$isModal:boolean}>`
     top: 10%;
     left: 38%;
     transform: translate(-38%, -15%);
+    pointer-events: ${({$isModal}) => $isModal ? "auto" : "none"};
   }
 `;
