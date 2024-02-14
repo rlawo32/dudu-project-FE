@@ -82,8 +82,10 @@ const PaymentWidget = (props: Props) => {
             method: "GET",
             url: "/member/findMemberInfo",
         }).then((res):void => {
+            console.log(res)
+            const memberInfo = res.data.data;
             const paymentInfo:any[] = location.state;
-            const customerKey:string = Math.random().toString(16).substring(2) + "_" + res.data.memberNo;
+            const customerKey:string = Math.random().toString(16).substring(2) + "_" + memberInfo.memberNo;
             let orderId:string = Math.random().toString(16).substring(2);
             let orderName:string = paymentInfo[0].lectureTitle;
             if(paymentInfo.length > 1) {
@@ -94,10 +96,13 @@ const PaymentWidget = (props: Props) => {
                 orderId += "_" + paymentInfo[i].lectureNo;
                 paymentFee += paymentInfo[i].lectureFee;
             }
+            console.log(customerKey)
+            console.log(orderName)
 
             script.addEventListener("load", ():void => {
                 const button:HTMLElement|null = document.getElementById("payment-button");
                 const paymentWidget = window.PaymentWidget(clientKey, customerKey);
+                console.log(paymentWidget)
 
                 paymentWidget.renderPaymentMethods(
                     '#payment-widget',
@@ -116,9 +121,9 @@ const PaymentWidget = (props: Props) => {
                             orderName: orderName,
                             successUrl: window.location.origin + "/paymentSuccess",
                             failUrl: window.location.origin + "/fail",
-                            customerEmail: res.data.memberEmail,
-                            customerName: res.data.memberName,
-                            customerMobilePhone: res.data.memberPhone
+                            customerEmail: memberInfo.memberEmail,
+                            customerName: memberInfo.memberName,
+                            customerMobilePhone: memberInfo.memberPhone
                         });
                     });
                 }
@@ -127,19 +132,6 @@ const PaymentWidget = (props: Props) => {
             console.log(err.message);
         })
     }, [])
-
-    useEffect(()=>{
-        const handleClickOutside = (e:MouseEvent)=> {
-            if(modalRef.current && !modalRef.current.contains(e.target)) {
-                props.setIsModal(false)
-            }
-        }
-        window.addEventListener('mousedown',handleClickOutside)
-
-        return()=>{
-            window.removeEventListener('mousedown',handleClickOutside)
-        }
-    })
 
     return (
         <PaymentWidgetView ref={modalRef} x={logoPos.x} y={logoPos.y}>
