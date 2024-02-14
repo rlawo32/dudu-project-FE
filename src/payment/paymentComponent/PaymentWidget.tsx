@@ -128,6 +128,10 @@ const PaymentWidget = (props: Props) => {
                     });
                 }
             })
+            script.addEventListener("error", (e):void => {
+                e.preventDefault();
+                console.log(e.message)
+            })
         }).catch((err):void => {
             console.log(err.message);
         })
