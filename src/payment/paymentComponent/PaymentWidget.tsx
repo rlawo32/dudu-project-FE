@@ -1,14 +1,16 @@
-import {useLocation} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
-import styled from "styled-components";
+import {useLocation} from "react-router-dom";
 import {useDrag} from "react-use-gesture";
+import styled from "styled-components";
 import axios from "axios";
 
-declare global {
-    interface Window {
-        PaymentWidget: any;
-    }
-}
+import {loadPaymentWidget, ANONYMOUS} from "@tosspayments/payment-widget-sdk";
+
+// declare global {
+//     interface Window {
+//         PaymentWidget: any;
+//     }
+// }
 
 interface Props {
     isModal: boolean;
@@ -72,69 +74,129 @@ const PaymentWidget = (props: Props) => {
     const location = useLocation();
     const clientKey:string|undefined = process.env.REACT_APP_TOSS_CLIENT_KEY;
 
+    // useEffect(() => {
+    //     const script:HTMLScriptElement = document.createElement("script");
+    //     script.async = true;
+    //     script.src = `https://js.tosspayments.com/v1/payment-widget`;
+    //     document.head.appendChild(script);
+    //
+    //     axios({
+    //         method: "GET",
+    //         url: "/member/findMemberInfo",
+    //     }).then((res):void => {
+    //         console.log(res)
+    //         const memberInfo = res.data.data;
+    //         const paymentInfo:any[] = location.state;
+    //         const customerKey:string = Math.random().toString(16).substring(2) + "_" + memberInfo.memberNo;
+    //         let orderId:string = Math.random().toString(16).substring(2);
+    //         let orderName:string = paymentInfo[0].lectureTitle;
+    //         if(paymentInfo.length > 1) {
+    //             orderName += " 외 " + (paymentInfo.length-1) + "건";
+    //         }
+    //         let paymentFee:number = 0;
+    //         for(let i:number=0; i<paymentInfo.length; i++) {
+    //             orderId += "_" + paymentInfo[i].lectureNo;
+    //             paymentFee += paymentInfo[i].lectureFee;
+    //         }
+    //         console.log(customerKey)
+    //         console.log(orderName)
+    //
+    //         script.addEventListener("load", ():void => {
+    //             const button:HTMLElement|null = document.getElementById("payment-button");
+    //             const paymentWidget = window.PaymentWidget(clientKey, customerKey);
+    //             console.log(paymentWidget)
+    //
+    //             paymentWidget.renderPaymentMethods(
+    //                 '#payment-widget',
+    //                 { value: paymentFee },
+    //                 { variantKey: "DEFAULT" })
+    //             paymentWidget.renderAgreement(
+    //                 '#payment-agreement',
+    //                 { variantKey: "AGREEMENT" })
+    //
+    //             if(button !== null) {
+    //                 button.addEventListener("click", ():void => {
+    //                     // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
+    //                     // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
+    //                     paymentWidget.requestPayment({
+    //                         orderId: orderId,
+    //                         orderName: orderName,
+    //                         successUrl: window.location.origin + "/paymentSuccess",
+    //                         failUrl: window.location.origin + "/fail",
+    //                         customerEmail: memberInfo.memberEmail,
+    //                         customerName: memberInfo.memberName,
+    //                         customerMobilePhone: memberInfo.memberPhone
+    //                     });
+    //                 });
+    //             }
+    //         })
+    //         script.addEventListener("error", (e):void => {
+    //             e.preventDefault();
+    //             console.log(e.message)
+    //         })
+    //     }).catch((err):void => {
+    //         console.log(err.message);
+    //     })
+    // }, [])
+
     useEffect(() => {
-        const script:HTMLScriptElement = document.createElement("script");
-        script.async = true;
-        script.src = `https://js.tosspayments.com/v1/payment-widget`;
-        document.head.appendChild(script);
-
-        axios({
-            method: "GET",
-            url: "/member/findMemberInfo",
-        }).then((res):void => {
-            console.log(res)
-            const memberInfo = res.data.data;
-            const paymentInfo:any[] = location.state;
-            const customerKey:string = Math.random().toString(16).substring(2) + "_" + memberInfo.memberNo;
-            let orderId:string = Math.random().toString(16).substring(2);
-            let orderName:string = paymentInfo[0].lectureTitle;
-            if(paymentInfo.length > 1) {
-                orderName += " 외 " + (paymentInfo.length-1) + "건";
-            }
-            let paymentFee:number = 0;
-            for(let i:number=0; i<paymentInfo.length; i++) {
-                orderId += "_" + paymentInfo[i].lectureNo;
-                paymentFee += paymentInfo[i].lectureFee;
-            }
-            console.log(customerKey)
-            console.log(orderName)
-
-            script.addEventListener("load", ():void => {
-                const button:HTMLElement|null = document.getElementById("payment-button");
-                const paymentWidget = window.PaymentWidget(clientKey, customerKey);
-                console.log(paymentWidget)
-
-                paymentWidget.renderPaymentMethods(
-                    '#payment-widget',
-                    { value: paymentFee },
-                    { variantKey: "DEFAULT" })
-                paymentWidget.renderAgreement(
-                    '#payment-agreement',
-                    { variantKey: "AGREEMENT" })
-
-                if(button !== null) {
-                    button.addEventListener("click", ():void => {
-                        // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
-                        // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
-                        paymentWidget.requestPayment({
-                            orderId: orderId,
-                            orderName: orderName,
-                            successUrl: window.location.origin + "/paymentSuccess",
-                            failUrl: window.location.origin + "/fail",
-                            customerEmail: memberInfo.memberEmail,
-                            customerName: memberInfo.memberName,
-                            customerMobilePhone: memberInfo.memberPhone
-                        });
-                    });
+            axios({
+                method: "GET",
+                url: "/member/findMemberInfo",
+            }).then(async (res):Promise<void> => {
+                console.log(res)
+                const memberInfo = res.data.data;
+                const paymentInfo:any[] = location.state;
+                const customerKey:string = Math.random().toString(16).substring(2) + "_" + memberInfo.memberNo;
+                let orderId:string = Math.random().toString(16).substring(2);
+                let orderName:string = paymentInfo[0].lectureTitle;
+                if(paymentInfo.length > 1) {
+                    orderName += " 외 " + (paymentInfo.length-1) + "건";
                 }
+                let paymentFee:number = 0;
+                for(let i:number=0; i<paymentInfo.length; i++) {
+                    orderId += "_" + paymentInfo[i].lectureNo;
+                    paymentFee += paymentInfo[i].lectureFee;
+                }
+
+                const button:HTMLElement|null = document.getElementById("payment-button");
+                try {
+                    if(clientKey !== undefined) {
+                        const paymentWidget = await loadPaymentWidget(clientKey, customerKey);
+                        paymentWidget.renderPaymentMethods(
+                            '#payment-widget',
+                            { value: paymentFee },
+                            { variantKey: "DEFAULT" })
+                        paymentWidget.renderAgreement(
+                            '#payment-agreement',
+                            { variantKey: "AGREEMENT" })
+
+                        if(button !== null) {
+                            button.addEventListener("click", async ():Promise<void> => {
+                                // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
+                                // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
+                                try {
+                                    await paymentWidget.requestPayment({
+                                        orderId: orderId,
+                                        orderName: orderName,
+                                        successUrl: window.location.origin + "/paymentSuccess",
+                                        failUrl: window.location.origin + "/fail",
+                                        customerEmail: memberInfo.memberEmail,
+                                        customerName: memberInfo.memberName,
+                                        customerMobilePhone: memberInfo.memberPhone
+                                    });
+                                } catch (err) {
+                                    console.error("Error requesting payment : ", err)
+                                }
+                            });
+                        }
+                    }
+                } catch (err) {
+                    console.error("Error fetching payment widget : ", err);
+                }
+            }).catch((err):void => {
+                console.log(err.message);
             })
-            script.addEventListener("error", (e):void => {
-                e.preventDefault();
-                console.log(e.message)
-            })
-        }).catch((err):void => {
-            console.log(err.message);
-        })
     }, [])
 
     return (
