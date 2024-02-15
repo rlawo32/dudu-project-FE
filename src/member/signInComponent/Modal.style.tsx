@@ -5,6 +5,7 @@ export const ModalView = styled.div`
   top: 25%;
   left: 35%;
   transform: translate(-40%, -30%);
+  z-index: 50;
 `;
 
 export const ModalTabBar = styled.div`
