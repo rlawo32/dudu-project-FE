@@ -101,7 +101,6 @@ const FindIdModal = (props: Props) => {
                 headers: {'Content-type': 'application/json'}
             }).then((res) => {
                 const responseData = res.data;
-                console.log(responseData);
                 if(responseData.result) {
                     let encodeId:string = "";
                     for(let i:number=0; i<responseData.data.length; i++) {

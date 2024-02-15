@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {getCookie} from "../Cookie";
 import axios from "axios";
 
 import HeaderNavigation from "../navigation/HeaderNavigation";
@@ -110,7 +111,10 @@ const ReviewList = () => {
         let result:any[] = [];
 
         for(let i:number=0; i<reviewOftenList.length; i++) {
-            result.push(<SwiperSlide key={i} className="rls-item">
+            result.push(<SwiperSlide key={i} className="rls-item"
+                                     onClick={() => {onClickReviewViewsUp(reviewOftenList[i].reviewNo);
+                                         navigate("/reviewDetail/" + reviewOftenList[i].reviewNo,
+                                             { state: {reviewNo: reviewOftenList[i].reviewNo}})}}>
                 <div className="rls-item-image">
                     <div className="rls-image-label">
                         <div className="label-text">HOT</div>
@@ -211,6 +215,17 @@ const ReviewList = () => {
         }).catch((err):void => {
             console.log(err.message);
         })
+    }
+
+    const onClickMyReviewMove = ():void => {
+        if(window.localStorage.getItem("role") && getCookie("refreshToken")) {
+            navigate("/lectureReview");
+        } else {
+            alert("로그인이 필요한 기능입니다.");
+            if(window.confirm('바로 로그인 하시겠습니까?') === true) {
+                navigate("/signIn");
+            }
+        }
     }
 
     useEffect(() => {
@@ -482,7 +497,7 @@ const ReviewList = () => {
                 </div>
             </div>
 
-            <div className="my-review-btn" onClick={() => navigate("/lectureReview")}>
+            <div className="my-review-btn" onClick={() => onClickMyReviewMove()}>
                 <FontAwesomeIcon icon={reviewWriteIcon} className="icon-custom" />
             </div>
             <TopButtonNavigation type={""} />
