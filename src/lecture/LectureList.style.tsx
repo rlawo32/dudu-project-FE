@@ -12,7 +12,7 @@ export const LectureListView = styled.div<{$isShow:boolean}>`
     @media screen and (max-width: 1024px) {
       margin: 5% auto 5%;
     }
-    opacity: ${({$isShow}) => $isShow ? "0.5" : "1"};
+    opacity: ${({$isShow}) => $isShow ? 0.5 : 1};
   }
   
   .header-navigation {
