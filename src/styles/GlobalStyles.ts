@@ -12,7 +12,6 @@ export const GlobalStyle = createGlobalStyle<{$isModal:boolean}>`
       
       #root {
         div:nth-child(2) > * {
-          opacity: ${({$isModal}) => $isModal ? 0.5 : 1};
           pointer-events: ${({$isModal}) => $isModal ? "none" : "auto"};
         }
       }
