@@ -8,6 +8,7 @@ import FooterNavigation from "../navigation/FooterNavigation";
 import FindIdModal from "./signInComponent/FindIdModal";
 import FindPwModal from "./signInComponent/FindPwModal";
 import useJoinProgressStore from "../stores/useJoinProgressStore";
+import useTokenExpiresStore from "../stores/useTokenExpiresStore";
 
 import * as Styled from "./SignIn.style";
 import * as Modal from "./signInComponent/Modal.style";
@@ -28,6 +29,7 @@ const SignIn = ():any => {
     const [isLoginPwEffect, setIsLoginPwEffect] = useState<boolean>(true);
 
     const {setActiveProgressTab} = useJoinProgressStore();
+    const {tokenExpiresTime, setTokenExpiresTime} = useTokenExpiresStore();
 
     const passwordSeeHandler = ():void => {
         const typeCheck = passwordRef.current.type;
@@ -73,8 +75,10 @@ const SignIn = ():any => {
             }).then((res) => {
                 const responseData = res.data;
                 if(responseData.data) {
-                    const { grantType, accessToken, refreshToken, refreshTokenExpiresIn } = responseData.data;
-                    const expires  = new Date(refreshTokenExpiresIn);
+                    const { grantType, accessToken, refreshToken, accessTokenExpires, accessTokenExpiresDate} = responseData.data;
+                    const expires:number = accessTokenExpires;
+                    setTokenExpiresTime(expires);
+                    const expiresDate:Date = new Date(accessTokenExpiresDate);
 
                     axios.defaults.headers.common['Authorization'] = `${grantType} ${accessToken}`;
 
