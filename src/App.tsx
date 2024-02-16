@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Route, Routes, useNavigate} from "react-router-dom";
 import {getCookie, removeCookie, setCookie} from "./Cookie";
 import {ThemeProvider} from "styled-components";
@@ -44,55 +44,15 @@ import {GlobalStyle} from "./styles/GlobalStyles";
 import {darkTheme, lightTheme} from "./styles/theme";
 import useThemeToggleStore from "./stores/useThemeToggleStore";
 import useTokenExpiresStore from "./stores/useTokenExpiresStore";
+import LoginExpiresNavigation from "./navigation/LoginExpiresNavigation";
+import reissue from "./reissue";
 
 function App() {
     const navigate = useNavigate();
 
+    const [isLoginExpiresModal, setIsLoginExpiresModal] = useState<boolean>(false);
     const {themeMode, setThemeMode} = useThemeToggleStore();
     const {tokenExpiresTime, setTokenExpiresTime} = useTokenExpiresStore();
-
-    const reissue = async ():Promise<void> => {
-
-        if(getCookie('refreshToken')) {
-            const token:object = {
-                accessToken: axios.defaults.headers.common["Authorization"]?.toString(),
-                refreshToken: getCookie('refreshToken')
-            }
-            await axios({
-                method: "POST",
-                url: "/member/reissue",
-                data: JSON.stringify(token),
-                headers: {'Content-type': 'application/json'}
-            }).then((res) => {
-                const responseData = res.data;
-                if(responseData.result) {
-                    const { grantType, accessToken, refreshToken, accessTokenExpires, accessTokenExpiresDate} = responseData.data;
-                    setTokenExpiresTime(120000);
-                    const expiresDate:Date = new Date(accessTokenExpiresDate);
-
-                    axios.defaults.headers.common['Authorization'] = `${grantType} ${accessToken}`;
-
-                    setCookie('refreshToken', refreshToken, {
-                        path: '/',
-                        // httpOnly: true,
-                        // expires
-                    });
-                } else {
-                    alert('재로그인을 해주세요1');
-                    removeCookie('refreshToken');
-                    window.localStorage.removeItem("role");
-                    navigate("/");
-                    window.location.reload();
-                }
-            }).catch((err) => {
-                const errCode:string = err.message.substring(err.message.length-3);
-
-                if(errCode === '401' || errCode === '403') { // 대부분 refresh token 만료로 인한 오류
-                    alert('재로그인을 해주세요2');
-                }
-            })
-        }
-    }
 
     useEffect(() => {
         const localTheme:string|null = window.localStorage.getItem("theme");
@@ -101,31 +61,41 @@ function App() {
         } else {
             setThemeMode(true);
         }
-        reissue().then();
+        reissue().then((res:number):void => {
+            setTokenExpiresTime(res);
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    // useEffect(() => {
-    //     if(tokenExpiresTime > 0) {
-    //         const timer = setInterval(() => {
-    //             setTokenExpiresTime(tokenExpiresTime - 1000);
-    //         }, 1000);
-    //
-    //         if(tokenExpiresTime === 60000) {
-    //         } else if(tokenExpiresTime <= 0) {
-    //             clearInterval(timer);
-    //         }
-    //
-    //         return ():void => {
-    //             clearInterval(timer);
-    //         };
-    //     }
-    // }, [tokenExpiresTime]);
+    useEffect(() => {
+        if(tokenExpiresTime > 0) {
+            const timer = setInterval(() => {
+                setTokenExpiresTime(tokenExpiresTime - 1000);
+            }, 1000);
+
+            if(tokenExpiresTime === 60000) {
+                setIsLoginExpiresModal(true);
+            }
+            if(tokenExpiresTime === 1000) {
+                removeCookie("refreshToken");
+                window.localStorage.removeItem("role");
+                setIsLoginExpiresModal(false);
+                navigate("/");
+                clearInterval(timer);
+                window.location.reload();
+            }
+
+            return ():void => {
+                clearInterval(timer);
+            };
+        }
+    }, [tokenExpiresTime]);
 
   return (
     <>
         <ThemeProvider theme={themeMode ? darkTheme : lightTheme } >
-            <GlobalStyle />
+            <GlobalStyle $isModal={isLoginExpiresModal}/>
+            {isLoginExpiresModal ? <LoginExpiresNavigation isModal={isLoginExpiresModal} setIsModal={setIsLoginExpiresModal}/> : <div/>}
 
             <Routes>
                 <Route path="/" element={<MainHome />} />

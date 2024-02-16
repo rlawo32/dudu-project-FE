@@ -2,18 +2,18 @@ import {getCookie, removeCookie, setCookie} from "./Cookie";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
-const reissue = async ():Promise<void> => {
+const reissue = async ():Promise<number> => {
     if(getCookie('refreshToken')) {
         const token:object = {
             accessToken: axios.defaults.headers.common["Authorization"]?.toString(),
             refreshToken: getCookie('refreshToken')
         }
-        await axios({
+        return await axios({
             method: "POST",
             url: "/member/reissue",
             data: JSON.stringify(token),
             headers: {'Content-type': 'application/json'}
-        }).then((res) => {
+        }).then((res):number|any => {
             const responseData = res.data;
             if(responseData.result) {
                 const { grantType, accessToken, refreshToken, accessTokenExpires, accessTokenExpiresDate} = responseData.data;
@@ -26,6 +26,7 @@ const reissue = async ():Promise<void> => {
                     // httpOnly: true,
                     // expires
                 });
+                return accessTokenExpires;
             } else {
                 alert('재로그인을 해주세요1');
                 removeCookie('refreshToken');
@@ -41,6 +42,8 @@ const reissue = async ():Promise<void> => {
                 alert('재로그인을 해주세요2');
             }
         })
+    } else {
+        return 0;
     }
 
 }
