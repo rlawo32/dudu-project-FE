@@ -45,6 +45,7 @@ const DarkModeToggle = styled.div`
     background-color: #ffeccf;
     box-shadow: inset 0px 0px 0px 0.75px #ffbb52;
     transition: background-color 250ms, border-color 250ms, transform 500ms cubic-bezier(.26,2,.46,.21);
+    z-index: 5;
   }
 
   .toggle-checkbox:checked ~ .toggle-slot .toggle-button {
@@ -68,6 +69,7 @@ const DarkModeToggle = styled.div`
     transform: translate(4px, 19px) rotate(10deg);
     transform-origin: 50% 50%;
     transition: opacity 150ms, transform 500ms cubic-bezier(.26,1,.46,.21);
+    z-index: 5;
   }
 
   .toggle-checkbox:checked ~ .toggle-slot .sun-icon-wrapper {

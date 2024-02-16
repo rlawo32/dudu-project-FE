@@ -14,6 +14,14 @@ export const GlobalStyle = createGlobalStyle<{$isModal:boolean}>`
         div:nth-child(2) > * {
           pointer-events: ${({$isModal}) => $isModal ? "none" : "auto"};
         }
+
+        div:nth-child(2) > .header-navigation {
+          opacity: ${({$isModal}) => $isModal ? 0.5 : ""};
+        }
+        
+        div:nth-child(2) > div:nth-child(1) ~ div {
+          opacity: ${({$isModal}) => $isModal ? 0.5 : 1};
+        }
       }
     }
 `;
