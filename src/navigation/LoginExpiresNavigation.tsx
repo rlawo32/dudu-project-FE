@@ -54,7 +54,7 @@ const StyledLoginExpiresNavigation = styled.div<{$isModal:boolean}>`
     .len-btn-section {
       display: flex;
       width: fit-content;
-      margin: 50px auto 0;
+      margin: 40px auto 0;
       
       .btn-logout {
         display: inline-block;
@@ -111,7 +111,6 @@ const LoginExpiresNavigation = (props:Props) => {
             (res:number):void => {setTokenExpiresTime(res)}
         )
         props.setIsModal(false);
-        window.location.reload();
     }
 
     return (
@@ -120,7 +119,7 @@ const LoginExpiresNavigation = (props:Props) => {
             <div className="len-modal-view">
                 <div className="len-time-box">{second}초</div>
                 <div className="len-head-text">자동 로그아웃 예정입니다.</div>
-                <div className="len-body-text">계속하시려면 로그인 시간을 연장해 주세요.</div>
+                <div className="len-body-text">계속하시려면 새로고침 또는<br/>로그인 연장 버튼을 클릭해 주세요.</div>
                 <div className="len-btn-section">
                     <button onClick={() => logout()} className="btn-logout">로그아웃</button>
                     <button onClick={() => extension()} className="btn-extension">로그인연장</button>

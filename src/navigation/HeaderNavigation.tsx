@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {getCookie,removeCookie} from "../Cookie";
 import styled from "styled-components";
+import axios from "axios";
 
 import ThemeModeToggle from "./ThemeModeToggle";
 
@@ -172,6 +173,17 @@ const HeaderNavigation = ():any => {
 
     const logout = ():boolean => {
         if(window.confirm('로그아웃 하시겠습니까?') === true) {
+            axios({
+                method: "POST",
+                url: "/member/logout"
+            }).then((res) => {
+                console.log(res)
+                if(res.data) {
+
+                }
+            }).catch((err) => {
+                console.log(err.message)
+            })
             removeCookie("refreshToken");
             window.localStorage.removeItem("role");
             navigate("/");
@@ -193,7 +205,7 @@ const HeaderNavigation = ():any => {
         <div style={{height: "fit-content"}} onMouseOut={() => {
             setIsLectureSubHovering(false); setIsInformationUseHovering(false);
             setIsCommunityHovering(false); setIsAdminPageHovering(false);
-        }}>
+        }} className="header-navigation">
             <StyledHeaderNavigation $getRole={memberRole}>
                 <div className="header-parent">
                     <div className="header-left">
