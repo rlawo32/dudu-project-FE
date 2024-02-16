@@ -16,8 +16,8 @@ const reissue = async ():Promise<void> => {
         }).then((res) => {
             const responseData = res.data;
             if(responseData.result) {
-                const { grantType, accessToken, refreshToken, accessTokenExpiresIn} = responseData.data;
-                const expires = new Date(accessTokenExpiresIn);
+                const { grantType, accessToken, refreshToken, accessTokenExpires, accessTokenExpiresDate} = responseData.data;
+                const expiresDate:Date = new Date(accessTokenExpiresDate);
 
                 axios.defaults.headers.common['Authorization'] = `${grantType} ${accessToken}`;
 

@@ -24,7 +24,8 @@ const MainHome = ():any => {
     useEffect(() => {
         if(searchParams.get("bearer") === "Bearer") {
             axios.defaults.headers.common['Authorization'] = `${searchParams.get("bearer")} ${searchParams.get("accessToken")}`;
-            const expires:Date = new Date(`${searchParams.get("expires")}`);
+            const expires:string = `${searchParams.get("expires")}`;
+            const expiresDate:Date = new Date(`${searchParams.get("expiresDate")}`);
 
             setCookie('refreshToken', `${searchParams.get("refreshToken")}`, {
                 path: '/',
