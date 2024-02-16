@@ -24,7 +24,7 @@ const StyledLoginExpiresNavigation = styled.div<{$isModal:boolean}>`
   border-radius: 15px;
   background-color: ${({theme}) => theme.bgColor};
   text-align: center;
-  z-index: 50;
+  z-index: 90;
   opacity: ${({$isModal}) => $isModal ? 1 : 1};
   pointer-events: ${({$isModal}) => $isModal ? "auto" : "auto"};
   

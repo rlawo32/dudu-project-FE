@@ -63,7 +63,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     height: 90px;
     background: ${({theme}) => theme.noticeBgColor};
     color: ${({theme}) => theme.textColor};
-    z-index: 99;
+    z-index: 90;
     
     .header-left {
       box-sizing: border-box;
@@ -112,7 +112,7 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     background: ${({theme}) => theme.noticeBgColor};
     font-size: 16px;
     overflow: hidden;
-    z-index: 99;
+    z-index: 90;
     transition: height .5s ease, left .6s ease;
     cursor: default;
     @media screen and (max-width: 1180px) {

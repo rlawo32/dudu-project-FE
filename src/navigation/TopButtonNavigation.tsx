@@ -16,7 +16,7 @@ const TopButtonNavigationView = styled.div<{$type:string}>`
   background-color: ${({theme}) => theme.topBtnColor};
   color: ${({theme}) => theme.textColor};;
   text-align: center;
-  z-index: 99;
+  z-index: 90;
   cursor: pointer;
 
   .icon-custom {
