@@ -80,7 +80,7 @@ const LectureMainCategoryView = (props: Props) => {
         const lectureCategoryData = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureMainCategoryList"
+                url: "/lecture/auth/lectureMainCategoryList"
             }).then((res):void => {
                 setLectureMainCategoryData(res.data.data);
             }).catch((err):void => {
