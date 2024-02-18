@@ -232,7 +232,7 @@ const ReviewList = () => {
         const faqListData = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureInstitutionList"
+                url: "/lecture/auth/lectureInstitutionList"
             }).then((res):void => {
                 setInstitutionList(res.data.data);
             }).catch((err):void => {
