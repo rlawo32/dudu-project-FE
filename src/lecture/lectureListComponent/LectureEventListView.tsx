@@ -169,7 +169,7 @@ const LectureEventListView = () => {
             }
             await axios({
                 method: "POST",
-                url: '/lecture/lectureEventList',
+                url: '/lecture/auth/lectureEventList',
                 data: JSON.stringify(getEventData),
                 headers: {'Content-type': 'application/json'}
             }).then((res):void => {
@@ -180,7 +180,7 @@ const LectureEventListView = () => {
             });
             await axios({
                 method: "GET",
-                url: '/lecture/lectureEventDetail',
+                url: '/lecture/auth/lectureEventDetail',
                 params: {lectureEventNo: lectureEventNo}
             }).then((res):void => {
                 setLectureEventOne(res.data.data);

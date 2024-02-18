@@ -150,7 +150,7 @@ const LectureEventSwiperView = (props : {institutionNo:number;}) => {
             }
             await axios({
                 method: "POST",
-                url: '/lecture/lectureEventList',
+                url: '/lecture/auth/lectureEventList',
                 data: JSON.stringify(getEventData),
                 headers: {'Content-type': 'application/json'}
             }).then((res):void => {
