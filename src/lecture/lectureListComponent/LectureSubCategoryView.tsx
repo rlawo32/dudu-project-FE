@@ -209,7 +209,7 @@ const LectureSubCategoryView = (props: Props) => {
             const lectureCategoryData = async ():Promise<void> => {
                 await axios({
                     method: "GET",
-                    url: "/lecture/lectureSubCategoryList",
+                    url: "/lecture/auth/lectureSubCategoryList",
                     params: {mainCategoryNo: props.mainCategoryNo}
                 }).then((res):void => {
                     setLectureSubCategoryData(res.data.data);

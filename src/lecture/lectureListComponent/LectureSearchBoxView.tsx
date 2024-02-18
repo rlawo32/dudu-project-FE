@@ -167,7 +167,7 @@ const LectureSearchBoxView = (props : { isShow: boolean; setIsShow: React.Dispat
         const stateList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureStateList"
+                url: "/lecture/auth/lectureStateList"
             }).then((res):void => {
                 setLectureStateList(res.data.data);
             }).catch((err):void => {
