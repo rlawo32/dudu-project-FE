@@ -79,7 +79,7 @@ const BranchInfoList = () => {
         const institutionList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureInstitutionList"
+                url: "/lecture/auth/lectureInstitutionList"
             }).then((res):void => {
                 setInstitutionList(res.data.data);
             }).catch((err):void => {
@@ -93,7 +93,7 @@ const BranchInfoList = () => {
         const institutionList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureInstitutionImageList",
+                url: "/lecture/auth/lectureInstitutionImageList",
                 params: {institutionNo: institutionNo}
             }).then((res):void => {
                 setInstitutionImageList(res.data.data);
@@ -102,7 +102,7 @@ const BranchInfoList = () => {
             })
             await axios({
                 method: "GET",
-                url: "/lecture/lectureRoomList",
+                url: "/lecture/auth/lectureRoomList",
                 params: {institutionNo: institutionNo}
             }).then((res):void => {
                 setLectureRoomList(res.data.data);
