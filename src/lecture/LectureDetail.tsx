@@ -110,7 +110,7 @@ const LectureDetail = () => {
         const lectureDetail = async () => {
             await axios({
                 method: "GET",
-                url: '/lecture/lectureDetail',
+                url: '/lecture/auth/lectureDetail',
                 params: {lectureNo: lectureNo}
             }).then((res):void => {
                 setLectureDetail(res.data.data);
