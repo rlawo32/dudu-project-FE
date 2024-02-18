@@ -117,7 +117,7 @@ const MainRecentEvent = () => {
         const eventList = async () => {
             await axios({
                 method: "POST",
-                url: '/lecture/lectureList',
+                url: '/lecture/auth/lectureList',
                 data: JSON.stringify(listData),
                 headers: {'Content-type': 'application/json'}
             }).then((res):void => {

@@ -38,7 +38,7 @@ const MainRecommendEvent = () => {
             }
             await axios({
                 method: "POST",
-                url: '/lecture/lectureEventType',
+                url: '/lecture/auth/lectureEventType',
                 data: JSON.stringify(listData),
                 headers: {'Content-type': 'application/json'}
             }).then((res): void => {

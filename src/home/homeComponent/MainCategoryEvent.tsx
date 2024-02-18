@@ -75,7 +75,7 @@ const MainCategoryEvent = () => {
         const dataList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureMainCategoryList"
+                url: "/lecture/auth/lectureMainCategoryList"
             }).then((res):void => {
                 setMainCategoryList(res.data.data);
             }).catch((err):void => {
@@ -83,7 +83,7 @@ const MainCategoryEvent = () => {
             })
             await axios({
                 method: "GET",
-                url: "/lecture/lectureSubCategoryList",
+                url: "/lecture/auth/lectureSubCategoryList",
                 params: {mainCategoryNo: 0}
             }).then((res):void => {
                 setSelectCategory(res.data.data[0].lectureSubCategoryNo);
@@ -107,7 +107,7 @@ const MainCategoryEvent = () => {
         const dataList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/eventCategoryList",
+                url: "/lecture/auth/eventCategoryList",
                 params: {selectCategory: selectCategory}
             }).then((res):void => {
                 setEventList(res.data.data);
