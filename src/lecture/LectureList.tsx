@@ -87,7 +87,7 @@ const LectureList = () => {
         const institutionList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureInstitutionList"
+                url: "/lecture/auth/lectureInstitutionList"
             }).then((res):void => {
                 setInstitutionNo(res.data.data[0].institutionNo);
                 setInstitutionList(res.data.data);
@@ -118,7 +118,7 @@ const LectureList = () => {
         const lectureList = async ():Promise<void> => {
            await axios({
                method: "POST",
-               url: '/lecture/lectureList',
+               url: '/lecture/auth/lectureList',
                data: JSON.stringify(getListData),
                headers: {'Content-type': 'application/json'}
            }).then((res):void => {
