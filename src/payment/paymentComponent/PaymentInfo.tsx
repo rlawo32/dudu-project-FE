@@ -46,7 +46,7 @@ const PaymentInfo = (props:Props) => {
         for(let i:number=0; i<props.paymentInfo.length; i++) {
             axios({
                 method: "GET",
-                url: "/lecture/lectureDetail",
+                url: "/lecture/auth/lectureDetail",
                 params: {lectureNo: props.paymentInfo[i].lectureNo}
             }).then((res):void => {
                 setPaymentDetail(prev => [...prev, res.data.data]);

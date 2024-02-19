@@ -50,8 +50,6 @@ const MainRecommendEvent = () => {
         setTimeout(() => {dataList().then();}, 100);
     }, []);
 
-    console.log(eventList)
-
     return (
         <Styled.MainRecommendEventView>
             <div className="el-title">
