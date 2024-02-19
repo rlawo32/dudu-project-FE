@@ -8,6 +8,9 @@ export const LectureDetailView = styled.div<Props>`
   position: relative;
   box-sizing: border-box;
   margin-top: 200px;
+  @media screen and (max-width: 1280px) {
+    margin-top: 100px;
+  }
   word-break: keep-all;
   overflow-wrap: break-word;
   line-height: 1.75;
@@ -66,7 +69,7 @@ export const LectureDetailView = styled.div<Props>`
   
   .detail-remote {
     position: sticky;
-    top: 55px;
+    top: 85px;
     @media screen and (max-width: 1280px) {
       display: flex;
     }
