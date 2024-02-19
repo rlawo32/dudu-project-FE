@@ -65,20 +65,24 @@ const MainHome = ():any => {
         <Styled.MainHomeView>
             <HeaderNavigation />
 
-            <Suspense fallback={<Loader />}>
-                <Await resolve={<MainRecommendEvent />} errorElement={<Error />}>
-                    <MainRecommendEvent />
-                </Await>
-                <Await resolve={<MainRecommendEvent />} errorElement={<Error />}>
-                    <MainCategoryEvent />
-                </Await>
-                <Await resolve={<MainRecommendEvent />} errorElement={<Error />}>
-                    <MainRecentEvent />
-                </Await>
-                <Await resolve={<MainRecommendEvent />} errorElement={<Error />}>
-                    <MainInformEvent />
-                </Await>
-            </Suspense>
+            {/*<Suspense fallback={<Loader />}>*/}
+            {/*    <Await resolve={<MainRecommendEvent />} errorElement={<Error />}>*/}
+            {/*        <MainRecommendEvent />*/}
+            {/*    </Await>*/}
+            {/*    <Await resolve={<MainRecommendEvent />} errorElement={<Error />}>*/}
+            {/*        <MainCategoryEvent />*/}
+            {/*    </Await>*/}
+            {/*    <Await resolve={<MainRecommendEvent />} errorElement={<Error />}>*/}
+            {/*        <MainRecentEvent />*/}
+            {/*    </Await>*/}
+            {/*    <Await resolve={<MainRecommendEvent />} errorElement={<Error />}>*/}
+            {/*        <MainInformEvent />*/}
+            {/*    </Await>*/}
+            {/*</Suspense>*/}
+            <MainRecommendEvent />
+            <MainCategoryEvent />
+            <MainRecentEvent />
+            <MainInformEvent />
 
             <TopButtonNavigation type={""} />
 
