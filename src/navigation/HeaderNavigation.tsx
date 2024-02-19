@@ -108,31 +108,28 @@ const StyledHeaderNavigation = styled.div<{$getRole:string}>`
     justify-content: space-between;
     height: 0;
     width: 100%;
-    padding-left: 220px;
     background: ${({theme}) => theme.noticeBgColor};
     font-size: 16px;
     overflow: hidden;
     z-index: 90;
     transition: height .5s ease, left .6s ease;
     cursor: default;
-    @media screen and (max-width: 1180px) {
-      padding-left: 80px;
-    }
-    @media screen and (max-width: 1080px) {
-      padding-left: 60px;
-    }
     
     .button-section {
       display: flex;
+      justify-content: center;
       align-items: center;
       flex-direction: column;
-      padding-bottom: 100px;
+      width: calc((100% - 120px) / 2);
+      padding: 100px 0;
     }
 
     .image-section {
       height: 100%;
+      @media screen and (max-width: 1180px) {
+        width: calc((100% - 120px) / 2);
+      }
       padding: 120px 40px 0 0;
-      
     }
     
     img {
@@ -177,17 +174,15 @@ const HeaderNavigation = ():any => {
                 method: "POST",
                 url: "/member/logout"
             }).then((res) => {
-                console.log(res)
-                if(res.data) {
-
+                if(res.data.result) {
+                    removeCookie("refreshToken");
+                    window.localStorage.removeItem("role");
+                    navigate("/");
+                    window.location.reload();
                 }
             }).catch((err) => {
                 console.log(err.message)
             })
-            removeCookie("refreshToken");
-            window.localStorage.removeItem("role");
-            navigate("/");
-            window.location.reload();
             return true;
         } else {
             return false;
