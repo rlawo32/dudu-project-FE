@@ -131,7 +131,6 @@ const LectureList = () => {
         if(institutionNo > 0) {
             setTimeout(() => {lectureList().then();}, 200);
         }
-        console.log(institutionNo)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [institutionNo, mainCategoryNo, subCategoryNo, searchButton, pageNo, sortType])
 
