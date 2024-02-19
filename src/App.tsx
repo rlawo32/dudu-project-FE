@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Route, Routes, useNavigate} from "react-router-dom";
-import {getCookie, removeCookie, setCookie} from "./Cookie";
+import {removeCookie} from "./Cookie";
 import {ThemeProvider} from "styled-components";
 import axios from "axios";
 
@@ -77,12 +77,21 @@ function App() {
                 setIsLoginExpiresModal(true);
             }
             if(tokenExpiresTime === 1000) {
-                removeCookie("refreshToken");
-                window.localStorage.removeItem("role");
-                setIsLoginExpiresModal(false);
-                navigate("/");
-                clearInterval(timer);
-                window.location.reload();
+                axios({
+                    method: "POST",
+                    url: "/member/logout"
+                }).then((res) => {
+                    if(res.data.result) {
+                        removeCookie("refreshToken");
+                        window.localStorage.removeItem("role");
+                        setIsLoginExpiresModal(false);
+                        navigate("/");
+                        clearInterval(timer);
+                        window.location.reload();
+                    }
+                }).catch((err) => {
+                    console.log(err.message)
+                })
             }
 
             return ():void => {
