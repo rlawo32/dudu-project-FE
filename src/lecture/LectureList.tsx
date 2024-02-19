@@ -12,6 +12,7 @@ import LectureListToolView from "./lectureListComponent/LectureListToolView";
 import LectureSearchBoxView from "./lectureListComponent/LectureSearchBoxView";
 
 import useLectureSearchDataStore from "../stores/useLectureSearchDataStore";
+import useLectureCategoryDataStore from "../stores/useLectureCategoryDataStore";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown as arrow} from "@fortawesome/free-solid-svg-icons";
@@ -46,7 +47,6 @@ const LectureList = () => {
     const [sortType, setSortType] = useState<string>("1");
     const [totalPage, setTotalPage] = useState<number>(0);
 
-    const [institutionNo, setInstitutionNo] = useState<number>(1);
     const [mainCategoryNo, setMainCategoryNo] = useState<number>(0);
     const [subCategoryNo, setSubCategoryNo] = useState<number>(0);
     const [isSelectBoxShow, setIsSelectBoxShow] = useState<boolean>(false);
@@ -55,6 +55,7 @@ const LectureList = () => {
     const {searchButton, searchText,
         ltDivisionArr, ltStateArr,
         ltDowArr, ltFeeArr} = useLectureSearchDataStore();
+    const {institutionNo, setInstitutionNo} = useLectureCategoryDataStore();
 
     const customInstitutionSelectBox = ():any => {
         const result:any[] = [];
@@ -89,7 +90,6 @@ const LectureList = () => {
                 method: "GET",
                 url: "/lecture/auth/lectureInstitutionList"
             }).then((res):void => {
-                setInstitutionNo(res.data.data[0].institutionNo);
                 setInstitutionList(res.data.data);
             }).catch((err):void => {
                 console.log(err.message);
@@ -131,6 +131,7 @@ const LectureList = () => {
         if(institutionNo > 0) {
             setTimeout(() => {lectureList().then();}, 200);
         }
+        console.log(institutionNo)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [institutionNo, mainCategoryNo, subCategoryNo, searchButton, pageNo, sortType])
 
