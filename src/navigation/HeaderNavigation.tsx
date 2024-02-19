@@ -300,11 +300,6 @@ const HeaderNavigation = ():any => {
                                         <StyledLink to="/branchInfoWrite" style={{marginLeft: '30px'}}>
                                             지점 등록
                                         </StyledLink>
-                                        <div className="button-section">
-                                        </div>
-                                        <div className="image-section">
-
-                                        </div>
                                     </div>
                                 </LinkBox>: <></>
                         }
