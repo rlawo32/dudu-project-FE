@@ -91,6 +91,15 @@ const LectureListToolView = (props : Props) => {
     }
 
     useEffect(() => {
+        if(searchText.length > 0 || ltDivisionArr.length > 0 ||
+            ltStateArr.length > 0 || ltDowArr.length > 0 || ltFeeArr.length > 0) {
+            setIsSearchInventory(true);
+        } else {
+            setIsSearchInventory(false);
+        }
+    }, [])
+
+    useEffect(() => {
         setSortSelect(0);
     }, [props.institutionNo])
 
@@ -107,14 +116,6 @@ const LectureListToolView = (props : Props) => {
             setIsSearchInventory(false);
         }
     }, [searchButton])
-
-    useEffect(() => {
-        if(isSearchText.length > 0 || isSearchDivisionArr.length > 0 ||
-            isSearchStateArr.length > 0 || isSearchDowArr.length > 0 || isSearchFeeArr.length > 0) {
-        } else {
-            setIsSearchInventory(false);
-        }
-    }, [searchText, ltDivisionArr, ltStateArr, ltDowArr, ltFeeArr])
 
     useEffect(() => {
         if(isSortBoxShow) {
