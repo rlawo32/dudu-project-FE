@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from "react";
-import axios from "axios";
 
 import useLectureSearchDataStore from "../../stores/useLectureSearchDataStore";
 
@@ -25,34 +24,6 @@ const LectureSearchBoxView = (props : { isShow: boolean; setIsShow: React.Dispat
     const [isStateBoxShow, setIsStateBoxShow] = useState<boolean>(false);
     const [isDowBoxShow, setIsDowBoxShow] = useState<boolean>(false);
     const [isFeeBoxShow, setIsFeeBoxShow] = useState<boolean>(false);
-
-    const [lectureStateList, setLectureStateList] = useState<{
-        lectureStateNo:number;
-        lectureStateName:string;
-        lectureStateDesc:string;
-    }[]>([{
-        lectureStateNo:0,
-        lectureStateName:'',
-        lectureStateDesc:'',
-    }]);
-    const [lectureDowList, setLectureDowList] = useState<{
-        lectureDowNo:number;
-        lectureDowName:string;
-    }[]>([{lectureDowNo:1, lectureDowName:'월요일'},{lectureDowNo:2, lectureDowName:'화요일'},
-        {lectureDowNo:3, lectureDowName:'수요일'},{lectureDowNo:4, lectureDowName:'목요일'},
-        {lectureDowNo:5, lectureDowName:'금요일'}, {lectureDowNo:6, lectureDowName:'토요일'},
-        {lectureDowNo:7, lectureDowName:'일요일'}]);
-    const [lectureFeeList, setLectureFeeList] = useState<{
-        lectureFeeNo:number;
-        lectureFeeKey:string;
-        lectureFeeValue:string;
-        lectureFeeName:string;
-    }[]>([{lectureFeeNo:1, lectureFeeKey:'D', lectureFeeValue:'5000', lectureFeeName:'5천원 이하'},
-        {lectureFeeNo:2, lectureFeeKey:'B', lectureFeeValue:'5000~10000', lectureFeeName:'5천원~1만원 이하'},
-        {lectureFeeNo:3, lectureFeeKey:'B', lectureFeeValue:'10000~30000', lectureFeeName:'1만원~3만원 이하'},
-        {lectureFeeNo:4, lectureFeeKey:'B', lectureFeeValue:'30000~50000', lectureFeeName:'3만원~5만원 이하'},
-        {lectureFeeNo:5, lectureFeeKey:'B', lectureFeeValue:'50000~100000', lectureFeeName:'5만원~10만원 이하'},
-        {lectureFeeNo:6, lectureFeeKey:'U', lectureFeeValue:'100000', lectureFeeName:'10만원 이상'}]);
 
     const {
         searchButton, setSearchButton, searchText, setSearchText,
@@ -93,32 +64,45 @@ const LectureSearchBoxView = (props : { isShow: boolean; setIsShow: React.Dispat
     }
 
     const searchItemStateList = ():any[] => {
+        const stateArr:any[] = [{stateNo:1, stateName:'접수예정'}, {stateNo:2, stateName:'접수중'},
+            {stateNo:3, stateName:'대기접수'}, {stateNo:4, stateName:'접수마감'},
+            {stateNo:5, stateName:'접수불가'}, {stateNo:6, stateName:'강의종료'}];
         let result:any[] = [];
-        for(let i:number=0; i<lectureStateList.length; i++) {
+        for(let i:number=0; i<stateArr.length; i++) {
             result.push(<li key={i} ref={btn => (stBtn.current[i] = btn)}
-                            onClick={() => onClickStateBtn(i, lectureStateList[i].lectureStateNo, lectureStateList[i].lectureStateName)}>
-                {lectureStateList[i].lectureStateName}</li>)
+                            onClick={() => onClickStateBtn(i, stateArr[i].stateNo, stateArr[i].stateName)}>
+                {stateArr[i].stateName}</li>)
         }
         return result;
     }
 
     const searchItemDowList = ():any[] => {
+        const dowArr:any[] = [{lectureDowNo:1, lectureDowName:'월요일'},
+            {lectureDowNo:2, lectureDowName:'화요일'}, {lectureDowNo:3, lectureDowName:'수요일'},
+            {lectureDowNo:4, lectureDowName:'목요일'}, {lectureDowNo:5, lectureDowName:'금요일'},
+            {lectureDowNo:6, lectureDowName:'토요일'}, {lectureDowNo:7, lectureDowName:'일요일'}];
         let result:any[] = [];
-        for(let i:number=0; i<lectureDowList.length; i++) {
+        for(let i:number=0; i<dowArr.length; i++) {
             result.push(<li key={i} ref={btn => (dwBtn.current[i] = btn)}
-                            onClick={() => onClickDowBtn(i, lectureDowList[i].lectureDowNo, lectureDowList[i].lectureDowName)}>
-                {lectureDowList[i].lectureDowName}</li>)
+                            onClick={() => onClickDowBtn(i, dowArr[i].lectureDowNo, dowArr[i].lectureDowName)}>
+                {dowArr[i].lectureDowName}</li>)
         }
         return result;
     }
 
     const searchItemFeeList = ():any[] => {
+        const feeArr:any[] = [{lectureFeeNo:1, lectureFeeKey:'D', lectureFeeValue:'5000', lectureFeeName:'5천원 이하'},
+            {lectureFeeNo:2, lectureFeeKey:'B', lectureFeeValue:'5000~10000', lectureFeeName:'5천원~1만원 이하'},
+            {lectureFeeNo:3, lectureFeeKey:'B', lectureFeeValue:'10000~30000', lectureFeeName:'1만원~3만원 이하'},
+            {lectureFeeNo:4, lectureFeeKey:'B', lectureFeeValue:'30000~50000', lectureFeeName:'3만원~5만원 이하'},
+            {lectureFeeNo:5, lectureFeeKey:'B', lectureFeeValue:'50000~100000', lectureFeeName:'5만원~10만원 이하'},
+            {lectureFeeNo:6, lectureFeeKey:'U', lectureFeeValue:'100000', lectureFeeName:'10만원 이상'}];
         let result:any[] = [];
-        for(let i:number=0; i<lectureFeeList.length; i++) {
+        for(let i:number=0; i<feeArr.length; i++) {
             result.push(<li key={i} ref={btn => (feBtn.current[i] = btn)}
-                            onClick={() => onClickFeeBtn(i, lectureFeeList[i].lectureFeeNo, lectureFeeList[i].lectureFeeKey,
-                                lectureFeeList[i].lectureFeeValue, lectureFeeList[i].lectureFeeName)}>
-                {lectureFeeList[i].lectureFeeName}</li>)
+                            onClick={() => onClickFeeBtn(i, feeArr[i].lectureFeeNo, feeArr[i].lectureFeeKey,
+                                feeArr[i].lectureFeeValue, feeArr[i].lectureFeeName)}>
+                {feeArr[i].lectureFeeName}</li>)
         }
         return result;
     }
@@ -161,21 +145,6 @@ const LectureSearchBoxView = (props : { isShow: boolean; setIsShow: React.Dispat
             setLtFeeArr(idx, item, key, value, name);
         }
     }
-
-
-    useEffect(() => {
-        const stateList = async ():Promise<void> => {
-            await axios({
-                method: "GET",
-                url: "/lecture/auth/lectureStateList"
-            }).then((res):void => {
-                setLectureStateList(res.data.data);
-            }).catch((err):void => {
-                console.log(err.message);
-            })
-        }
-        setTimeout(() => {stateList().then();}, 100);
-    }, [])
 
     useEffect(() => {
         for(let i:number=0; i<dvBtn.current.length; i++) {
