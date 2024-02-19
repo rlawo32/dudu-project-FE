@@ -2,6 +2,7 @@ import React from "react";
 import {removeCookie} from "../Cookie";
 import {useNavigate} from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 import useTokenExpiresStore from "../stores/useTokenExpiresStore";
 import reissue from "../reissue";
@@ -99,11 +100,20 @@ const LoginExpiresNavigation = (props:Props) => {
     const second:string = String(Math.floor((tokenExpiresTime / 1000) % 61)).padStart(2, '0');
 
     const logout = ():void => {
-        removeCookie("refreshToken");
-        window.localStorage.removeItem("role");
-        props.setIsModal(false);
-        navigate("/");
-        window.location.reload();
+        axios({
+            method: "POST",
+            url: "/member/logout"
+        }).then((res) => {
+            if(res.data.result) {
+                removeCookie("refreshToken");
+                window.localStorage.removeItem("role");
+                props.setIsModal(false);
+                navigate("/");
+                window.location.reload();
+            }
+        }).catch((err) => {
+            console.log(err.message)
+        })
     }
 
     const extension = ():void => {
