@@ -100,7 +100,6 @@ export const ReviewDetailView = styled.div`
             height: 100px;
             width: 100px;
             border-radius: 10px;
-            overflow: hidden;
 
             img {
               height: 100%;
@@ -115,6 +114,7 @@ export const ReviewDetailView = styled.div`
           }
           
           .ld-lt-right {
+            width: calc(100% - 100px);
             margin-left: 20px;
             
             .ld-lt-top {
@@ -176,6 +176,7 @@ export const ReviewDetailView = styled.div`
               display: flex;
               justify-content: flex-start;
               align-items: center;
+              flex-wrap: wrap;
               margin-top: 10px;
               font-size: 13px;
               line-height: 19px;
