@@ -50,6 +50,8 @@ const MainRecommendEvent = () => {
         setTimeout(() => {dataList().then();}, 100);
     }, []);
 
+    console.log(eventList)
+
     return (
         <Styled.MainRecommendEventView>
             <div className="el-title">
@@ -61,17 +63,16 @@ const MainRecommendEvent = () => {
                 </div>
             </div>
             <div className="el-list">
-                {
-                    eventList.map((item) => {
-                        return (
-                            <div key={item.lectureNo} className="el-list-item"
-                                 onClick={() => navigate("/lectureDetail/" + item.lectureNo,
-                                     {state: {lectureNo: item.lectureNo}})}>
-                                <div className="el-list-image">
-                                    <img src={item.lectureThumbnail} alt="강의 이미지"/>
-                                </div>
-                                <div className="el-list-info">
-                                    <div className="el-list-state">
+                {eventList.map((item) => {
+                    return (
+                        <div key={item.lectureNo} className="el-list-item"
+                             onClick={() => navigate("/lectureDetail/" + item.lectureNo,
+                                 {state: {lectureNo: item.lectureNo}})}>
+                            <div className="el-list-image">
+                                <img src={item.lectureThumbnail} alt="강의 이미지"/>
+                            </div>
+                            <div className="el-list-info">
+                                <div className="el-list-state">
                                     <span className="span-elState" style={
                                         item.lectureStateNo === 1 ? {backgroundColor: "slategray", color: 'white'} :
                                             item.lectureStateNo === 2 ? {backgroundColor: "greenyellow", color: 'black'} :
@@ -87,20 +88,20 @@ const MainRecommendEvent = () => {
                                                             item.lectureStateNo === 5 ? '접수불가' : '강의종료'
                                         }
                                     </span>
-                                        <span className="span-elInstitution">{item.lectureInstitution}</span>
-                                    </div>
-                                    <div className="el-list-title">
-                                        <p>
-                                            {item.lectureTitle}
-                                        </p>
-                                    </div>
-                                    <div className="el-list-division">
-                                        <span className="span-line">{item.lectureDivision}&nbsp;&nbsp;</span>
-                                        <span>&nbsp;{item.lectureTeacher}</span>
-                                    </div>
-                                    <div className="el-list-time">
-                                        <FontAwesomeIcon icon={clockIcon} className="icon-custom"/>
-                                        <span>
+                                    <span className="span-elInstitution">{item.lectureInstitution}</span>
+                                </div>
+                                <div className="el-list-title">
+                                    <p>
+                                        {item.lectureTitle}
+                                    </p>
+                                </div>
+                                <div className="el-list-division">
+                                    <span className="span-line">{item.lectureDivision}&nbsp;&nbsp;</span>
+                                    <span>&nbsp;{item.lectureTeacher}</span>
+                                </div>
+                                <div className="el-list-time">
+                                    <FontAwesomeIcon icon={clockIcon} className="icon-custom"/>
+                                    <span>
                                         {
                                             item.lectureTime.substring(13, 14) === '1' ? '월' :
                                                 item.lectureTime.substring(13, 14) === '2' ? '화' :
@@ -110,19 +111,18 @@ const MainRecommendEvent = () => {
                                                                 item.lectureTime.substring(13, 14) === '6' ? '토' : '일'
                                         }
                                     </span>
-                                        <span>
+                                    <span>
                                         {item.lectureTime.substring(0, 11)},
                                     </span>
-                                        <span>총 {item.lectureCount}회</span>
-                                    </div>
-                                    <div className="el-list-fee">
-                                        {item.lectureFee.toLocaleString()}원
-                                    </div>
+                                    <span>총 {item.lectureCount}회</span>
+                                </div>
+                                <div className="el-list-fee">
+                                    {item.lectureFee.toLocaleString()}원
                                 </div>
                             </div>
-                        )
-                    })
-                }
+                        </div>
+                    )
+                })}
             </div>
         </Styled.MainRecommendEventView>
     )

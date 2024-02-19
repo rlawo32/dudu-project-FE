@@ -1,19 +1,19 @@
-import {useSearchParams} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import {useSearchParams, Await} from "react-router-dom";
+import React, {useEffect, useState, Suspense} from "react";
 import {setCookie} from "../Cookie";
 import axios from "axios";
 
-import * as Styled from "./MainHome.style";
-
 import HeaderNavigation from "../navigation/HeaderNavigation";
 import FooterNavigation from "../navigation/FooterNavigation";
+import TopButtonNavigation from "../navigation/TopButtonNavigation";
 import MainRecommendEvent from "./homeComponent/MainRecommendEvent";
 import MainCategoryEvent from "./homeComponent/MainCategoryEvent";
 import MainRecentEvent from "./homeComponent/MainRecentEvent";
 import MainInformEvent from "./homeComponent/MainInformEvent";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowUpLong as topIcon} from "@fortawesome/free-solid-svg-icons";
-import TopButtonNavigation from "../navigation/TopButtonNavigation";
+
+import * as Styled from "./MainHome.style";
+import Loader from "../styles/loader";
+import Error from "../styles/error";
 
 const MainHome = ():any => {
 
@@ -65,13 +65,20 @@ const MainHome = ():any => {
         <Styled.MainHomeView>
             <HeaderNavigation />
 
-            <MainRecommendEvent />
-
-            <MainCategoryEvent />
-
-            <MainRecentEvent />
-
-            <MainInformEvent />
+            <Suspense fallback={<Loader />}>
+                <Await resolve={<MainRecommendEvent />} errorElement={<Error />}>
+                    <MainRecommendEvent />
+                </Await>
+                <Await resolve={<MainRecommendEvent />} errorElement={<Error />}>
+                    <MainCategoryEvent />
+                </Await>
+                <Await resolve={<MainRecommendEvent />} errorElement={<Error />}>
+                    <MainRecentEvent />
+                </Await>
+                <Await resolve={<MainRecommendEvent />} errorElement={<Error />}>
+                    <MainInformEvent />
+                </Await>
+            </Suspense>
 
             <TopButtonNavigation type={""} />
 
