@@ -355,7 +355,7 @@ const ReviewList = () => {
                                         }}
                                         pagination={{ clickable: true }}
                                         breakpoints={{
-                                            480: {
+                                            100: {
                                                 slidesPerView: 1,
                                                 spaceBetween: 25
                                             },
