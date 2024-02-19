@@ -80,7 +80,7 @@ export const MainRecentEventView = styled.div`
     box-sizing: content-box;
     height: 100%;
     width: 100%;
-    padding-bottom: 40px;
+    padding-bottom: 60px;
     margin: 64px auto 0;
     z-index: 1;
     transition-property: transform;

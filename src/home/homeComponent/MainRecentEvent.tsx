@@ -156,7 +156,7 @@ const MainRecentEvent = () => {
                             disableOnInteraction: false
                         }}
                         breakpoints={{
-                            600: {
+                            100: {
                                 slidesPerView: 1,
                                 spaceBetween: 10
                             },
