@@ -66,7 +66,7 @@ const BoardWrite = () => {
         const selectDataList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureInstitutionList"
+                url: "/lecture/auth/lectureInstitutionList"
             }).then((res):void => {
                 setInstitutionList(res.data.data);
                 setBoardInstitution(res.data.data[0].institutionNo + "");
