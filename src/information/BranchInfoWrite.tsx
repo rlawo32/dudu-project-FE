@@ -190,7 +190,7 @@ const BranchInfoWrite = () => {
         const institutionList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureInstitutionList"
+                url: "/lecture/auth/lectureInstitutionList"
             }).then((res):void => {
                 setInstitutionNo(res.data.data[0].institutionNo);
                 setInstitutionList(res.data.data);
@@ -205,7 +205,7 @@ const BranchInfoWrite = () => {
         const institutionImageList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureInstitutionImageList",
+                url: "/lecture/auth/lectureInstitutionImageList",
                 params: {institutionNo: institutionNo}
             }).then((res):void => {
                 setInstitutionImageList(res.data.data);
@@ -215,8 +215,6 @@ const BranchInfoWrite = () => {
         }
         setTimeout(() => {institutionImageList().then();}, 0);
     }, [institutionNo])
-
-    console.log(institutionImageList)
 
     return (
         <Styled.BranchInfoWriteView>
