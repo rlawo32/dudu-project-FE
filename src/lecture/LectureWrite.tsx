@@ -219,7 +219,7 @@ const LectureWrite = () => {
             })
             await axios({
                 method: "GET",
-                url: "/lecture/lectureInstitutionList"
+                url: "/lecture/auth/lectureInstitutionList"
             }).then((res):void => {
                 setInstitutionList(res.data.data);
                 setLectureInstitution(res.data.data[0].institutionNo + "");
@@ -228,7 +228,7 @@ const LectureWrite = () => {
             })
             await axios({
                 method: "GET",
-                url: "/lecture/lectureMainCategoryList"
+                url: "/lecture/auth/lectureMainCategoryList"
             }).then((res):void => {
                 setLectureMainCategoryList(res.data.data);
                 setLectureMainCategory(res.data.data[0].lectureMainCategoryNo + "");
@@ -245,7 +245,7 @@ const LectureWrite = () => {
         const selectLectureRoomList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureRoomList",
+                url: "/lecture/auth/lectureRoomList",
                 params: {institutionNo: lectureInstitution}
             }).then((res):void => {
                 setLectureRoomList(res.data.data);
@@ -262,7 +262,7 @@ const LectureWrite = () => {
         const selectLectureSubCategoryList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureSubCategoryList",
+                url: "/lecture/auth/lectureSubCategoryList",
                 params: {mainCategoryNo: lectureMainCategory}
             }).then((res):void => {
                 setLectureSubCategoryList(res.data.data);
