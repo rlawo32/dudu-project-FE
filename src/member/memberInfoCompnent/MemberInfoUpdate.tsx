@@ -299,8 +299,8 @@ const MemberInfoUpdate = (props:Props) => {
                                 <div className="modal-emailAuth-input">
                                     <MemberAuth setIsMemberEmailCheck={setIsEmailAuthModal} duplicationChk={true} />
                                 </div>
-                                <div className="btn-cancel">
-                                    <button onClick={() => setIsEmailAuthModal(true)}>닫기</button>
+                                <div className="modal-btn">
+                                    <button onClick={() => setIsEmailAuthModal(true)} className=" btn-cancel">닫기</button>
                                 </div>
                             </div>}
                         {isInfoUpdateModal ? <div/> :
