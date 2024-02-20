@@ -198,7 +198,7 @@ const LectureEventMain = () => {
         const dataList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureMainCategoryList"
+                url: "/lecture/auth/lectureMainCategoryList"
             }).then((res):void => {
                 setLectureMainCategoryList(res.data.data);
                 setMainCategoryNo(res.data.data[0].lectureMainCategoryNo + "");
@@ -218,7 +218,7 @@ const LectureEventMain = () => {
             }
             await axios({
                 method: "POST",
-                url: '/lecture/lectureEventType',
+                url: '/lecture/auth/lectureEventType',
                 data: JSON.stringify(listData),
                 headers: {'Content-type': 'application/json'}
             }).then((res):void => {
@@ -234,7 +234,7 @@ const LectureEventMain = () => {
         const subCategoryList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureSubCategoryList",
+                url: "/lecture/auth/lectureSubCategoryList",
                 params: {mainCategoryNo: mainCategoryNo}
             }).then((res):void => {
                 setLectureSubCategoryList(res.data.data);
@@ -261,7 +261,7 @@ const LectureEventMain = () => {
         const mainEventList = async () => {
             await axios({
                 method: "POST",
-                url: '/lecture/lectureEventType',
+                url: '/lecture/auth/lectureEventType',
                 data: JSON.stringify(listData),
                 headers: {'Content-type': 'application/json'}
             }).then((res):void => {
@@ -289,7 +289,7 @@ const LectureEventMain = () => {
         const mainEventList = async () => {
             await axios({
                 method: "POST",
-                url: '/lecture/lectureEventType',
+                url: '/lecture/auth/lectureEventType',
                 data: JSON.stringify(listData),
                 headers: {'Content-type': 'application/json'}
             }).then((res):void => {
