@@ -189,7 +189,7 @@ const LectureRoomWrite = () => {
         const dataList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureInstitutionList"
+                url: "/lecture/auth/lectureInstitutionList"
             }).then((res):void => {
                 setInstitutionList(res.data.data);
                 setInstitutionNo(res.data.data[0].institutionNo + "");
@@ -198,7 +198,7 @@ const LectureRoomWrite = () => {
             })
             await axios({
                 method: "GET",
-                url: "/lecture/lectureMainCategoryList"
+                url: "/lecture/auth/lectureMainCategoryList"
             }).then((res):void => {
                 setLectureMainCategoryList(res.data.data);
             }).catch((err):void => {
@@ -229,7 +229,7 @@ const LectureRoomWrite = () => {
         const subCategoryList = async ():Promise<void> => {
             await axios({
                 method: "GET",
-                url: "/lecture/lectureSubCategoryList",
+                url: "/lecture/auth/lectureSubCategoryList",
                 params: {mainCategoryNo: mainCategoryNo}
             }).then((res):void => {
                 setLectureSubCategoryList(res.data.data);
@@ -255,12 +255,14 @@ const LectureRoomWrite = () => {
             subCategoryNo: subCategoryNo,
             searchText: "",
             searchDivision: [],
-            searchState: []
+            searchState: [],
+            searchDow: [],
+            searchFee: []
         }
         const lectureList = async () => {
             await axios({
                 method: "POST",
-                url: '/lecture/lectureList',
+                url: '/lecture/auth/lectureList',
                 data: JSON.stringify(listData),
                 headers: {'Content-type': 'application/json'}
             }).then((res):void => {
