@@ -8,7 +8,7 @@ export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
   height: 100%;
   width: 410px;
   @media screen and (max-width: 1024px) {
-    width: 260px;
+    width: 310px;
   }
   padding: 30px;
   border-left: 1px solid rgba(0,0,0,0.3);
