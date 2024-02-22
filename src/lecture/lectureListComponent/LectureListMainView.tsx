@@ -146,9 +146,14 @@ const LectureListMainView = (props : Props) => {
                                         </div>
                                         <div className="lt-list-fee">
                                             {lectures.lectureFee.toLocaleString()}원
-                                            <FontAwesomeIcon icon={basketIcon} className="icon-custom"
-                                                             style={lectures.lectureBasketState === 'Y' ? {color: 'lime'} : {}}
-                                                             onClick={(e) => insertLectureBasketHandler(e, lectures)}/>
+                                            {
+                                                lectures.lectureStateNo < 4 ? // 1:접수예정, 2:접수중, 3:대기접수
+                                                    <FontAwesomeIcon icon={basketIcon} className="icon-custom"
+                                                                     style={lectures.lectureBasketState === 'Y' ? {color: 'lime'} : {}}
+                                                                     onClick={(e) => insertLectureBasketHandler(e, lectures)}/>
+                                                    :
+                                                    <div />
+                                            }
                                         </div>
                                     </div>
                                 </div>
