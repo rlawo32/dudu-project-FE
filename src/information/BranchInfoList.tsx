@@ -22,6 +22,7 @@ import {
 
 const BranchInfoList = () => {
     const institutionBtn:any = useRef<any>([]);
+    const swiperRef  = useRef<any>();
     const swiperPrevRef = useRef<SwiperCore>();
     const swiperNextRef = useRef<SwiperCore>();
 
@@ -109,6 +110,8 @@ const BranchInfoList = () => {
             }).catch((err):void => {
                 console.log(err.message);
             })
+
+            swiperRef.current.swiper.slideTo(0, 1000, false);
         }
         setTimeout(() => {institutionList().then();}, 0);
     }, [institutionNo])
@@ -141,7 +144,7 @@ const BranchInfoList = () => {
                 </div>
                 <div className="bi-main-image">
                     <div className="bis-list-view">
-                        <Swiper className="bis-list"
+                        <Swiper className="bis-list" ref={swiperRef}
                                 modules={[Navigation, Pagination]}
                                 speed={1000}
                                 spaceBetween={25}
