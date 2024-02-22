@@ -141,7 +141,7 @@ export const BoardListView = styled.div`
               top: 105%;
               right: 0;
               height: 0;
-              width: 0;
+              width: 130px;
               padding: 0;
               margin: 5px auto 0;
               border: none;
@@ -154,7 +154,7 @@ export const BoardListView = styled.div`
             
             ul.sort-list {
               height: 0;
-              width: 0;
+              width: 120px;
               padding: 0;
               margin: 5px auto 0;
               border: none;
