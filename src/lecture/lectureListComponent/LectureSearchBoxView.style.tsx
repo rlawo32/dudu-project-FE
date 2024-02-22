@@ -14,7 +14,6 @@ export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
   border-left: 1px solid rgba(0,0,0,0.3);
   background-color: ${({theme}) => theme.boxBgColor};
   overflow: auto;
-  
   z-index: 99;
   transition: all 0.4s ease-in;
 
