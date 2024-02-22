@@ -182,6 +182,7 @@ export const FaqListView = styled.div`
           overflow-wrap: break-word;
           
           .item-title {
+            min-height: 85px;
             padding-top: 12px;
             font-weight: bolder;
             
