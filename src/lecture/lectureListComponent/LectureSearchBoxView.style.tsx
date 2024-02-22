@@ -4,16 +4,17 @@ export const LectureSearchBox = styled.div<{ $showBox:boolean }>`
   box-sizing: border-box;
   position: fixed;
   top: 0;
-  right: 0;
+  right: ${({$showBox}) => $showBox ? 0 : "-410px"};
   height: 100%;
-  width: ${({$showBox}) => $showBox ? "410px" : 0};
+  width: 410px;
   @media screen and (max-width: 1024px) {
-    width: ${({$showBox}) => $showBox ? "260px" : 0};
+    width: 260px;
   }
-  padding: ${({$showBox}) => $showBox ? "30px" : 0};
+  padding: 30px;
   border-left: 1px solid rgba(0,0,0,0.3);
   background-color: ${({theme}) => theme.boxBgColor};
   overflow: auto;
+  
   z-index: 99;
   transition: all 0.4s ease-in;
 
