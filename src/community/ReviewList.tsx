@@ -218,7 +218,7 @@ const ReviewList = () => {
     }
 
     const onClickMyReviewMove = ():void => {
-        if(window.localStorage.getItem("role") && getCookie("refreshToken")) {
+        if(window.localStorage.getItem("role")) {
             navigate("/lectureReview");
         } else {
             alert("로그인이 필요한 기능입니다.");
