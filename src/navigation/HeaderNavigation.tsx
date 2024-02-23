@@ -170,13 +170,13 @@ const HeaderNavigation = ():any => {
 
     const logout = ():boolean => {
         if(window.confirm('로그아웃 하시겠습니까?') === true) {
+            window.localStorage.removeItem("role");
             axios({
                 method: "POST",
                 url: "/member/logout"
             }).then((res) => {
                 if(res.data.result) {
                     removeCookie("refreshToken");
-                    window.localStorage.removeItem("role");
                     navigate("/");
                     window.location.reload();
                 }
@@ -277,7 +277,7 @@ const HeaderNavigation = ():any => {
                             </div>
                         </LinkBox>
                         {
-                            memberRole === 'ROLE_ADMIN' && getCookie("refreshToken") ?
+                            memberRole === 'ROLE_ADMIN' ?
                                 <LinkBox style={{marginLeft: '30px'}}>
                                     <div className="parent-adminPage"
                                          onMouseOver={() => setIsAdminPageHovering(true)}>
@@ -307,7 +307,7 @@ const HeaderNavigation = ():any => {
                     <div className="header-right">
                         <ThemeModeToggle />
                         {
-                            memberRole.length > 0 && getCookie("refreshToken") ?
+                            memberRole.length > 0 ?
                                 <>
                                     <StyledLink to="/memberInfo" style={{marginLeft: '20px'}}>
                                         <FontAwesomeIcon icon={myPageIcon} className="icon-custom"/>

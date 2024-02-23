@@ -77,13 +77,13 @@ function App() {
                 setIsLoginExpiresModal(true);
             }
             if(tokenExpiresTime === 1000) {
+                window.localStorage.removeItem("role");
                 axios({
                     method: "POST",
                     url: "/member/logout"
                 }).then((res) => {
                     if(res.data.result) {
                         removeCookie("refreshToken");
-                        window.localStorage.removeItem("role");
                         setIsLoginExpiresModal(false);
                         navigate("/");
                         clearInterval(timer);
