@@ -5,6 +5,7 @@ import {ThemeProvider} from "styled-components";
 import axios from "axios";
 
 import MainHome from './home/MainHome';
+import AutoLogoutPage from "./home/AutoLogoutPage";
 // member
 import SignIn from "./member/SignIn";
 import SignUp from "./member/SignUp";
@@ -50,9 +51,9 @@ import reissue from "./reissue";
 function App() {
     const navigate = useNavigate();
 
-    const [isLoginExpiresModal, setIsLoginExpiresModal] = useState<boolean>(false);
     const {themeMode, setThemeMode} = useThemeToggleStore();
-    const {tokenExpiresTime, setTokenExpiresTime} = useTokenExpiresStore();
+    const {tokenExpiresTime, setTokenExpiresTime, isTokenExpiresTimeBox,
+        setIsTokenExpiresTimeBox, isTokenExpiresTimeStart, setIsTokenExpiresTimeStart} = useTokenExpiresStore();
 
     useEffect(() => {
         const localTheme:string|null = window.localStorage.getItem("theme");
@@ -62,36 +63,40 @@ function App() {
             setThemeMode(true);
         }
         reissue().then((res:number):void => {
-            setTokenExpiresTime(res);
+            if(res > 0) {
+                setIsTokenExpiresTimeStart(true);
+                setTokenExpiresTime(res);
+            }
         });
+        console.log(isTokenExpiresTimeBox)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
-        if(tokenExpiresTime > 0) {
+        if(isTokenExpiresTimeStart) {
             const timer = setInterval(() => {
                 setTokenExpiresTime(tokenExpiresTime - 1000);
             }, 1000);
 
             if(tokenExpiresTime === 60000) {
-                setIsLoginExpiresModal(true);
+                setIsTokenExpiresTimeBox(true);
             }
-            if(tokenExpiresTime === 1000) {
-                window.localStorage.removeItem("role");
+            if(tokenExpiresTime === 0) {
                 axios({
                     method: "POST",
                     url: "/member/logout"
                 }).then((res) => {
                     if(res.data.result) {
                         removeCookie("refreshToken");
-                        setIsLoginExpiresModal(false);
-                        navigate("/");
-                        clearInterval(timer);
-                        window.location.reload();
                     }
                 }).catch((err) => {
                     console.log(err.message)
                 })
+                window.localStorage.removeItem("role");
+                setIsTokenExpiresTimeBox(false);
+                clearInterval(timer);
+                navigate("/");
+                window.location.reload();
             }
 
             return ():void => {
@@ -103,11 +108,12 @@ function App() {
   return (
     <>
         <ThemeProvider theme={themeMode ? darkTheme : lightTheme } >
-            <GlobalStyle $isModal={isLoginExpiresModal}/>
-            {isLoginExpiresModal ? <LoginExpiresNavigation isModal={isLoginExpiresModal} setIsModal={setIsLoginExpiresModal}/> : <div/>}
+            <GlobalStyle $isModal={isTokenExpiresTimeBox}/>
+            {isTokenExpiresTimeBox ? <LoginExpiresNavigation /> : <div/>}
 
             <Routes>
                 <Route path="/" element={<MainHome />} />
+                <Route path="/autoLogout" element={<AutoLogoutPage />} />
 
                 <Route path="/signIn" element={<SignIn />} />
                 <Route path="/signUp" element={<SignUp />} />
