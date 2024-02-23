@@ -34,7 +34,7 @@ const LectureListMainView = (props : Props) => {
 
     const insertLectureBasketHandler = (e:any, itemData:any):void => {
         e.stopPropagation();
-        if(window.localStorage.getItem("role") && getCookie("refreshToken")) {
+        if(window.localStorage.getItem("role")) {
             const basketData:object = {
                 lectureNo: itemData.lectureNo
             }
