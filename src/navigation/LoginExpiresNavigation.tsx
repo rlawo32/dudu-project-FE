@@ -7,11 +7,6 @@ import axios from "axios";
 import useTokenExpiresStore from "../stores/useTokenExpiresStore";
 import reissue from "../reissue";
 
-interface Props {
-    isModal:boolean;
-    setIsModal:React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 const StyledLoginExpiresNavigation = styled.div<{$isModal:boolean}>`
   box-sizing: border-box;
   position: fixed;
@@ -93,10 +88,10 @@ const StyledLoginExpiresNavigation = styled.div<{$isModal:boolean}>`
   }
 `;
 
-const LoginExpiresNavigation = (props:Props) => {
+const LoginExpiresNavigation = () => {
     const navigate = useNavigate();
 
-    const {tokenExpiresTime, setTokenExpiresTime} = useTokenExpiresStore();
+    const {tokenExpiresTime, setTokenExpiresTime, isTokenExpiresTimeBox, setIsTokenExpiresTimeBox} = useTokenExpiresStore();
     const second:string = String(Math.floor((tokenExpiresTime / 1000) % 61)).padStart(2, '0');
 
     const logout = ():void => {
@@ -106,25 +101,25 @@ const LoginExpiresNavigation = (props:Props) => {
         }).then((res) => {
             if(res.data.result) {
                 removeCookie("refreshToken");
-                window.localStorage.removeItem("role");
-                props.setIsModal(false);
-                navigate("/");
-                window.location.reload();
             }
         }).catch((err) => {
             console.log(err.message)
         })
+        window.localStorage.removeItem("role");
+        setIsTokenExpiresTimeBox(false);
+        navigate("/");
+        window.location.reload();
     }
 
     const extension = ():void => {
         reissue().then(
             (res:number):void => {setTokenExpiresTime(res)}
         )
-        props.setIsModal(false);
+        setIsTokenExpiresTimeBox(false);
     }
 
     return (
-        <StyledLoginExpiresNavigation $isModal={props.isModal}>
+        <StyledLoginExpiresNavigation $isModal={isTokenExpiresTimeBox}>
 
             <div className="len-modal-view">
                 <div className="len-time-box">{second}초</div>
