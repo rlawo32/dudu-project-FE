@@ -92,7 +92,7 @@ const LectureDetail = () => {
     }
 
     const lectureApplicationHandler = ():void => {
-        if(window.localStorage.getItem("role") && getCookie("refreshToken")) {
+        if(window.localStorage.getItem("role")) {
             navigate("/lecturePayment", { state: [{lectureNo:lectureDetail.lectureNo,
                     lectureTitle:lectureDetail.lectureTitle, lectureFee: lectureDetail.lectureFee}]})
         } else {
