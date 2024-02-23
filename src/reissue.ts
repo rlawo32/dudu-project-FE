@@ -33,7 +33,7 @@ const reissue = async ():Promise<number> => {
                 removeCookie('refreshToken');
                 window.localStorage.removeItem("role");
                 const navigate = useNavigate();
-                navigate("/");
+                navigate("/autoLogout");
                 window.location.reload();
             }
         }).catch((err) => {
