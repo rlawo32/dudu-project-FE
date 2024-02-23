@@ -29,7 +29,7 @@ const SignIn = ():any => {
     const [isLoginPwEffect, setIsLoginPwEffect] = useState<boolean>(true);
 
     const {setActiveProgressTab} = useJoinProgressStore();
-    const {tokenExpiresTime, setTokenExpiresTime} = useTokenExpiresStore();
+    const {setTokenExpiresTime, setIsTokenExpiresTimeStart} = useTokenExpiresStore();
 
     const passwordSeeHandler = ():void => {
         const typeCheck = passwordRef.current.type;
@@ -76,8 +76,8 @@ const SignIn = ():any => {
                 const responseData = res.data;
                 if(responseData.data) {
                     const { grantType, accessToken, refreshToken, accessTokenExpires, accessTokenExpiresDate} = responseData.data;
-                    const expires:number = accessTokenExpires;
-                    setTokenExpiresTime(expires);
+                    setIsTokenExpiresTimeStart(true);
+                    setTokenExpiresTime(accessTokenExpires);
                     const expiresDate:Date = new Date(accessTokenExpiresDate);
 
                     axios.defaults.headers.common['Authorization'] = `${grantType} ${accessToken}`;
