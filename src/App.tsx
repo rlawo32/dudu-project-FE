@@ -95,7 +95,7 @@ function App() {
                 window.localStorage.removeItem("role");
                 setIsTokenExpiresTimeBox(false);
                 clearInterval(timer);
-                navigate("/");
+                navigate("/autoLogout");
                 window.location.reload();
             }
 

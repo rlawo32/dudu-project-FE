@@ -107,7 +107,7 @@ const LoginExpiresNavigation = () => {
         })
         window.localStorage.removeItem("role");
         setIsTokenExpiresTimeBox(false);
-        navigate("/");
+        navigate("/autoLogout");
         window.location.reload();
     }
 
