@@ -85,7 +85,8 @@ const SignIn = ():any => {
                     setCookie('refreshToken', refreshToken, {
                         path: '/',
                         // httpOnly: true,
-                        // expires
+                        secure: true,
+                        expires: expiresDate
                     });
                     axios({
                         method: "GET",

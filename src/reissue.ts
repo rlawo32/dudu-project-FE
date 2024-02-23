@@ -24,7 +24,8 @@ const reissue = async ():Promise<number> => {
                 setCookie('refreshToken', refreshToken, {
                     path: '/',
                     // httpOnly: true,
-                    // expires
+                    secure: true,
+                    expires: expiresDate
                 });
                 return accessTokenExpires;
             } else {
