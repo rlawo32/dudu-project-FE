@@ -55,12 +55,12 @@ const AutoLogoutPageStyle = styled.div`
       
       button {
         display: inline-block;
-        min-height: 60px;
-        min-width: 160px;
+        min-height: 50px;
+        min-width: 140px;
         padding: 16px 10px 17px;
         border: none;
         border-radius: 8px;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: bold;
         text-align: center;
         transition: all .4s ease;
