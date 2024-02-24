@@ -1,14 +1,17 @@
 import styled from "styled-components";
 
-export const MainCategoryEventView = styled.div`
+export const MainCategoryEventView = styled.div<{$bgColor:string}>`
+  padding: 100px 0 150px;
   margin: 500px auto;
+  background-color: ${({$bgColor, theme}) => $bgColor.length > 0 ? $bgColor : theme.bgColor};
+  transition: background-color 0.5s ease;
+  
   @media screen and (max-width: 1024px) {
     box-sizing: border-box;
     width: calc(100% - 30px);
     padding: 40px 10px 20px;
     margin: 400px 15px;
     border-radius: 10px;
-    background: ${({theme}) => theme.boxBgColor};
   }
 
   .el-title {
@@ -20,6 +23,7 @@ export const MainCategoryEventView = styled.div`
       padding: 0;
       margin: 0 20px 70px;
     }
+    color: ${({theme}) => theme.reverseTextColor};
     word-break: keep-all;
     overflow-wrap: break-word;
 
@@ -110,10 +114,6 @@ export const MainCategoryEventView = styled.div`
           font-size: 18px;
           font-weight: bold;
           cursor: pointer;
-          @media screen and (max-width: 1024px) {
-            border: 2px solid ${({theme}) => theme.textColor};
-            color: ${({theme}) => theme.textColor};
-          }
         }
 
         .select-box {

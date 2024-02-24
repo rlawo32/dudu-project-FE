@@ -6,6 +6,7 @@ import * as Styled from  "./MainCategoryEvent.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown as arrow} from "@fortawesome/free-solid-svg-icons";
 import {faClock as clockIcon} from "@fortawesome/free-regular-svg-icons";
+import {useColor} from "color-thief-react";
 
 const MainCategoryEvent = () => {
     const navigate = useNavigate();
@@ -41,10 +42,16 @@ const MainCategoryEvent = () => {
         lectureThumbnail:string;
     }[]>([]);
 
-    const [selectCategory, setSelectCategory] = useState<number>(0);
-    const [selectCategoryImage, setSelectCategoryImage] = useState<string>("");
+    const [selectMainCategory, setSelectMainCategory] = useState<number>(0);
+    const [selectSubCategory, setSelectSubCategory] = useState<number>(0);
+    const [selectSubCategoryName, setSelectSubCategoryName] = useState<string>("");
+    const [selectSubCategoryImage, setSelectSubCategoryImage] = useState<string>("");
+    const [selectSubCategoryImageColor, setSelectSubCategoryImageColor] = useState<string>("");
     const [isSelectBoxShow, setIsSelectBoxShow] = useState<boolean>(false);
     const [selectIndex, setSelectIndex] = useState<number>(0);
+
+    const path:string = process.env.PUBLIC_URL;
+    const {data} = useColor((path + "/categoryImage/" + selectMainCategory + "/" + selectSubCategoryName + ".jpg"), "hex", {crossOrigin: 'anonymous'});
 
     const mainCategoryEventSelectBox = ():any[] => {
         let result:any[] = [];
@@ -68,7 +75,7 @@ const MainCategoryEvent = () => {
     const onClickSelectBoxItem = (idx:number, selectItem:number):void => {
         setIsSelectBoxShow(false);
         setSelectIndex(idx);
-        setSelectCategory(selectItem);
+        setSelectSubCategory(selectItem);
     }
 
     useEffect(() => {
@@ -86,7 +93,7 @@ const MainCategoryEvent = () => {
                 url: "/lecture/auth/lectureSubCategoryList",
                 params: {mainCategoryNo: 0}
             }).then((res):void => {
-                setSelectCategory(res.data.data[0].lectureSubCategoryNo);
+                setSelectSubCategory(res.data.data[0].lectureSubCategoryNo);
                 setSubCategoryList(res.data.data);
             }).catch((err):void => {
                 console.log(err.message);
@@ -108,7 +115,7 @@ const MainCategoryEvent = () => {
             await axios({
                 method: "GET",
                 url: "/lecture/auth/eventCategoryList",
-                params: {selectCategory: selectCategory}
+                params: {selectCategory: selectSubCategory}
             }).then((res):void => {
                 setEventList(res.data.data);
                 const imageUrl:{
@@ -118,18 +125,21 @@ const MainCategoryEvent = () => {
                     lectureSubCategoryDesc: string;
                     lectureSubCategoryThumbnail: string;
                 } | undefined = subCategoryList.find((item) =>
-                    item.lectureSubCategoryNo === selectCategory)
+                    item.lectureSubCategoryNo === selectSubCategory)
                 if(imageUrl !== undefined) {
-                    setSelectCategoryImage(imageUrl.lectureSubCategoryThumbnail);
+                    setSelectMainCategory(imageUrl.lectureMainCategoryNo);
+                    setSelectSubCategory(imageUrl.lectureSubCategoryNo);
+                    setSelectSubCategoryName(imageUrl.lectureSubCategoryName);
+                    setSelectSubCategoryImage(imageUrl.lectureSubCategoryThumbnail);
                 }
             }).catch((err):void => {
                 console.log(err.message);
             })
         }
-        if(selectCategory !== 0) {
+        if(selectSubCategory !== 0) {
             setTimeout(() => {dataList().then();}, 200);
         }
-    }, [selectCategory]);
+    }, [selectSubCategory]);
 
 
     useEffect(() => {
@@ -160,7 +170,7 @@ const MainCategoryEvent = () => {
     }, [selectIndex])
 
     return (
-        <Styled.MainCategoryEventView>
+        <Styled.MainCategoryEventView $bgColor={data !== undefined ? data : ""}>
             <div className="el-title">
                 <div className="title-top">
                     강좌 카테고리
@@ -171,14 +181,14 @@ const MainCategoryEvent = () => {
             </div>
             <div className="el-wrapper">
                 <div className="el-select" ref={selectBottom}>
-                    <img src={selectCategoryImage} alt={"카테고리 이미지"} />
+                    <img src={selectSubCategoryImage} alt={"카테고리 이미지"} />
                     {/*<div className="select-bottom" ref={selectBottom} />*/}
                     <div className="el-select-box">
                         <button onClick={() => setIsSelectBoxShow(!isSelectBoxShow)}>
                             <div className="select-name">
                                 {
                                     subCategoryList.find((item) =>
-                                        item.lectureSubCategoryNo === selectCategory)?.lectureSubCategoryName
+                                        item.lectureSubCategoryNo === selectSubCategory)?.lectureSubCategoryName
                                 }
                             </div>
                             <div className="select-arrow" ref={selectArrow}>
