@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 export const MainCategoryEventView = styled.div<{$bgColor:string}>`
+  position: relative;
+  width: 100%;
   padding: 100px 0 150px;
   margin: 500px auto;
   background-color: ${({$bgColor, theme}) => $bgColor.length > 0 ? $bgColor : theme.bgColor};
   transition: background-color 0.5s ease;
-  
   @media screen and (max-width: 1024px) {
     box-sizing: border-box;
     width: calc(100% - 30px);
@@ -18,7 +19,7 @@ export const MainCategoryEventView = styled.div<{$bgColor:string}>`
     width: 1440px;
     padding-left: 60px;
     margin: 80px auto;
-    @media screen and (max-width: 1024px) {
+    @media screen and (max-width: 1440px) {
       width: 100%;
       padding: 0;
       margin: 0 20px 70px;
