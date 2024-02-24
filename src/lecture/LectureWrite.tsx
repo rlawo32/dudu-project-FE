@@ -497,4 +497,4 @@ const LectureWrite = () => {
     )
 }
 
-export default LectureWrite;
+export default React.memo(LectureWrite);

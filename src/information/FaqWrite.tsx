@@ -111,4 +111,4 @@ const FaqWrite = () => {
     )
 }
 
-export default FaqWrite;
+export default React.memo(FaqWrite);

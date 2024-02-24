@@ -279,4 +279,4 @@ const BranchInfoWrite = () => {
         </Styled.BranchInfoWriteView>
     )
 }
-export default BranchInfoWrite;
+export default React.memo(BranchInfoWrite);
