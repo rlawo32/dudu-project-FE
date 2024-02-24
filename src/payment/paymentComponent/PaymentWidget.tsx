@@ -4,7 +4,7 @@ import {useDrag} from "react-use-gesture";
 import styled from "styled-components";
 import axios from "axios";
 
-import {loadPaymentWidget, ANONYMOUS} from "@tosspayments/payment-widget-sdk";
+import {loadPaymentWidget} from "@tosspayments/payment-widget-sdk";
 
 // declare global {
 //     interface Window {

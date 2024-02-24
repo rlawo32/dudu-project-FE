@@ -20,7 +20,6 @@ const PaymentInfo = (props:Props) => {
     const [totalPaymentFee, setTotalPaymentFee] = useState<number>(0);
 
     const lectureApplicationDuplicationHandler = async ():Promise<void> => {
-        let duplicationChk:boolean = true;
         for(let i:number=0; i<paymentDetail.length; i++) {
             await axios({
                 method: "GET",
@@ -28,17 +27,14 @@ const PaymentInfo = (props:Props) => {
                 params: {lectureNo: paymentDetail[i].lectureNo}
             }).then((res):void => {
                 if(res.data) {
-                    duplicationChk = false;
+                    alert('이미 수강신청한 강좌입니다.');
+                } else {
+                    window.scrollTo({ top: 50, behavior: "smooth" });
+                    props.setIsModal(true);
                 }
             }).catch((err):void => {
                 console.log(err.message);
             })
-        }
-        if(duplicationChk) {
-            window.scrollTo({ top: 50, behavior: "smooth" });
-            props.setIsModal(true);
-        } else {
-            alert('이미 수강신청한 강좌입니다.');
         }
     }
 
