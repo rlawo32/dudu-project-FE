@@ -226,4 +226,4 @@ const LectureEventListView = () => {
     )
 }
 
-export default LectureEventListView;
+export default React.memo(LectureEventListView);

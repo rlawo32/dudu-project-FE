@@ -401,4 +401,4 @@ const LectureDetail = () => {
     )
 }
 
-export default LectureDetail;
+export default React.memo(LectureDetail);

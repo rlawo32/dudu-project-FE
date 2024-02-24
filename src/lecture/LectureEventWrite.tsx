@@ -451,4 +451,4 @@ const LectureRoomWrite = () => {
     )
 }
 
-export default LectureRoomWrite;
+export default React.memo(LectureRoomWrite);
