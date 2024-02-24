@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {getCookie,removeCookie} from "../Cookie";
+import {removeCookie} from "../Cookie";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -170,19 +170,19 @@ const HeaderNavigation = ():any => {
 
     const logout = ():boolean => {
         if(window.confirm('로그아웃 하시겠습니까?') === true) {
-            window.localStorage.removeItem("role");
             axios({
                 method: "POST",
                 url: "/member/logout"
             }).then((res) => {
                 if(res.data.result) {
                     removeCookie("refreshToken");
-                    navigate("/");
-                    window.location.reload();
                 }
             }).catch((err) => {
                 console.log(err.message)
             })
+            window.localStorage.removeItem("role");
+            navigate("/");
+            window.location.reload();
             return true;
         } else {
             return false;

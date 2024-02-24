@@ -35,4 +35,4 @@ const TopButtonNavigation = (props:{type:string}) => {
     )
 }
 
-export default TopButtonNavigation
+export default TopButtonNavigation;
