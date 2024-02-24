@@ -330,4 +330,4 @@ const FaqList = () => {
     )
 }
 
-export default FaqList;
+export default React.memo(FaqList);

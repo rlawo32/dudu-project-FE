@@ -54,4 +54,4 @@ const LecturePayment = () => {
     )
 }
 
-export default LecturePayment;
+export default React.memo(LecturePayment);
