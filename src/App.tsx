@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Route, Routes, useNavigate} from "react-router-dom";
 import {removeCookie} from "./Cookie";
 import {ThemeProvider} from "styled-components";
@@ -67,15 +67,15 @@ function App() {
                 setIsTokenExpiresTimeStart(true);
                 setTokenExpiresTime(res);
             }
-        });
-        console.log(isTokenExpiresTimeBox)
+        })
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
         if(isTokenExpiresTimeStart) {
             const timer = setInterval(() => {
-                setTokenExpiresTime(tokenExpiresTime - 1000);
+                setTokenExpiresTime(tokenExpiresTime);
             }, 1000);
 
             if(tokenExpiresTime === 60000) {
@@ -94,6 +94,7 @@ function App() {
                 })
                 window.localStorage.removeItem("role");
                 setIsTokenExpiresTimeBox(false);
+                setIsTokenExpiresTimeStart(false);
                 clearInterval(timer);
                 navigate("/autoLogout");
                 window.location.reload();

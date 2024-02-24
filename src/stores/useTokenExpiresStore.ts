@@ -23,7 +23,7 @@ const useTokenExpiresStore = create<tokenExpiresStore>((set) => ({
     tokenExpiresTime: 0,
     setTokenExpiresTime: (decrease: number) =>
         set((state: {tokenExpiresTime: number}) => ({
-            tokenExpiresTime: (state.tokenExpiresTime = decrease),
+            tokenExpiresTime: (state.tokenExpiresTime = decrease - 1000),
         })),
 }));
 
