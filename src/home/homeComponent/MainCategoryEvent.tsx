@@ -169,8 +169,14 @@ const MainCategoryEvent = () => {
         }, 300);
     }, [selectIndex])
 
+    useEffect(() => {
+        if(data !== undefined) {
+            setSelectSubCategoryImageColor(data);
+        }
+    }, [data])
+
     return (
-        <Styled.MainCategoryEventView $bgColor={data !== undefined ? data : ""}>
+        <Styled.MainCategoryEventView $bgColor={selectSubCategoryImageColor}>
             <div className="el-title">
                 <div className="title-top">
                     강좌 카테고리
