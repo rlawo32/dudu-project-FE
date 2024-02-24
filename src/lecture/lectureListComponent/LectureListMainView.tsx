@@ -9,7 +9,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamation as emptyIcon, faQuoteLeft as quoteLeft,
     faQuoteRight as quoteRight, faBagShopping as basketIcon} from "@fortawesome/free-solid-svg-icons";
 import {faClock as clockIcon} from "@fortawesome/free-regular-svg-icons";
-import {getCookie} from "../../Cookie";
 
 interface Props {
     ltCount:number;

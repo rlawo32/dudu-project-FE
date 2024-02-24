@@ -206,4 +206,4 @@ const LectureList = () => {
     )
 }
 
-export default LectureList;
+export default React.memo(LectureList);
