@@ -205,4 +205,4 @@ const BranchInfoList = () => {
     )
 }
 
-export default BranchInfoList;
+export default React.memo(BranchInfoList);

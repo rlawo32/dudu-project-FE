@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 
 declare global {
     interface Window {
@@ -28,7 +28,6 @@ const BranchInfoMap = (props : {mapPosition:string; mapName:string;}) => {
                 if(props.mapPosition.length > 0) {
                     // 주소로 좌표를 검색합니다
                     geocoder.addressSearch(props.mapPosition, function(result:any, status:any) {
-
                         // 정상적으로 검색이 완료됐으면
                         if (status === window.kakao.maps.services.Status.OK) {
                             // 결과값 위치 좌표
@@ -73,9 +72,7 @@ const BranchInfoMap = (props : {mapPosition:string; mapName:string;}) => {
     }, [props])
 
     return (
-        <div id="map" style={{height: "500px", width: "100%"}}>
-
-        </div>
+        <div id="map" style={{height: "500px", width: "100%"}} />
     )
 }
 
