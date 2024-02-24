@@ -4,7 +4,6 @@ import axios from "axios";
 import HeaderNavigation from "../../navigation/HeaderNavigation";
 import FooterNavigation from "../../navigation/FooterNavigation";
 import TopButtonNavigation from "../../navigation/TopButtonNavigation";
-import LectureCancelModal from "./LectureCancelModal";
 
 import * as Styled from "./LectureReview.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -48,9 +47,6 @@ const LectureReview = () => {
         lectureFee:number;
         lectureStateNo:number;
         reviewNo:number;
-    }[]>([]);
-    const [ReviewCheckList, setReviewCheckList] = useState<{
-        lectureNo:number;
     }[]>([]);
 
     const sortItemList = ():any[] => {

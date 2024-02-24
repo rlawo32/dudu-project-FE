@@ -1,6 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import styled from "styled-components";
-import {ko} from "date-fns/esm/locale";
 import dayjs from "dayjs";
 import 'dayjs/locale/ko';
 
@@ -63,8 +62,6 @@ const LectureItemAdditionStyle = styled.div`
 const LectureItemAddition = (props : {type:string;}) => {
     dayjs.locale('ko');
     const inputId = useRef<number>(1);
-
-    const [lectureCount, setLectureCount] = useState<number>(0);
 
     const {materialsAndSignificantData, setMaterialsAndSignificantData,
         onChangeMaterialsAndSignificant, removeMaterialsAndSignificantData,
