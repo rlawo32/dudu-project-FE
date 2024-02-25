@@ -251,7 +251,7 @@ const LectureSearchBoxView = (props : { isShow: boolean; setIsShow: React.Dispat
                            onKeyDown={(e) => activeEnter(e)}
                            placeholder="강좌명 or 강사명으로 검색" />
                     <FontAwesomeIcon icon={searchIcon} className="icon-custom"
-                                     onClick={() => (props.setIsShow(false), setSearchButton(!searchButton))}/>
+                                     onClick={() => {props.setIsShow(false); setSearchButton(!searchButton);}}/>
                 </div>
             </div>
             <div className="search-body">
@@ -347,7 +347,7 @@ const LectureSearchBoxView = (props : { isShow: boolean; setIsShow: React.Dispat
                     <FontAwesomeIcon icon={resetIcon} className="icon-custom" />
                     초기화
                 </button>
-                <button onClick={() => (props.setIsShow(false), setSearchButton(!searchButton))} className="search-btn">
+                <button onClick={() => {props.setIsShow(false); setSearchButton(!searchButton);}} className="search-btn">
                     강좌 검색
                 </button>
             </div>
