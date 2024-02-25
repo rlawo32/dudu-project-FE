@@ -18,7 +18,6 @@ const LectureBasket = () => {
 
     const [pageNo, setPageNo] = useState<number>(1);
     const [totalPage, setTotalPage] = useState<number>(0);
-    const [institutionNo, setInstitutionNo] = useState<number>(0);
     const [lectureBasketList, setLectureBasketList] = useState<{
         lectureBasketNo:number;
         lectureBasketDate:string;
@@ -115,7 +114,6 @@ const LectureBasket = () => {
                 } else {
                     return false;
                 }
-                return true;
             } else {
                 alert('삭제할 강좌를 선택해주세요');
                 return false;
@@ -141,7 +139,6 @@ const LectureBasket = () => {
             } else {
                 return false;
             }
-            return true;
         }
     }
 
