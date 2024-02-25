@@ -173,11 +173,11 @@ const LectureHistory = () => {
                 </div>
                 <div className="lh-main-list">
                     <div className="lh-list-category">
-                        <div className="lh-category" onClick={() => (setSearchCategory("N"), setCategorySelect(0))}
+                        <div className="lh-category" onClick={() => {setSearchCategory("N"); setCategorySelect(0);}}
                              ref={btn => (categoryBtn.current[0] = btn)}>
                             수강내역 조회
                         </div>
-                        <div className="lh-category" onClick={() => (setSearchCategory("Y"), setCategorySelect(1))}
+                        <div className="lh-category" onClick={() => {setSearchCategory("Y"); setCategorySelect(1);}}
                              ref={btn => (categoryBtn.current[1] = btn)}>
                             취소내역 조회
                         </div>
