@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {getCookie} from "../Cookie";
 import axios from "axios";
 import dayjs from "dayjs";
 import dompurify from "dompurify";
