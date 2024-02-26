@@ -6,7 +6,6 @@ interface themeToggleStore {
 }
 
 const useThemeToggleStore = create<themeToggleStore>((set) => ({
-
     themeMode: false,
     setThemeMode: (toggle: boolean) =>
         set((state: {themeMode: boolean}) => ({
