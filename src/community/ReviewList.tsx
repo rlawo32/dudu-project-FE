@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {getCookie} from "../Cookie";
 import axios from "axios";
 
 import HeaderNavigation from "../navigation/HeaderNavigation";
@@ -18,7 +17,6 @@ import * as Styled from "./ReviewList.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faSearch as searchIcon, faStar as fullStar, faPenToSquare as reviewWriteIcon,
-    faCircleChevronLeft as leftArrowIcon, faCircleChevronRight as rightArrowIcon,
     faExclamation as emptyIcon, faArrowRightArrowLeft as sortIcon,
     faQuoteLeft as quoteLeft, faQuoteRight as quoteRight, faChevronDown as arrow
 } from "@fortawesome/free-solid-svg-icons";

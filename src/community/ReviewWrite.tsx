@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from "react";
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 import LectureQuillEditor from "../lecture/lectureWriteComponent/LectureQuillEditor";
@@ -63,7 +62,7 @@ const ReviewWrite = (props:Props) => {
             alert('별점을 최소 1점이상을 주세요.');
             return false;
         } else {
-            if(window.confirm("작성하시겠습니까?") == true) {
+            if(window.confirm("작성하시겠습니까?") === true) {
                 axios({
                     method: "POST",
                     url: "/review/reviewWrite",
