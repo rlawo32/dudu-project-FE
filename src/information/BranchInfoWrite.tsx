@@ -113,7 +113,7 @@ const BranchInfoWrite = () => {
     }
 
     const deleteInstitutionImageHandler = async (imageNo:number, imageName:string, deleteType:string):Promise<boolean> => {
-        if(window.confirm("정말 삭제하시겠습니까??") == true) {
+        if(window.confirm("정말 삭제하시겠습니까??") === true) {
             const deleteObj:object = {
                 imageFileName: imageName,
                 type: deleteType
