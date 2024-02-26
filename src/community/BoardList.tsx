@@ -163,11 +163,11 @@ const BoardList = () => {
             <div className="bl-main-view">
                 <div className="bl-main">
                     <div className="bl-category">
-                        <div className="bl-category-inform" onClick={() => (setSearchCategory("BI"), setCategorySelect(0))}
+                        <div className="bl-category-inform" onClick={() => {setSearchCategory("BI"); setCategorySelect(0);}}
                              ref={btn => (categoryBtn.current[0] = btn)}>
                             공지사항
                         </div>
-                        <div className="bl-category-event" onClick={() => (setSearchCategory("BE"), setCategorySelect(1))}
+                        <div className="bl-category-event" onClick={() => {setSearchCategory("BE"); setCategorySelect(1);}}
                              ref={btn => (categoryBtn.current[1] = btn)}>
                             이벤트
                         </div>

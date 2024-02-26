@@ -43,7 +43,7 @@ const BoardWrite = () => {
             alert('내용을 작성해주세요.');
             return false;
         } else {
-            if(window.confirm("작성하시겠습니까?") == true) {
+            if(window.confirm("작성하시겠습니까?") === true) {
                 axios({
                     method: "POST",
                     url: "/board/boardWrite",
