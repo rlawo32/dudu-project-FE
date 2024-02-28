@@ -12,8 +12,7 @@ import 'swiper/css/pagination';
 import * as Styled from "./MainRecentEvent.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClock as clockIcon} from "@fortawesome/free-regular-svg-icons";
-import {faCircleChevronLeft as leftArrowIcon,
-faCircleChevronRight as rightArrowIcon} from "@fortawesome/free-solid-svg-icons";
+import {faCircleChevronLeft as leftArrowIcon, faCircleChevronRight as rightArrowIcon} from "@fortawesome/free-solid-svg-icons";
 
 const MainRecentEvent = () => {
     const navigate = useNavigate();

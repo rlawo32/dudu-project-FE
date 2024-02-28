@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {useColor} from "color-thief-react";
 import axios from "axios";
 
 import * as Styled from  "./MainCategoryEvent.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown as arrow} from "@fortawesome/free-solid-svg-icons";
 import {faClock as clockIcon} from "@fortawesome/free-regular-svg-icons";
-import {useColor} from "color-thief-react";
 
 const MainCategoryEvent = () => {
     const navigate = useNavigate();
