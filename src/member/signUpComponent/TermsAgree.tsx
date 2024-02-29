@@ -1,6 +1,7 @@
 import {useState} from "react";
 
 import useJoinProgressStore from "../../stores/useJoinProgressStore";
+
 import * as Styled from "../SignUp.style";
 
 const TermsAgree = ():any => {
