@@ -9,11 +9,12 @@ import MemberInfoUpdate from "./memberInfoCompnent/MemberInfoUpdate";
 import MemberInfoPwUpdate from "./memberInfoCompnent/MemberInfoPwUpdate";
 import MemberInfoWithdraw from "./memberInfoCompnent/MemberInfoWithdraw";
 
+import useJoinProgressStore from "../stores/useJoinProgressStore";
+
 import * as Styled from "./MemberInfo.style";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBasketShopping as basketIcon, faChalkboardUser as reviewIcon,
 faClipboard as historyIcon, faClockRotateLeft as logIcon} from "@fortawesome/free-solid-svg-icons";
-import useJoinProgressStore from "../stores/useJoinProgressStore";
 
 const MemberInfo = () => {
     const navigate = useNavigate();

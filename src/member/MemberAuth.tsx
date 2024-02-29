@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 
 import useJoinProgressStore from "../stores/useJoinProgressStore";
+
 import * as Styled from "./SignUp.style";
 
 interface Props {

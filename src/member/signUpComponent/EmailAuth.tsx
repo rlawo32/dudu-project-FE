@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 
-import useJoinProgressStore from "../../stores/useJoinProgressStore";
 import MemberAuth from "../MemberAuth";
+import useJoinProgressStore from "../../stores/useJoinProgressStore";
+
 import * as Styled from "../SignUp.style";
 
 const EmailAuth = ():any => {

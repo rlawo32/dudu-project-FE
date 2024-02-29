@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
+import useJoinProgressStore from "../../stores/useJoinProgressStore";
+
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faCircleCheck as checked } from "@fortawesome/free-solid-svg-icons"
 import { faCircleCheck as unChecked } from "@fortawesome/free-regular-svg-icons"
-
-import useJoinProgressStore from "../../stores/useJoinProgressStore";
 
 const ProgressMarkBox = styled.div`
   display: flex;
