@@ -28,14 +28,15 @@ const reissue = async ():Promise<number> => {
                     expires: expiresDate
                 });
                 return accessTokenExpires;
-            } else {
-                alert('재로그인을 해주세요1');
-                removeCookie('refreshToken');
-                window.localStorage.removeItem("role");
-                const navigate = useNavigate();
-                navigate("/autoLogout");
-                window.location.reload();
-            }
+            } 
+            // else {
+            //     alert('재로그인을 해주세요1');
+            //     removeCookie('refreshToken');
+            //     window.localStorage.removeItem("role");
+            //     const navigate = useNavigate();
+            //     navigate("/autoLogout");
+            //     window.location.reload();
+            // }
         }).catch((err) => {
             const errCode:string = err.message.substring(err.message.length-3);
 

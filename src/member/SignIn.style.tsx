@@ -34,7 +34,7 @@ export const SignInMain = styled.div`
     @media screen and (max-width: 1024px) {
       height: 50vh;
     }
-    background-image: url("https://react-project-bucket.s3.ap-northeast-2.amazonaws.com/defaultImage/signup-image1.jpg");
+    background-image: url("https://pub-168f9e8bdf754ff79c1313481784f5dd.r2.dev/defaultImage/signup-image1.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

@@ -205,7 +205,7 @@ const HeaderNavigation = ():any => {
                 <div className="header-parent">
                     <div className="header-left">
                         <StyledLink to="/">
-                            <img src={"https://react-project-bucket.s3.ap-northeast-2.amazonaws.com/defaultImage/mainlog01.png"} alt={"메인로고"}/>
+                            <img src={"https://pub-168f9e8bdf754ff79c1313481784f5dd.r2.dev/defaultImage/main_logo.png"} alt={"메인로고"}/>
                         </StyledLink>
                     </div>
                     <div className="header-center">
@@ -224,7 +224,7 @@ const HeaderNavigation = ():any => {
                                     </StyledLink>
                                 </div>
                                 <div className="image-section">
-                                    <img src={"https://react-project-bucket.s3.ap-northeast-2.amazonaws.com/defaultImage/headerimg0.jpg"} alt={"header-image1"}/>
+                                    <img src={"https://pub-168f9e8bdf754ff79c1313481784f5dd.r2.dev/defaultImage/header_01.jpg"} alt={"header-image1"}/>
                                 </div>
                             </div>
                         </LinkBox>
@@ -248,7 +248,7 @@ const HeaderNavigation = ():any => {
                                     </StyledLink>
                                 </div>
                                 <div className="image-section">
-                                    <img src={"https://react-project-bucket.s3.ap-northeast-2.amazonaws.com/defaultImage/headerimg1.jpg"} alt={"header-image1"}/>
+                                    <img src={"https://pub-168f9e8bdf754ff79c1313481784f5dd.r2.dev/defaultImage/header_02.jpg"} alt={"header-image1"}/>
                                 </div>
                             </div>
                         </LinkBox>
@@ -272,7 +272,7 @@ const HeaderNavigation = ():any => {
                                     </StyledLink>
                                 </div>
                                 <div className="image-section">
-                                    <img src={"https://react-project-bucket.s3.ap-northeast-2.amazonaws.com/defaultImage/headerimg2.jpg"} alt={"header-image2"}/>
+                                    <img src={"https://pub-168f9e8bdf754ff79c1313481784f5dd.r2.dev/defaultImage/header_03.jpg"} alt={"header-image2"}/>
                                 </div>
                             </div>
                         </LinkBox>
