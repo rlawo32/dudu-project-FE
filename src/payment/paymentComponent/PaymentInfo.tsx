@@ -18,6 +18,7 @@ const PaymentInfo = (props:Props) => {
         lecturePeriod:string; lectureTime:string; lectureCount:number; lectureFee:number;
     }[]>([]);
     const [totalPaymentFee, setTotalPaymentFee] = useState<number>(0);
+    const [memberName, setMemberName] = useState<string>("");
 
     const lectureApplicationDuplicationHandler = async ():Promise<void> => {
         for(let i:number=0; i<paymentDetail.length; i++) {
@@ -39,6 +40,17 @@ const PaymentInfo = (props:Props) => {
     }
 
     useEffect(() => {
+        const memberInfoData = async ():Promise<void> => {
+            await axios({
+                method: "GET",
+                url: "/member/findMemberInfo"
+            }).then((res):void => {
+                setMemberName(res.data.data.memberName);
+            }).catch((err):void => {
+                console.log(err.message);
+            })
+        }
+        memberInfoData().then();
         for(let i:number=0; i<props.paymentInfo.length; i++) {
             axios({
                 method: "GET",
@@ -127,7 +139,7 @@ const PaymentInfo = (props:Props) => {
                             <div className="lp-content-bot">
                                 <div className="lp-bot-left">
                                     <div className="lp-member">
-                                        김성재(본인)
+                                        {memberName}(본인)
                                     </div>
                                 </div>
                                 <div className="lp-bot-right">

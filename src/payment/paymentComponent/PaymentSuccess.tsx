@@ -246,8 +246,20 @@ const PaymentSuccess = () => {
         lectureTime: '', lecturePeriod: '', lectureFee: 0, lectureInstitution: '',
         lectureStateNo: 0, lectureCount: 0, lectureEventType: '', lectureThumbnail: ''
     }]);
+    const [memberName, setMemberName] = useState<string>("");
 
     useEffect(() => {
+        const memberInfoData = async ():Promise<void> => {
+            await axios({
+                method: "GET",
+                url: "/member/findMemberInfo"
+            }).then((res):void => {
+                setMemberName(res.data.data.memberName);
+            }).catch((err):void => {
+                console.log(err.message);
+            })
+        }
+        memberInfoData().then();
         const lectureApplicationData:object = {
             paymentKey: paymentKey,
             orderId: orderId
@@ -339,7 +351,7 @@ const PaymentSuccess = () => {
                         <div className="lp-content-bot">
                             <div className="lp-bot-left">
                                 <div className="lp-member">
-                                    김성재(본인)
+                                    {memberName}(본인)
                                 </div>
                             </div>
                             <div className="lp-bot-right">

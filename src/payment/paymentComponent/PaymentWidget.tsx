@@ -4,7 +4,7 @@ import {useDrag} from "react-use-gesture";
 import styled from "styled-components";
 import axios from "axios";
 
-import {loadPaymentWidget} from "@tosspayments/payment-widget-sdk";
+import * as PortOne from "@portone/browser-sdk/v2";
 
 // declare global {
 //     interface Window {
@@ -29,6 +29,7 @@ const PaymentWidgetView = styled.div<{ x: number; y: number; }>`
   text-align: center;
   
   .modal-bar {
+    height: 30px;
     background-color: rgba(216,201,201,0.5);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -40,6 +41,12 @@ const PaymentWidgetView = styled.div<{ x: number; y: number; }>`
       background: none;
       cursor: pointer;
     }
+  }
+
+  .modal-content {
+    width: 100%;
+    padding: 60px 0;
+    text-align: center;
   }
   
   .pl-widget-submit {
@@ -72,82 +79,50 @@ const PaymentWidget = (props: Props) => {
     });
 
     const location = useLocation();
-    const clientKey:string|undefined = process.env.REACT_APP_TOSS_CLIENT_KEY;
+    const storeId:string|undefined = process.env.REACT_APP_PORTONE_STORE_ID;
+    const channelKey:string|undefined = process.env.REACT_APP_PORTONE_CHANNEL_KEY;
 
-    // useEffect(() => {
-    //     const script:HTMLScriptElement = document.createElement("script");
-    //     script.async = true;
-    //     script.src = `https://js.tosspayments.com/v1/payment-widget`;
-    //     document.head.appendChild(script);
-    //
-    //     axios({
-    //         method: "GET",
-    //         url: "/member/findMemberInfo",
-    //     }).then((res):void => {
-    //         console.log(res)
-    //         const memberInfo = res.data.data;
-    //         const paymentInfo:any[] = location.state;
-    //         const customerKey:string = Math.random().toString(16).substring(2) + "_" + memberInfo.memberNo;
-    //         let orderId:string = Math.random().toString(16).substring(2);
-    //         let orderName:string = paymentInfo[0].lectureTitle;
-    //         if(paymentInfo.length > 1) {
-    //             orderName += " 외 " + (paymentInfo.length-1) + "건";
-    //         }
-    //         let paymentFee:number = 0;
-    //         for(let i:number=0; i<paymentInfo.length; i++) {
-    //             orderId += "_" + paymentInfo[i].lectureNo;
-    //             paymentFee += paymentInfo[i].lectureFee;
-    //         }
-    //         console.log(customerKey)
-    //         console.log(orderName)
-    //
-    //         script.addEventListener("load", ():void => {
-    //             const button:HTMLElement|null = document.getElementById("payment-button");
-    //             const paymentWidget = window.PaymentWidget(clientKey, customerKey);
-    //             console.log(paymentWidget)
-    //
-    //             paymentWidget.renderPaymentMethods(
-    //                 '#payment-widget',
-    //                 { value: paymentFee },
-    //                 { variantKey: "DEFAULT" })
-    //             paymentWidget.renderAgreement(
-    //                 '#payment-agreement',
-    //                 { variantKey: "AGREEMENT" })
-    //
-    //             if(button !== null) {
-    //                 button.addEventListener("click", ():void => {
-    //                     // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
-    //                     // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
-    //                     paymentWidget.requestPayment({
-    //                         orderId: orderId,
-    //                         orderName: orderName,
-    //                         successUrl: window.location.origin + "/paymentSuccess",
-    //                         failUrl: window.location.origin + "/fail",
-    //                         customerEmail: memberInfo.memberEmail,
-    //                         customerName: memberInfo.memberName,
-    //                         customerMobilePhone: memberInfo.memberPhone
-    //                     });
-    //                 });
-    //             }
-    //         })
-    //         script.addEventListener("error", (e):void => {
-    //             e.preventDefault();
-    //             console.log(e.message)
-    //         })
-    //     }).catch((err):void => {
-    //         console.log(err.message);
-    //     })
-    // }, [])
+    const paymentTrigger = async (memberInfo:any, orderId:string, customerKey:string, orderName:string, paymentFee:number, successUrl:string) => {
+        try {
+            const response = await PortOne.requestPayment({
+                storeId: storeId!!,
+                channelKey: channelKey,
+                paymentId: customerKey, // 고유 주문 번호
+                orderName: orderName,
+                totalAmount: Number(paymentFee),
+                currency: "CURRENCY_KRW",
+                payMethod: "CARD",
+                customer: {
+                    fullName: memberInfo.memberName || "소셜사용자",
+                    phoneNumber: (memberInfo.memberPhone || "01000000000").replace(/-/g, ""),
+                    email: memberInfo.memberEmail || "test@test.com",
+                },
+                redirectUrl: successUrl,
+            });
+
+            if (!response) {
+                alert("결제 응답이 없습니다.");
+                return;
+            }
+
+            if (response.code !== undefined) {
+                return alert(`결제 실패: ${response.message}`);
+            }
+            
+            window.location.href = successUrl;
+        } catch (err) {
+            console.error("결제 프로세스 에러: ", err);
+        }
+    }
 
     useEffect(() => {
             axios({
                 method: "GET",
                 url: "/member/findMemberInfo",
             }).then(async (res):Promise<void> => {
-                console.log(res)
                 const memberInfo = res.data.data;
                 const paymentInfo:any[] = location.state;
-                const customerKey:string = Math.random().toString(16).substring(2) + "_" + memberInfo.memberNo;
+                const customerKey:string = "payment-" + Math.random().toString(16).substring(2) + "_" + memberInfo.memberNo;
                 let orderId:string = Math.random().toString(16).substring(2);
                 let orderName:string = paymentInfo[0].lectureTitle;
                 if(paymentInfo.length > 1) {
@@ -159,40 +134,16 @@ const PaymentWidget = (props: Props) => {
                     paymentFee += paymentInfo[i].lectureFee;
                 }
 
-                const button:HTMLElement|null = document.getElementById("payment-button");
-                try {
-                    if(clientKey !== undefined) {
-                        const paymentWidget = await loadPaymentWidget(clientKey, customerKey);
-                        paymentWidget.renderPaymentMethods(
-                            '#payment-widget',
-                            { value: paymentFee },
-                            { variantKey: "DEFAULT" })
-                        paymentWidget.renderAgreement(
-                            '#payment-agreement',
-                            { variantKey: "AGREEMENT" })
+                const successParams = new URLSearchParams({
+                    paymentKey: customerKey,
+                    orderId: orderId,
+                    amount: paymentFee.toString() // 보통 성공 페이지에서 금액 검증을 위해 금액도 같이 보냅니다.
+                }).toString();
 
-                        if(button !== null) {
-                            button.addEventListener("click", async ():Promise<void> => {
-                                // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
-                                // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
-                                try {
-                                    await paymentWidget.requestPayment({
-                                        orderId: orderId,
-                                        orderName: orderName,
-                                        successUrl: window.location.origin + "/paymentSuccess",
-                                        failUrl: window.location.origin + "/fail",
-                                        customerEmail: memberInfo.memberEmail,
-                                        customerName: memberInfo.memberName,
-                                        customerMobilePhone: memberInfo.memberPhone
-                                    });
-                                } catch (err) {
-                                    console.error("Error requesting payment : ", err)
-                                }
-                            });
-                        }
-                    }
-                } catch (err) {
-                    console.error("Error fetching payment widget : ", err);
+                const successUrl = `${window.location.origin}/paymentSuccess?${successParams}`;
+
+                if(storeId !== undefined) {
+                    paymentTrigger(memberInfo, orderId, customerKey, orderName, paymentFee, successUrl);
                 }
             }).catch((err):void => {
                 console.log(err.message);
@@ -201,13 +152,13 @@ const PaymentWidget = (props: Props) => {
 
     return (
         <PaymentWidgetView ref={modalRef} x={logoPos.x} y={logoPos.y}>
-            <div className="modal-bar" {...bindLogoPos()}>
-                <button onClick={() => props.setIsModal(false)}>X</button>
+            <div className="modal-bar" {...bindLogoPos()} />
+            <div className="modal-content">
+                결제중...
             </div>
-            <div id="payment-widget"></div>
-            <div id="payment-agreement"></div>
-
-            <button className="pl-widget-submit" id="payment-button">결제하기</button>
+            <button className="pl-widget-submit" onClick={() => props.setIsModal(false)}>
+                닫기
+            </button>
         </PaymentWidgetView>
     )
 }
