@@ -259,6 +259,10 @@ const LectureCancelModal = (props:Props) => {
     }
 
     const lectureCancelSubmit = async():Promise<boolean> => {
+        if(cancelReason.length <= 0) {
+            alert('취소 사유를 선택해주세요.');
+            return false;
+        }
         const cancelData = {
             lectureApplicationNo: props.lectureCancelData.lectureApplicationNo,
             lectureApplicationOrderId: props.lectureCancelData.lectureApplicationOrderId,
